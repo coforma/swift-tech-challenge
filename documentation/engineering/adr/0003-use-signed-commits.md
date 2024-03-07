@@ -12,8 +12,8 @@ The issue motivating this decision, and any context that influences or constrain
 
 ## Decision
 
-The change that we're proposing or have agreed to implement.
+We're going to use signed commits for this repository
 
 ## Consequences
 
-What becomes easier or more difficult to do and any risks introduced by the change that will need to be mitigated.
+Initial user setup takes a few extra minutes but provides extra security.
