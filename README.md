@@ -4,7 +4,7 @@ Coforma's response to the SWIFT technical challenge
 ## Local Setup
 
 ###
-TODO: Link to signed commits
+TODO: Link to signed commits, with process
 
 ### Using adr-tools
 
