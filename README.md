@@ -3,6 +3,9 @@ Coforma's response to the SWIFT technical challenge
 
 ## Local Setup
 
+###
+TODO: Link to signed commits
+
 ### Using adr-tools
 
 This repository makes use of [adr-tools](https://github.com/npryce/adr-tools/tree/master) to record architectural decisions as part of the code base.
