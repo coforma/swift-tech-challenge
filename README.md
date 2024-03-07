@@ -3,6 +3,14 @@ Coforma's response to the SWIFT technical challenge
 
 ## Local Setup
 
+To run the local development server:
+
+```bash
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
 ###
 TODO: Link to signed commits, with process
 
