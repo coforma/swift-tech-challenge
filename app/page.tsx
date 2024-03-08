@@ -1,9 +1,13 @@
-import styles from "./page.module.css";
+import { Alert } from "@trussworks/react-uswds";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}></div>
+    <main>
+      <div>
+        <Alert type="success" headingLevel="h1">
+          App running successfully
+        </Alert>
+      </div>
     </main>
   );
 }
