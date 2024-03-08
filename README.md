@@ -21,11 +21,10 @@ Before developing locally, you'll need to install some tools. You may have some 
     cd <project-directory>
     nvm use
     ```
-- Install [yarn](https://yarnpkg.com/getting-started/install) via [corepack](https://yarnpkg.com/corepack):
+- Install [yarn](https://classic.yarnpkg.com/en/docs/install):
 
     ```bash
-    cd <project-directory>
-    corepack enable
+    brew install yarn
     ```
 
 - Install [pre-commit](https://pre-commit.com/#install):
@@ -42,6 +41,7 @@ Before developing locally, you'll need to install some tools. You may have some 
 - Install pre-commit [git hook scripts](https://pre-commit.com/#3-install-the-git-hook-scripts):
 
     ```bash
+    cd <project-directory>
     pre-commit install
     ```
 
