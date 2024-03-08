@@ -1,7 +1,55 @@
 # Description
 Coforma's response to the SWIFT technical challenge
 
-## Local Setup
+## TODO: Table of Contents
+
+- TODO: Links here
+
+## Getting Started
+
+### One time only
+
+Before developing locally, you'll need to install some tools. You may have some of these already, or you may not.
+
+- Install [nvm](https://github.com/nvm-sh/nvm):
+    ```bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    ```
+
+- Use nvm to install specified version of [node](https://nodejs.org/en):
+    ```bash
+    cd <project-directory>
+    nvm use
+    ```
+- Install [yarn](https://yarnpkg.com/getting-started/install) via [corepack](https://yarnpkg.com/corepack):
+
+    ```bash
+    cd <project-directory>
+    corepack enable
+    ```
+
+- Install [pre-commit](https://pre-commit.com/#install):
+
+    ```bash
+    brew install precommit
+    ```
+     OR
+    ```bash
+    pip install precommit
+
+    ```
+
+- Install pre-commit [git hook scripts](https://pre-commit.com/#3-install-the-git-hook-scripts):
+
+    ```bash
+    pre-commit install
+    ```
+
+### Before making commits
+
+TODO: Link to signed commits, with process
+
+### Running the local development server
 
 To run the local development server:
 
@@ -9,10 +57,7 @@ To run the local development server:
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-###
-TODO: Link to signed commits, with process
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the locally running application.
 
 ### Using adr-tools
 

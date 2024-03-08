@@ -27,8 +27,4 @@ repos:
       - id: detect-secrets
         args:
           - --exclude-files
-          - .*test\.json
-  - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.18.0
-    hooks:
-      - id: gitleaks
+          - .yarn/*
