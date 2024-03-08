@@ -29,6 +29,10 @@ Before developing locally, you'll need to install some tools. You may have some 
   brew install yarn
   ```
 
+  ```bash
+  yarn install
+  ```
+
 - Install [pre-commit](https://pre-commit.com/#install):
 
   ```bash

@@ -44,4 +44,4 @@ Delete this section if no tasks need specified
 ### Additional Notes
 
 ## Definition of Done
-[Definition of Done](/documentation/product/definition_of_done.md)
+[Definition of Done](https://github.com/coforma/swift-tech-challenge/blob/main/documentation/product/definition_of_done.md)
