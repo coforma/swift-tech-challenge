@@ -128,11 +128,11 @@ resource "aws_iam_policy" "tfstate_access" {
         Action = [
           "dynamodb:DescribeTable",
           "dynamodb:GetItem",
-          "dyanmodb:PutItem",
+          "dynamodb:PutItem",
           "dynamodb:DeleteItem"
         ]
         Effect   = "Allow"
-        Resource = [aws_dynamodb_table.terraform.arn]
+        Resource = ["arn:aws:dynamodb:*:*:table/${var.dynamodb_table}"]
       },
     ]
   })
