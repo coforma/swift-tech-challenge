@@ -218,3 +218,13 @@ $RECYCLE.BIN/
 # Local .terraform directories
 **/.terraform/*
 .terraform*
+*.tfstate
+*.tfstate.*
+tf/**/crash.log
+tf/**/crash.*.log
+tf/**/override.tf
+tf/**/override.tf.json
+tf/**/*_override.tf
+tf/**/*_override.tf
+.terraformrc
+terraform.rc
