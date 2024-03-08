@@ -1,1 +1,1 @@
-bucket_name = db3ce7ca
+bucket_name = "test-db3ce7ca"
