@@ -29,10 +29,6 @@ Before developing locally, you'll need to install some tools. You may have some 
   brew install yarn
   ```
 
-  ```bash
-  yarn install
-  ```
-
 - Install [pre-commit](https://pre-commit.com/#install):
 
   ```bash
@@ -68,7 +64,8 @@ TODO: Link to signed commits, with process
 To run the local development server:
 
 ```bash
-yarn dev
+yarn install # checks dependencies and installs as needed
+yarn dev # runs the development server
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the locally running application.
