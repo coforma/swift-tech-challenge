@@ -1,0 +1,36 @@
+name: "Validate Terraform"
+on:
+  workflow_call:
+    inputs:
+      project:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      project:
+        type: string
+        required: true
+
+jobs:
+  terraform:
+    name: "Terraform Validate (${{ inputs.project }})"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Terraform Init Empty
+        working-directory: tf/projects/${{ inputs.project }}
+        run: terraform init -backend=false -reconfigure
+
+      - name: Terraform Format
+        working-directory: tf/projects/${{ inputs.project }}
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        working-directory: tf/projects/${{ inputs.project }}
+        run: terraform validate
+    

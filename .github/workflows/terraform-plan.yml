@@ -1,0 +1,55 @@
+name: "Terraform Plan"
+on:
+  workflow_call:
+    inputs:
+      target:
+        required: true
+        type: string
+      project:
+        type: string
+        required: true
+    secrets:
+      TERRAFORM_ROLE:
+        required: true
+  workflow_dispatch:
+    inputs:
+      target:
+        required: true
+        type: choice
+        options:
+          - stage
+          - prod
+      project:
+        type: string
+        required: true
+
+jobs:
+  terraform:
+    name: "Terraform Plan (${{ inputs.target }}, ${{ inputs.project }})"
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    environment: validation
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.TERRAFORM_ROLE }}
+          aws-region: us-east-1
+          role-session-name: GitHubTFValidation
+      
+      - name: Terraform Init
+        working-directory: tf/projects/${{ inputs.project }}
+        run: terraform init -backend-config=env/${{inputs.target}}.s3.tfbackend -reconfigure
+
+      - name: Terraform Plan
+        working-directory: tf/projects/${{ inputs.project }}
+        run: terraform plan -input=false -var-file=env/${{ inputs.target }}.tfvars
+    

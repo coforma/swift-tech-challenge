@@ -1,0 +1,34 @@
+name: "Deploy All Terraform Projects"
+on:
+  workflow_call:
+    inputs:
+      target:
+        required: true
+        type: string
+    secrets:
+      TERRAFORM_ROLE:
+        required: true
+  workflow_dispatch:
+    inputs:
+      target:
+        required: true
+        type: choice
+        options:
+          - stage
+          - prod
+
+jobs:
+  call-tf-deploy:
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/terraform-deploy.yml
+    strategy:
+      matrix:
+        project: [test]
+    with:
+      target: ${{ inputs.target }}
+      project: ${{ matrix.project }}
+    secrets:
+      TERRAFORM_ROLE: ${{ secrets.TERRAFORM_ROLE }}
+    permissions:
+      id-token: write
+      contents: read
