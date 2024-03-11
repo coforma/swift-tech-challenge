@@ -1,7 +1,6 @@
 @forward "uswds-theme.scss";
-@forward "globals.scss";
 
-// Import USWDS components as needs for optimal build speed
+// Import USWDS components as needed for optimal build speed
 @forward "usa-button";
 
-@forward "page-header.scss";
+@forward "globals.scss";
