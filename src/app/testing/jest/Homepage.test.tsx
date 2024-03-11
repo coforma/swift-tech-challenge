@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
-import Home from "./page";
+import Home from "../../page";
 
 const homepage = <Home />;
 
