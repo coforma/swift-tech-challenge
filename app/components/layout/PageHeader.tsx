@@ -8,16 +8,18 @@ export const PageHeader = () => {
     <>
       <GovBanner />
       <Header basic={true} className={styles.header}>
-        <GridContainer>
-          <div className={styles.logo}>
-            <div className={styles.logo_title}>
-              <p>U.S. College Finder</p>
+        <div role="navigation">
+          <GridContainer>
+            <div className={styles.logo}>
+              <div className={styles.logo_title}>
+                <p>U.S. College Finder</p>
+              </div>
+              <div className={styles.logo_subtitle}>
+                <p>From the Department of Higher Education</p>
+              </div>
             </div>
-            <div className={styles.logo_subtitle}>
-              <p>From the Department of Higher Education</p>
-            </div>
-          </div>
-        </GridContainer>
+          </GridContainer>
+        </div>
       </Header>
     </>
   );
