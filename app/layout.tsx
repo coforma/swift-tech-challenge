@@ -1,9 +1,12 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import type { Metadata } from "next";
+//  components
+import { PageHeader } from "./components";
 // styles
 import "@trussworks/react-uswds/lib/uswds.css";
 import "@trussworks/react-uswds/lib/index.css";
-import "../styles/styles.scss";
+import "./styles/styles.scss";
+// fonts
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,7 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <PageHeader />
+        {children}
+      </body>
     </html>
   );
 }

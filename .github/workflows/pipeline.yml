@@ -1,0 +1,50 @@
+name: 'CICD Pipeline'
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  call-tf-validation:
+    uses: ./.github/workflows/terraform-validate.yml
+    strategy:
+      matrix:
+        project: [test]
+    with:
+      project: ${{ matrix.project }}
+    name: Calling TF Validate
+
+  call-tf-plan:
+    name: 'Calling TF Plan Stage'
+    if: github.event_name == 'pull_request'
+    uses: ./.github/workflows/terraform-plan.yml
+    strategy:
+      matrix:
+        target: [stage,prod]
+        project: [test]
+    with:
+      target: ${{ matrix.target }}
+      project: ${{ matrix.project }}
+    secrets:
+      TERRAFORM_ROLE: ${{ secrets.TERRAFORM_ROLE }}
+    permissions:
+      id-token: write
+      contents: read
+
+  call-tf-deploy:
+    name: 'Calling TF Deploy Stage'
+    needs: call-tf-validation
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    uses: ./.github/workflows/terraform-deploy.yml
+    strategy:
+      matrix:
+        project: [test]
+    with:
+      target: stage
+      project: ${{ matrix.project }}
+    secrets:
+      TERRAFORM_ROLE: ${{ secrets.TERRAFORM_ROLE }}
+    permissions:
+      id-token: write
+      contents: read
