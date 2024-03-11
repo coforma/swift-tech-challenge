@@ -1,0 +1,20 @@
+@use "uswds-core" as *;
+
+.header {
+  @include u-bg("primary-darker");
+}
+
+.logo {
+  @include u-padding-y(3);
+
+  &_title {
+    @include u-text("base-lightest", "bold");
+    @include typeset("heading", "xl", 1);
+    @include u-margin-bottom(2);
+  }
+
+  &_subtitle {
+    @include u-text("base-lightest", "bold");
+    @include typeset("heading", "xs", 1);
+  }
+}
