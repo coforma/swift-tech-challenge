@@ -5,7 +5,7 @@
 }
 
 .logo {
-  @include u-margin-y(3);
+  @include u-padding-y(3);
 
   &-title {
     @include u-text("base-lightest");
