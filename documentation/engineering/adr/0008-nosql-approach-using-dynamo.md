@@ -33,4 +33,4 @@ _This will likely need refactored due to the number of records and the missing d
 ## Consequences
 
 1. Advanced queries will be slow, possibly requiring a refactoring of the data should a use case arrive where we need them
-2. We're assuming we can load all of that data from Dynamo into the front end and do a lot of quick filtering. We might have to refactor the data into a smaller payload or introduce DAX cache mechanisms to get the performance that we're after 
+2. We're assuming we can load all of that data from Dynamo into the front end and do a lot of quick filtering. We might have to refactor the data into a smaller payload or introduce DAX cache mechanisms to get the performance that we're after

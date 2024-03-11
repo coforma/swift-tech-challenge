@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Terraform Init Empty
         working-directory: tf/projects/${{ inputs.project }}
         run: terraform init -backend=false -reconfigure
@@ -33,4 +33,3 @@ jobs:
       - name: Terraform Validate
         working-directory: tf/projects/${{ inputs.project }}
         run: terraform validate
-    

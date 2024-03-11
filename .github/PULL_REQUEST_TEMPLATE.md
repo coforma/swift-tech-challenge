@@ -28,6 +28,6 @@ Please delete options that are not relevant.
 - [ ] I have made corresponding changes to the documentation, including any applicable ADRs
 - [ ] My changes generate no new warnings
 - [ ] I have added tests that fail without these changes
-- [ ] New and existing tests (unit, integration, accessibility) pass locally 
+- [ ] New and existing tests (unit, integration, accessibility) pass locally
 - [ ] Documentation updated
 - [ ] If there are security concerns they are addressed or ticketed after being discussed
