@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import type { Metadata } from "next";
 // styles
-import "./globals.css";
 import "@trussworks/react-uswds/lib/uswds.css";
 import "@trussworks/react-uswds/lib/index.css";
+import "../styles/styles.scss";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
