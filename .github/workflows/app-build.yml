@@ -1,12 +1,18 @@
 name: "Front End Build"
 on:
   workflow_call:
+    inputs:
+      upload:
+        type: boolean
+        default: false
+    secrets:
+      UPLOAD_ROLE:
+        required: true
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    tags:
-      - v**
+    inputs:
+      upload:
+        type: boolean
+        default: false
 
 jobs:
   next-lint:
@@ -53,6 +59,7 @@ jobs:
           aws-region: us-east-1
           role-session-name: GitHubAppUpload
       - name: Upload Zip
+        if: ${{ inputs.upload == true || inputs.upload == 'true' }}
         run: |
           aws s3 cp pkg/frontend.zip s3://${{ vars.artifact_bucket }}/$GITHUB_REF_NAME/frontend.zip
         
