@@ -38,7 +38,6 @@ jobs:
 
   call-app-build:
     name: 'Calling App Build Stage'
-    if: github.ref == 'refs/heads/main'
     uses: ./.github/workflows/app-build.yml
     needs: call-app-lint
     secrets:
