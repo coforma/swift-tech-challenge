@@ -54,6 +54,6 @@ jobs:
           role-session-name: GitHubAppUpload
       - name: Upload Zip
         run: |
-          aws s3 cp frontend.zip s3://${{ vars.artifact_bucket }}/$GITHUB_REF_NAME/frontend.zip
+          aws s3 cp pkg/frontend.zip s3://${{ vars.artifact_bucket }}/$GITHUB_REF_NAME/frontend.zip
         
 
