@@ -21,5 +21,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
+      - name: Install
+        run: yarn install
       - name: Lint
         run: yarn run lint
