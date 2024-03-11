@@ -47,8 +47,8 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-frontend/cypress/videos
-frontend/cypress/screenshots
+# cypress/videos
+# cypress/screenshots
 
 # TypeScript v1 declaration files
 typings/
