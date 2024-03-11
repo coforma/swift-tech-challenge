@@ -5,7 +5,7 @@ import styles from "./PageHeader.module.scss";
 
 export const PageHeader = () => {
   return (
-    <>
+    <div>
       <GovBanner />
       <Header basic={true} className={styles.header}>
         <GridContainer>
@@ -19,6 +19,6 @@ export const PageHeader = () => {
           </div>
         </GridContainer>
       </Header>
-    </>
+    </div>
   );
 };
