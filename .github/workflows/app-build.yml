@@ -25,6 +25,6 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install
-        run: yarn install --frozen-lockfile --production=true
+        run: yarn install --frozen-lockfile
       - name: Build
         run: yarn run build
