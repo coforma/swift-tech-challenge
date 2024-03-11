@@ -1,0 +1,56 @@
+name: "Deploy Terraform"
+on:
+  workflow_call:
+    inputs:
+      target:
+        required: true
+        type: string
+      project:
+        type: string
+        required: true
+    secrets:
+      TERRAFORM_ROLE:
+        required: true
+  workflow_dispatch:
+    inputs:
+      target:
+        required: true
+        type: choice
+        options:
+          - stage
+          - prod
+      project:
+        type: string
+        required: true
+
+jobs:
+  terraform:
+    name: "Validate Terraform (${{ inputs.target }}, ${{ inputs.project }})"
+    permissions:
+      id-token: write
+      contents: read
+    concurrency:
+      group: ${{ inputs.target }}-deployment
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.target }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.TERRAFORM_ROLE }}
+          aws-region: us-east-1
+          role-session-name: GitHubTFDeployment
+      
+      - name: Terraform Init
+        working-directory: tf/projects/${{ inputs.project }}
+        run: terraform init -backend-config=env/${{inputs.target}}.s3.tfbackend -reconfigure
+
+      - name: Terraform Apply
+        working-directory: tf/projects/${{ inputs.project }}
+        run: terraform apply -auto-approve -input=false -var-file=env/${{ inputs.target }}.tfvars
