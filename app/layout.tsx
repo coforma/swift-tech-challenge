@@ -1,7 +1,5 @@
 import React, { ReactNode } from "react";
 import type { Metadata } from "next";
-//  components
-import { PageHeader } from "./components/PageHeader";
 // styles
 import "@trussworks/react-uswds/lib/uswds.css";
 import "@trussworks/react-uswds/lib/index.css";
@@ -23,10 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <PageHeader />
-        {children}
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
