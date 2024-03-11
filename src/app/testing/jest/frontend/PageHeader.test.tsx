@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
-import { PageHeader } from "../../components";
+import { PageHeader } from "../../../components";
 
 const component = <PageHeader />;
 
