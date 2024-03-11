@@ -1,2 +1,2 @@
 // layout elements
-export { PageHeader } from "./PageHeader";
+export { PageHeader } from "./layout/PageHeader";
