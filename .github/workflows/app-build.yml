@@ -1,4 +1,4 @@
-name: "App Build"
+name: "Front End Build"
 on:
   workflow_call:
   workflow_dispatch:
@@ -39,3 +39,21 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Build
         run: yarn run build --no-lint
+      - name: Package
+        run: |
+          cp -r .next/standalone pkg
+          cp -r .next/static pkg/.next/
+          cd pkg
+          echo "node server.js" > run.sh
+          zip -r frontend.zip .
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.UPLOAD_ROLE }}
+          aws-region: us-east-1
+          role-session-name: GitHubAppUpload
+      - name: Upload Zip
+        run: |
+          aws s3 cp frontend.zip s3://${{ vars.artifact_bucket }}/$GITHUB_REF_NAME/frontend.zip
+        
+
