@@ -44,7 +44,7 @@ jobs:
       UPLOAD_ROLE: ${{ secrets.UPLOAD_ROLE }}
     with:
       upload: ${{ github.ref_protected }}
-      environment: ${{ github.ref_protected == true && 'prod' || '' }}
+      environment: ${{ github.ref_protected == true && 'stage' || '' }}
     permissions:
       id-token: write
       contents: read
