@@ -45,7 +45,6 @@ export default async function Home() {
     <main>
       <GridContainer>
         <h1> Browse Schools </h1>
-        <p> Find the school that&apos;s right for you</p>
         <ul className="usa-card-group">
           {cards.map((card) => (
             <CollegeCard key={card.id} card={card} />

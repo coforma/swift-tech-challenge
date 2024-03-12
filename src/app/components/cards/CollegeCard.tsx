@@ -21,7 +21,7 @@ export const CollegeCard = ({ card }: Props) => {
       </CardHeader>
       <CardMedia>{card.img}</CardMedia>
       <CardBody>
-        {card?.description && <p>{card.description}</p>}
+        {card?.description && <p className="card_desc">{card.description}</p>}
         <div className="card_grid">
           <CardIcon subtitle={"Type"} highlight={card.type} />
           <CardIcon
