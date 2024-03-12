@@ -18,32 +18,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: 'Setup jq'
-        uses: dcarbone/install-jq-action@v2.1.0
-        with:
-          version: '${{ inputs.version }}'
-          force: '${{ inputs.force }}'
-      - name: 'Check jq'
-        # language=sh
-        run: |
-          which jq
-          jq --version
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-      - uses: actions/cache@v3
+          cache: "yarn"
+      - uses: actions/cache@v4
         with:
           path: |
-            **/node_modules
             ~/.cache/Cypress
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
-      - name: run unit tests (frontend)
-        run: ./scripts/test-unit.sh src/app/testing/jest/frontend
-      - name: run unit tests (backend) src/app/testing/jest/frontend
-        run: ./scripts/test-unit.sh
+      - name: run unit tests
+        run: yarn dev:cov
       - name: publish test coverage to code climate
         if: env.CODE_CLIMATE_ID != ''
         uses: paambaati/codeclimate-action@v5
