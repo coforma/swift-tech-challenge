@@ -1,13 +1,6 @@
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  CardMedia,
-} from "@trussworks/react-uswds";
+import { GridContainer } from "@trussworks/react-uswds";
 import { College, CollegeType } from "./types";
+import { CollegeCard } from "./components/cards/CollegeCard";
 
 export default function Home() {
   const cards: College[] = [
@@ -39,25 +32,15 @@ export default function Home() {
 
   return (
     <main>
-      <ul className="usa-card-group">
-        {cards.map((card) => (
-          <Card key={card.id} layout="flagDefault" headerFirst={true}>
-            <CardHeader>
-              <h2>{card.name}</h2>
-            </CardHeader>
-            <CardMedia>{card.img}</CardMedia>
-            <CardBody>{card?.description && card.description}</CardBody>
-            <CardFooter>
-              <ButtonGroup>
-                <Button type={"button"}>Apply to this school</Button>
-                <Button type={"button"} outline={true}>
-                  More information
-                </Button>
-              </ButtonGroup>
-            </CardFooter>
-          </Card>
-        ))}
-      </ul>
+      <GridContainer>
+        <h1> Browse Schools </h1>
+        <p> Find the school that&apos;s right for you</p>
+        <ul className="usa-card-group">
+          {cards.map((card) => (
+            <CollegeCard key={card.id} card={card} />
+          ))}
+        </ul>
+      </GridContainer>
     </main>
   );
 }
