@@ -90,7 +90,7 @@ yarn test:cov # runs all unit tests and reports coverage
 
 #### Code Quality and Test Coverage
 
-We use [Code Climate](https://codeclimate.com/quality) for automated code review. You can track test coverage and maintainability of test coverage, maintainability by clicking the links at the top of this document.
+We use [Code Climate](https://codeclimate.com/quality) for automated code review. You can track test coverage and maintainability by clicking the links at the top of this document.
 
 ### Integration Testing
 
