@@ -8,15 +8,6 @@ export default function Home() {
           App running successfully
         </Alert>
         <h1>Welcome</h1>
-        <h1>Welcome</h1>
-        <h1>Welcome</h1>
-        <h1>Welcome</h1>
-        <h1>Welcome</h1>
-        <h1>Welcome</h1>
-        <h1>Welcome</h1>
-        <h1>Welcome</h1>
-        <h1>Welcome</h1>
-        <h1>Welcome</h1>
       </div>
     </main>
   );

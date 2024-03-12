@@ -8,7 +8,11 @@ export const PageHeader = () => {
     <>
       <GovBanner />
       <Header basic={true} className={styles.header}>
-        <div role="navigation">
+        <div
+          id="main-header-nav"
+          aria-label="main-header-nav"
+          role="navigation"
+        >
           <GridContainer>
             <div className={styles.logo}>
               <div className={styles.logo_title}>

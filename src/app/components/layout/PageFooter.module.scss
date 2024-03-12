@@ -53,6 +53,7 @@
 
 a.nav_item {
   @include u-text("base-light", "normal");
+  color: #a9aeb1 !important;
 }
 
 .more {
@@ -62,4 +63,5 @@ a.nav_item {
 
 a.more_link {
   @include u-text("base-lightest", "bold");
+  color: #a9aeb1 !important;
 }
