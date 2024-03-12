@@ -5,24 +5,11 @@ import {
   DynamoDBDocumentClient,
 } from "@aws-sdk/lib-dynamodb";
 
-const localConfig = {
-  endpoint: process.env.LOCAL_DYNAMODB_URL,
-  region: "localhost",
-  credentials: {
-    accessKeyId: "LOCALFAKEKEY", // pragma: allowlist secret
-    secretAccessKey: "LOCALFAKESECRET", // pragma: allowlist secret
-  },
-};
-
 const awsConfig = {
   region: "us-east-1",
 };
 
-export function getConfig() {
-  return process.env.LOCAL_DYNAMODB_URL ? localConfig : awsConfig;
-}
-
-const client = DynamoDBDocumentClient.from(new DynamoDBClient(getConfig()));
+const client = DynamoDBDocumentClient.from(new DynamoDBClient(awsConfig));
 
 const dynamoClient = {
   get: async function (params: GetCommandInput) {
