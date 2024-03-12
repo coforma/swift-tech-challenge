@@ -39,8 +39,8 @@ resource "aws_iam_openid_connect_provider" "github" {
   ## Thumbprint list is no longer used by AWS, but this must remain for compatability with the aws provider
   ## Remove once the terraform aws provider is updated to reflect this change
   thumbprint_list = [
-    "6938fd4d98bab03faadb97b34396831e3780aea1",
-    "1c58a3a8518e8759bf075b76b750d4f2df264fcd"
+    "6938fd4d98bab03faadb97b34396831e3780aea1", # pragma: allowlist-secret
+    "1c58a3a8518e8759bf075b76b750d4f2df264fcd"  # pragma: allowlist-secret
   ]
   url = "https://token.actions.githubusercontent.com"
 }
@@ -61,7 +61,7 @@ resource "aws_iam_role" "iac_deployer" {
         Condition = {
           StringEquals = {
             "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
-            "token.actions.githubusercontent.com:sub" : [for rest in var.deploy_restrictions : "repo:${var.github_repo}:${rest}"]
+            "token.actions.githubusercontent.com:sub" : [for rest in var.tf_deploy_restrictions : "repo:${var.github_repo}:${rest}"]
           }
         }
       }
