@@ -79,8 +79,6 @@ To run manually, do one of the following:
 ```bash
 yarn test # runs all unit tests
 yarn test:cov # runs all unit tests and reports coverage
-yarn test:be # runs only backend unit tests
-yarn test:fe # runs only frontend unit tests
 ```
 
 ### Integration Testing
