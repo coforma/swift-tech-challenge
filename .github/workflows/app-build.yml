@@ -1,0 +1,75 @@
+name: "Front End Build"
+on:
+  workflow_call:
+    inputs:
+      upload:
+        type: boolean
+        default: false
+      environment:
+        type: string
+        required: false
+        default: ''
+    secrets:
+      UPLOAD_ROLE:
+        required: true
+  workflow_dispatch:
+    inputs:
+      upload:
+        type: boolean
+        default: false
+      environment:
+        type: string
+        required: false
+        default: ''
+
+jobs:
+  next-build:
+    name: "Build"
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Nodejs and npm
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - uses: actions/cache@v4
+        with:
+          # See here for caching with `yarn` https://github.com/actions/cache/blob/main/examples.md#node---yarn or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn run build --no-lint
+      - name: Package
+        run: |
+          cp -r .next/standalone pkg
+          cp -r .next/static pkg/.next/
+          cd pkg
+          echo "node server.js" > run.sh
+          zip -r frontend.zip .
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.UPLOAD_ROLE }}
+          aws-region: us-east-1
+          role-session-name: GitHubAppUpload
+      - name: Upload Zip
+        if: ${{ inputs.upload == true || inputs.upload == 'true' }}
+        run: |
+          aws s3 cp pkg/frontend.zip s3://${{ vars.artifact_bucket }}/$GITHUB_REF_NAME/frontend.zip
+        
+

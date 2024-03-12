@@ -12,8 +12,8 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Swift Tech Challenge",
-  description: "Swift Tech Challenge ",
+  title: "U.S. College Finder",
+  description: "U.S. College Finder",
   authors: [{ name: "Coforma", url: "https://coforma.io/" }],
 };
 
@@ -24,12 +24,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>U.S. College Finder</title>
+      </head>
       <body className={inter.className}>
-        <div className="wrapper">
-          <PageHeader />
-          {children}
-          <PageFooter />
-        </div>
+        <PageHeader />
+        {children}
+        <PageFooter />
       </body>
     </html>
   );

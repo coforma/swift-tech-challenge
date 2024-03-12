@@ -7,6 +7,7 @@ export default function Home() {
         <Alert type="success" headingLevel="h1">
           App running successfully
         </Alert>
+        <h1>Welcome</h1>
       </div>
     </main>
   );

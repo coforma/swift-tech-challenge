@@ -1,0 +1,72 @@
+name: Testing
+
+on:
+  workflow_call:
+    secrets:
+      CODE_CLIMATE_ID:
+        required: true
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "yarn"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: set path
+        run: |
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+      - name: install dependencies
+        run: yarn install --frozen-lockfile
+      - name: run unit tests
+        run: yarn test:cov
+      - name: publish test coverage to code climate
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_ID }}
+        if: env.CC_TEST_REPORTER_ID != ''
+        uses: paambaati/codeclimate-action@v5
+        with:
+          coverageLocations: |
+            ${{github.workspace}}/coverage/lcov.info:lcov
+      - name: Store unit test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: unit_test_results
+          path: ${{github.workspace}}/coverage/lcov.info
+
+  # TODO: get integration tests running in pipeline after deploy outputs are configured
+  # integration-tests:
+  #   name: Integration Tests
+  #   needs: deploy #TODO: relies on deploy
+  #   if: ${{ github.ref_name != 'production' }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Run Cypress Tests
+  #       uses: cypress-io/github-action@v5
+  #       with:
+  #         working-directory: src/app/testing/cypress
+  #         spec: |
+  #           src/app/testing/cypress/e2e/*.js
+  #         browser: chrome
+  #         #TODO: needs output from deploy
+  #         config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
+  #         wait-on: ${{ needs.deploy.outputs.application_endpoint }}
