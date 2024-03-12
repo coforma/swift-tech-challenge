@@ -1,14 +1,11 @@
-name: "Front End Deploy"
+name: "Testing"
 on:
   workflow_call:
   workflow_dispatch:
 jobs:
-  next-deploy:
-    name: "Deploy"
+  run-testing:
+    name: "Build"
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     steps:
       ## Dummy step to clear up spurious pipeline failures
       - name: Dummy

@@ -1,0 +1,65 @@
+@use "uswds-core" as *;
+
+.footer {
+  bottom: 0;
+  width: 100%;
+}
+
+.footer > div {
+  @include u-bg("primary-darker");
+}
+
+.footer_primary-section {
+  @include u-display("flex");
+  @include u-flex("align-center");
+  gap: 20px;
+}
+
+.footer_logo {
+  @include u-margin-y(3);
+
+  // Temp code in place of a real logo
+  &-img {
+    width: 5rem;
+    height: 5rem;
+    line-height: 5rem;
+    display: inline-block;
+    background: #fff;
+    border-radius: 100%;
+    text-align: center;
+  }
+
+  &-title {
+    @include u-text("base-light", "normal");
+  }
+
+  &-description {
+    @include u-text("base-lightest", "bold");
+  }
+}
+
+.footer_nav {
+  list-style-type: none;
+  @include u-display("flex");
+  @include u-flex("wrap");
+  @include u-padding-bottom(1);
+
+  &-item {
+    @include u-display("flex");
+    @include u-padding-bottom(1);
+    width: 200px;
+  }
+}
+
+a.footer_nav-item {
+  @include u-text("base-light", "normal");
+}
+
+.footer_more {
+  @include u-text("base-light", "normal");
+  @include u-padding-bottom(1);
+}
+
+a.footer_more-link {
+  @include u-text("base-lightest", "bold");
+}
