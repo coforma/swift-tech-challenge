@@ -1,9 +1,8 @@
-name: 'CICD Pipeline'
+name: "CICD Pipeline"
 on:
   push:
-    branches: ['*']
+    branches: ["*"]
   pull_request:
-    branches: ['main']
 
 jobs:
   call-tf-validation:
@@ -16,16 +15,16 @@ jobs:
     name: Calling TF Validate
 
   call-app-lint:
-    name: 'Calling Application Lint Stage'
+    name: "Calling Application Lint Stage"
     uses: ./.github/workflows/app-lint.yml
 
   call-tf-plan:
-    name: 'Calling TF Plan Stage'
+    name: "Calling TF Plan Stage"
     if: github.event_name == 'pull_request'
     uses: ./.github/workflows/terraform-plan.yml
     strategy:
       matrix:
-        target: [stage,prod]
+        target: [stage, prod]
         project: [test]
     with:
       target: ${{ matrix.target }}
@@ -36,18 +35,27 @@ jobs:
       id-token: write
       contents: read
 
+  call-testing:
+    name: "Calling Testing"
+    uses: ./.github/workflows/testing.yml
+    secrets:
+      CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
+    permissions:
+      id-token: write
+      contents: read
+      actions: read
+
   call-app-build:
-    name: 'Calling App Build Stage'
+    name: "Calling App Build Stage"
     uses: ./.github/workflows/app-build.yml
     needs: call-app-lint
     secrets:
       UPLOAD_ROLE: ${{ secrets.UPLOAD_ROLE }}
     with:
       upload: ${{ github.ref == 'refs/heads/main' }}
-    
 
   call-tf-deploy:
-    name: 'Calling TF Deploy Stage'
+    name: "Calling TF Deploy Stage"
     needs: call-tf-validation
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     uses: ./.github/workflows/terraform-deploy.yml
