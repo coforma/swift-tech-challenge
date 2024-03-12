@@ -1,25 +1,23 @@
 // components
 import { Footer, GridContainer, NavList } from "@trussworks/react-uswds";
 import Link from "next/link";
-// styles
-import styles from "./PageFooter.module.scss";
 
 export const PageFooter = () => {
   return (
     <Footer
-      className={styles.footer}
+      className="footer"
       size="medium"
       primary={
         <GridContainer>
-          <div className={styles.primary_section}>
-            <div className={styles.logo}>
-              <div className={styles.logo_image}>Logo</div>
+          <div className="footer_primary-section">
+            <div className="footer_logo">
+              <div className="footer_logo-img">Logo</div>
             </div>
-            <div className={styles.logo}>
-              <Link className={styles.logo_title} href="https://highered.gov">
+            <div className="footer_logo">
+              <Link className="footer_logo-title" href="https://highered.gov">
                 highered.gov
               </Link>
-              <p className={styles.logo_description}>
+              <p className="footer_logo-description">
                 An official website of the Department of Higher Ed
               </p>
             </div>
@@ -28,65 +26,65 @@ export const PageFooter = () => {
       }
       secondary={
         <>
-          <nav>
+          <nav className="footer_secondary-section">
             <NavList
-              className={styles.nav}
+              className={"footer_nav"}
               items={[
                 <Link
                   href="#"
-                  key={"footer-nav-link-1"}
-                  className={styles.nav_item}
+                  key="footer-nav-link-1"
+                  className="footer_nav-item"
                 >
                   About
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-2"}
-                  className={styles.nav_item}
+                  key="footer-nav-link-2"
+                  className="footer_nav-item"
                 >
                   Accessibility support
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-3"}
-                  className={styles.nav_item}
+                  key="footer-nav-link-3"
+                  className="footer_nav-item"
                 >
                   FOIA Requests
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-4"}
-                  className={styles.nav_item}
+                  key="footer-nav-link-4"
+                  className="footer_nav-item"
                 >
                   No FEAR Act data
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-5"}
-                  className={styles.nav_item}
+                  key="footer-nav-link-5"
+                  className="footer_nav-item"
                 >
                   Performance reports
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-6"}
-                  className={styles.nav_item}
+                  key="footer-nav-link-6"
+                  className="footer_nav-item"
                 >
                   Office of the Inspector General
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-6"}
-                  className={styles.nav_item}
+                  key="footer-nav-link-7"
+                  className="footer_nav-item"
                 >
                   Privacy Policy
                 </Link>,
               ]}
             />
           </nav>
-          <p className={styles.more}>
+          <p className="footer_more">
             Looking for U.S. government information and services?{" "}
-            <Link href="https://usa.gov" className={styles.more_link}>
+            <Link href="https://usa.gov" className={"footer_more-link"}>
               Visit USA.gov
             </Link>
           </p>
