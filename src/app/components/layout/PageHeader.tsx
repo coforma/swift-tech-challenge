@@ -1,24 +1,22 @@
 // components
 import { GovBanner, GridContainer, Header } from "@trussworks/react-uswds";
-// styles
-import styles from "./PageHeader.module.scss";
 
 export const PageHeader = () => {
   return (
     <>
       <GovBanner />
-      <Header basic={true} className={styles.header}>
+      <Header basic={true} className="header">
         <div
           id="main-header-nav"
           aria-label="main-header-nav"
           role="navigation"
         >
           <GridContainer>
-            <div className={styles.logo}>
-              <div className={styles.logo_title}>
+            <div className="header_logo">
+              <div className="header_logo-title">
                 <p>U.S. College Finder</p>
               </div>
-              <div className={styles.logo_subtitle}>
+              <div className="header_logo-subtitle">
                 <p>From the Department of Higher Education</p>
               </div>
             </div>

@@ -9,17 +9,17 @@
   @include u-bg("primary-darker");
 }
 
-.primary_section {
+.footer_primary-section {
   @include u-display("flex");
   @include u-flex("align-center");
   gap: 20px;
 }
 
-.logo {
+.footer_logo {
   @include u-margin-y(3);
 
   // Temp code in place of a real logo
-  &_image {
+  &-img {
     width: 5rem;
     height: 5rem;
     line-height: 5rem;
@@ -29,39 +29,37 @@
     text-align: center;
   }
 
-  &_title {
+  &-title {
     @include u-text("base-light", "normal");
   }
 
-  &_description {
+  &-description {
     @include u-text("base-lightest", "bold");
   }
 }
 
-.nav {
+.footer_nav {
   list-style-type: none;
   @include u-display("flex");
   @include u-flex("wrap");
   @include u-padding-bottom(1);
 
-  &_item {
+  &-item {
     @include u-display("flex");
     @include u-padding-bottom(1);
     width: 200px;
   }
 }
 
-a.nav_item {
+a.footer_nav-item {
   @include u-text("base-light", "normal");
-  color: #a9aeb1 !important;
 }
 
-.more {
+.footer_more {
   @include u-text("base-light", "normal");
   @include u-padding-bottom(1);
 }
 
-a.more_link {
+a.footer_more-link {
   @include u-text("base-lightest", "bold");
-  color: #a9aeb1 !important;
 }
