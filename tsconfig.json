@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "./jest.config.ts"
-  ],
+, "src/app/testing/cypress/e2e/app.cy.js"  ],
   "exclude": ["node_modules"]
 }
