@@ -9,6 +9,10 @@ const config: Config = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["./src/app/testing/jest/setupJest.ts"],
   moduleDirectories: ["node_modules"],
+  moduleNameMapper: {
+    "^uuid$": require.resolve("uuid"),
+    "^sinon$": require.resolve("sinon"),
+  },
   collectCoverageFrom: [
     "src/app/**/*.{ts,tsx}",
     "src/app/components/**/*.{ts,tsx}",
