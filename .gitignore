@@ -228,3 +228,7 @@ tf/**/*_override.tf
 tf/**/*_override.tf
 .terraformrc
 terraform.rc
+
+# Locally created DynamoDB
+dynamodb/*.db
+dynamodb/dynamodb-local-metadata.json
