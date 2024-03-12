@@ -3,8 +3,8 @@ on:
   workflow_call:
   workflow_dispatch:
 jobs:
-  next-lint:
-    name: "Build"
+  next-deploy:
+    name: "Deploy"
     runs-on: ubuntu-latest
     permissions:
       id-token: write

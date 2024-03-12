@@ -15,7 +15,7 @@ on:
         default: false
 
 jobs:
-  next-lint:
+  next-build:
     name: "Build"
     runs-on: ubuntu-latest
     permissions:
