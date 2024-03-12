@@ -1,0 +1,12 @@
+name: "Testing"
+on:
+  workflow_call:
+  workflow_dispatch:
+jobs:
+  run-testing:
+    name: "Build"
+    runs-on: ubuntu-latest
+    steps:
+      ## Dummy step to clear up spurious pipeline failures
+      - name: Dummy
+        run: echo 'true'
