@@ -15,6 +15,10 @@ jobs:
       project: ${{ matrix.project }}
     name: Calling TF Validate
 
+  call-app-lint:
+    name: 'Calling Application Lint Stage'
+    uses: ./.github/workflows/app-lint.yml
+
   call-tf-plan:
     name: 'Calling TF Plan Stage'
     if: github.event_name == 'pull_request'
@@ -31,6 +35,16 @@ jobs:
     permissions:
       id-token: write
       contents: read
+
+  call-app-build:
+    name: 'Calling App Build Stage'
+    uses: ./.github/workflows/app-build.yml
+    needs: call-app-lint
+    secrets:
+      UPLOAD_ROLE: ${{ secrets.UPLOAD_ROLE }}
+    with:
+      upload: ${{ github.ref == 'refs/heads/main' }}
+    
 
   call-tf-deploy:
     name: 'Calling TF Deploy Stage'

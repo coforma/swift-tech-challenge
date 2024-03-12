@@ -4,16 +4,16 @@
   @include u-bg("primary-darker");
 }
 
-.logo {
+.header_logo {
   @include u-padding-y(3);
 
-  &_title {
+  &-title {
     @include u-text("base-lightest", "bold");
     @include typeset("heading", "xl", 1);
     @include u-margin-bottom(2);
   }
 
-  &_subtitle {
+  &-subtitle {
     @include u-text("base-lightest", "bold");
     @include typeset("heading", "xs", 1);
   }
