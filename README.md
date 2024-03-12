@@ -68,6 +68,10 @@ yarn dev # runs the development server
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the locally running application.
 
+### Connecting to DynamoDB locally
+
+Export AWS Credentials for a user with access to the AWS DynamoDB in your terminal before running the application
+
 ## Testing
 
 ### Unit Testing
