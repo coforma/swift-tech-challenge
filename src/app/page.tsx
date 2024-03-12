@@ -1,32 +1,43 @@
 import { GridContainer } from "@trussworks/react-uswds";
 import { College, CollegeType } from "./types";
 import { CollegeCard } from "./components/cards/CollegeCard";
+import dynamoClient from "./utils/dynamodb-lib";
 
-export default function Home() {
+export default async function Home() {
+  const params1 = {
+    TableName: "institutions",
+    Key: { institutionId: 110608, recordType: "data" },
+  };
+  const params2 = {
+    TableName: "institutions",
+    Key: { institutionId: 134130, recordType: "data" },
+  };
+  const college1 = await dynamoClient.get(params1);
+  const college2 = await dynamoClient.get(params2);
   const cards: College[] = [
     {
-      id: 0,
+      id: college1?.Item?.institutionId,
       img: "",
-      name: "Name of school",
-      city: "City",
-      state: "State",
-      description:
-        "Smiley was monstrous proud of his frog, and well he might be, for fellers that had traveled and been everywheres, all said he laid over any frog that ever they see.",
+      name: college1?.Item?.institutionName,
+      city: college1?.Item?.city,
+      state: college1?.Item?.state,
+      description: college1?.Item?.description,
       type: CollegeType.PUBLIC,
-      populationAmount: 17560,
-      gradRate: 56,
-      avgCost: 57000,
+      populationAmount: 0,
+      gradRate: college1?.Item?.completionRates.fourYearInstitution,
+      avgCost: college1?.Item?.publicNetPrice.averagePrice,
     },
     {
-      id: 1,
+      id: college2?.Item?.institutionId,
       img: "",
-      name: "Name of private school",
-      city: "City",
-      state: "State",
-      type: CollegeType.PRIVATE,
-      populationAmount: 9560,
-      gradRate: 86,
-      avgCost: 102000,
+      name: college2?.Item?.institutionName,
+      city: college2?.Item?.city,
+      state: college2?.Item?.state,
+      description: college2?.Item?.description,
+      type: CollegeType.PUBLIC,
+      populationAmount: 0,
+      gradRate: college2?.Item?.completionRates.fourYearInstitution,
+      avgCost: college2?.Item?.publicNetPrice.averagePrice,
     },
   ];
 
