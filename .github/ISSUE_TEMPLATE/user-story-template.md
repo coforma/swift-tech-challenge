@@ -37,7 +37,7 @@ Delete this section if no tasks need specified
 
 ### Resources:
 
-* Mockups: 
+* Mockups:
 * Resources
 * Any other helpful notes
 

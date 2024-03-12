@@ -6,7 +6,6 @@ module.exports = defineConfig({
     supportFile: "src/app/testing/cypress/setupCypress.ts",
     specPattern: "src/app/testing/cypress/**/*.cy.{js,jsx,ts,tsx}",
     setupNodeEvents(on: any, config: any) {
-      // bind to the event we care about
       on("task", {
         log(message: any) {
           console.log(message); // eslint-disable-line no-console

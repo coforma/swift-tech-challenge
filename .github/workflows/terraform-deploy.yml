@@ -46,7 +46,7 @@ jobs:
           role-to-assume: ${{ secrets.TERRAFORM_ROLE }}
           aws-region: us-east-1
           role-session-name: GitHubTFDeployment
-      
+
       - name: Terraform Init
         working-directory: tf/projects/${{ inputs.project }}
         run: terraform init -backend-config=env/${{inputs.target}}.s3.tfbackend -reconfigure
