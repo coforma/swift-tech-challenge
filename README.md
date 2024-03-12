@@ -1,4 +1,7 @@
-# Description
+# U.S. College Finder
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/74f953d2eba0abd1f240/maintainability)](https://codeclimate.com/github/coforma/swift-tech-challenge/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/74f953d2eba0abd1f240/test_coverage)](https://codeclimate.com/github/coforma/swift-tech-challenge/test_coverage)
 
 Coforma's response to the SWIFT technical challenge
 
