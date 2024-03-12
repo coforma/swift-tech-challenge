@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ## Description
-What details are necessary for understanding the specific work or request tracked by this issue? 
+What details are necessary for understanding the specific work or request tracked by this issue?
 What part of the prompt is this tied to?
 
 ### Acceptance Criteria
@@ -22,7 +22,7 @@ What will be created (the deliverable) or happen as a result of this story?
 
 ### Resources:
 
-* Links to working docs 
+* Links to working docs
 * Links to deliverables in documentation folder
 * Screenshot of deliverable
 * Any other helpful notes
