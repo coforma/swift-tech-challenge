@@ -55,6 +55,12 @@ Before developing locally, you'll need to install some tools. You may have some 
   brew install adr-tools
   ```
 
+- Set up local env file
+
+  ```bash
+  cp .env.local.example .env.local
+  ```
+
 ### Before making commits
 
 TODO: Link to signed commits, with process
@@ -69,6 +75,35 @@ yarn dev # runs the development server
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the locally running application.
+
+### Running DynamoDB locally
+
+#### Installation
+
+AWS provides a [local version of DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html) we can run with Java.
+
+If you need to install Java: 
+- ARM Mac users can download [java from azul](https://www.azul.com/downloads/?version=java-18-sts&os=macos&architecture=x86-64-bit&package=jdk). _Note that you'll need the x86 architecture Java for this to work_.
+- Otherwise [install java from here](https://java.com/en/download/).
+
+You can verify the installation with `java --version`. 
+
+#### Startup
+
+Run the following commands in a new terminal tab
+
+```
+cd dynamodb
+java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
+```
+
+(or other command per AWS guidance)
+
+#### Live interaction
+
+To interact with your database tables after the application is up and running you can install the [dynamodb-admin tool](https://www.npmjs.com/package/dynamodb-admin).
+
+- Run `DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin` in a new terminal tab
 
 ## Documentation
 
