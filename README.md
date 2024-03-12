@@ -94,7 +94,7 @@ Run the following commands in a new terminal tab
 
 ```
 cd dynamodb
-java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
+java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar
 ```
 
 (or other command per AWS guidance)
