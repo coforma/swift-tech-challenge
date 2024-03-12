@@ -28,11 +28,9 @@ export default function RootLayout({
         <title>U.S. College Finder</title>
       </head>
       <body className={inter.className}>
-        <div className="wrapper">
-          <PageHeader />
-          {children}
-          <PageFooter />
-        </div>
+        <PageHeader />
+        {children}
+        <PageFooter />
       </body>
     </html>
   );

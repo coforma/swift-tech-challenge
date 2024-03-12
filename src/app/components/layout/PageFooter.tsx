@@ -28,55 +28,55 @@ export const PageFooter = () => {
       }
       secondary={
         <>
-          <nav>
+          <nav className={styles.secondary_section}>
             <NavList
               className={styles.nav}
               items={[
                 <Link
                   href="#"
-                  key={"footer-nav-link-1"}
+                  key="footer-nav-link-1"
                   className={styles.nav_item}
                 >
                   About
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-2"}
+                  key="footer-nav-link-2"
                   className={styles.nav_item}
                 >
                   Accessibility support
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-3"}
+                  key="footer-nav-link-3"
                   className={styles.nav_item}
                 >
                   FOIA Requests
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-4"}
+                  key="footer-nav-link-4"
                   className={styles.nav_item}
                 >
                   No FEAR Act data
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-5"}
+                  key="footer-nav-link-5"
                   className={styles.nav_item}
                 >
                   Performance reports
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-6"}
+                  key="footer-nav-link-6"
                   className={styles.nav_item}
                 >
                   Office of the Inspector General
                 </Link>,
                 <Link
                   href="#"
-                  key={"footer-nav-link-6"}
+                  key="footer-nav-link-7"
                   className={styles.nav_item}
                 >
                   Privacy Policy

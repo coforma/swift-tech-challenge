@@ -1,12 +1,17 @@
 @use "uswds-core" as *;
 
+.footer {
+  bottom: 0;
+  width: 100%;
+}
+
 .footer > div {
   @include u-bg("primary-darker");
 }
 
 .primary_section {
   @include u-display("flex");
-  @include u-flex('align-center');
+  @include u-flex("align-center");
   gap: 20px;
 }
 
@@ -21,7 +26,7 @@
     display: inline-block;
     background: #fff;
     border-radius: 100%;
-    text-align: center; 
+    text-align: center;
   }
 
   &_title {
@@ -32,8 +37,6 @@
     @include u-text("base-lightest", "bold");
   }
 }
-
-
 
 .nav {
   list-style-type: none;
@@ -56,6 +59,7 @@ a.nav_item {
   @include u-text("base-light", "normal");
   @include u-padding-bottom(1);
 }
+
 a.more_link {
   @include u-text("base-lightest", "bold");
 }
