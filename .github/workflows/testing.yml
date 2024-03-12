@@ -51,7 +51,7 @@ jobs:
           name: unit_test_results
           path: ${{github.workspace}}/coverage/lcov.info
 
-  # TODO: run
+  # TODO: get integration tests running in pipeline after deploy outputs are configured
   # integration-tests:
   #   name: Integration Tests
   #   needs: deploy #TODO: relies on deploy

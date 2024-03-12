@@ -8,8 +8,6 @@
     "start": "next start",
     "test": "jest",
     "test:cov": "jest --coverage",
-    "test:be": "jest ./src/app/testing/jest/backend",
-    "test:fe": "jest ./src/app/testing/jest/frontend",
     "test:cy:open": "cypress open",
     "test:cy:run": "cypress run"
   },
