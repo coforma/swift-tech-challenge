@@ -1,4 +1,4 @@
-name: 'Front End Build'
+name: "Front End Build"
 on:
   workflow_call:
     inputs:
@@ -24,7 +24,7 @@ on:
 
 jobs:
   next-build:
-    name: 'Build'
+    name: "Build"
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     permissions:
@@ -59,7 +59,7 @@ jobs:
           cp -r .next/standalone pkg
           cp -r .next/static pkg/.next/
           cd pkg
-          echo 'node server.js' > run.sh
+          echo "node server.js" > run.sh
           zip -r frontend.zip .
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
