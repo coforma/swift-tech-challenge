@@ -30,6 +30,8 @@ jobs:
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+      - name: install dependencies
+        run: yarn install --frozen-lockfile
       - name: run unit tests
         run: yarn test:cov
       - name: publish test coverage to code climate
