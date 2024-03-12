@@ -8,7 +8,7 @@ on:
       environment:
         type: string
         required: false
-        default: null
+        default: ''
     secrets:
       UPLOAD_ROLE:
         required: true
@@ -20,7 +20,7 @@ on:
       environment:
         type: string
         required: false
-        default: null
+        default: ''
 
 jobs:
   next-build:
