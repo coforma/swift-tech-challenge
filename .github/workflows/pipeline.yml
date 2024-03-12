@@ -43,7 +43,11 @@ jobs:
     secrets:
       UPLOAD_ROLE: ${{ secrets.UPLOAD_ROLE }}
     with:
-      upload: ${{ github.ref == 'refs/heads/main' }}
+      upload: ${{ github.ref_protected }}
+      environment: ${{ github.ref_protected == true && 'prod' || '' }}
+    permissions:
+      id-token: write
+      contents: read
     
 
   call-tf-deploy:

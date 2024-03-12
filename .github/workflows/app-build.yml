@@ -5,6 +5,10 @@ on:
       upload:
         type: boolean
         default: false
+      environment:
+        type: string
+        required: false
+        default: null
     secrets:
       UPLOAD_ROLE:
         required: true
@@ -13,11 +17,16 @@ on:
       upload:
         type: boolean
         default: false
+      environment:
+        type: string
+        required: false
+        default: null
 
 jobs:
   next-build:
     name: "Build"
     runs-on: ubuntu-latest
+    environment: inputs.environment
     permissions:
       id-token: write
       contents: read
