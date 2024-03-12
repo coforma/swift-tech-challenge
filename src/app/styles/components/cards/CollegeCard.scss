@@ -1,0 +1,26 @@
+@use "uswds-core" as *;
+
+.card {
+  width: 100%;
+}
+
+.card_header {
+
+  &-title {
+    @include typeset("heading", "xl", 1);
+    @include u-text("primary-darker", "normal");
+  }
+
+  &-subtitle {
+    @include typeset("ui", "lg", 1);
+    @include u-text("base-dark", "normal");
+    @include u-padding-y(2)
+  }
+}
+
+.card_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1rem;
+  @include u-padding-y(2)
+}
