@@ -88,6 +88,10 @@ yarn test # runs all unit tests
 yarn test:cov # runs all unit tests and reports coverage
 ```
 
+#### Code Quality and Test Coverage
+
+We use [Code Climate](https://codeclimate.com/quality) for automated code review. You can track test coverage and maintainability of test coverage, maintainability by clicking the links at the top of this document.
+
 ### Integration Testing
 
 We use [Cypress](https://www.cypress.io/) to facilitate integration and end-to-end (e2e) testing. Integration tests can be run manually via the CLI, but will also run on every commit for each branch in the CI pipeline.
