@@ -32,6 +32,16 @@ jobs:
       id-token: write
       contents: read
 
+  call-testing:
+    name: 'Calling Testing'
+    uses: ./.github/workflows/testing.yml
+    secrets:
+      CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
+    permissions:
+      id-token: write
+      contents: read
+      actions: read
+
   call-tf-deploy:
     name: 'Calling TF Deploy Stage'
     needs: call-tf-validation

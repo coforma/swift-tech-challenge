@@ -2,6 +2,9 @@ name: Testing
 
 on:
   workflow_call:
+    secrets:
+      CODE_CLIMATE_ID:
+        required: true
   workflow_dispatch:
 
 concurrency:
@@ -48,6 +51,7 @@ jobs:
           name: unit_test_results
           path: ${{github.workspace}}/coverage/lcov.info
 
+  # TODO: run
   # integration-tests:
   #   name: Integration Tests
   #   needs: deploy #TODO: relies on deploy
