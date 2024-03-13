@@ -144,8 +144,9 @@ jobs:
         run: terraform init -backend-config=env/stage.s3.tfbackend -reconfigure
       - name: Terraform Output
         working-directory: tf/projects/${{ matrix.project }}
+        id: foo
         run: |
-          terraform output | sed -r  -e 's|(.*) = "(.*)"|${{ matrix.project }}_\1=\2|' | grep '^[a-z].*' || true >> $GITHUB_OUTPUT
+          terraform output | sed -r  -e 's|(.*) = "(.*)"|${{ matrix.project }}_\1=\2|' | grep 'application_cloudfront_url' || true >> $GITHUB_OUTPUT
 
   
   call-app-deploy:
@@ -182,6 +183,6 @@ jobs:
     concurrency:
       group: stage-deployment
     with:
-      application_endpoint: ${{ needs.get-tf-output.outputs.application_cloudfront_url }}
+      application_endpoint: ${{ needs.get-tf-output.foo.outputs.application_cloudfront_url }}
 
 
