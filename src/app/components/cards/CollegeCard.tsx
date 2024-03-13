@@ -9,7 +9,7 @@ import {
   CardMedia,
 } from "@trussworks/react-uswds";
 import { CardIcon } from "./CardIcon";
-//types
+// types
 import { College } from "../../types";
 
 export const CollegeCard = ({ college }: Props) => {

@@ -1,35 +1,11 @@
+// components
 import { GridContainer } from "@trussworks/react-uswds";
-import { College, CollegeType } from "./types";
 import { CollegeCard } from "./components/cards/CollegeCard";
+// utils
+import { getInstitutions } from "./utils/institutions";
 
-export default function Home() {
-  const cards: College[] = [
-    {
-      id: 0,
-      img: "",
-      name: "Name of school",
-      description: "School Description",
-      city: "City",
-      state: "State",
-      type: CollegeType.PUBLIC,
-      populationAmount: 123,
-      gradRate: 65,
-      avgCost: 17980,
-    },
-    {
-      id: 1,
-      img: "",
-      name: "Second Name of school",
-      description: "School Description",
-      city: "City",
-      state: "State",
-      type: CollegeType.PRIVATE,
-      populationAmount: 123,
-      gradRate: 65,
-      avgCost: 17980,
-    },
-  ];
-
+export default async function Home() {
+  const cards = await getInstitutions();
   return (
     <main>
       <GridContainer>
