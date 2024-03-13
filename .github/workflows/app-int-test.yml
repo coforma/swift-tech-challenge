@@ -27,7 +27,6 @@ jobs:
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v5
         with:
-          working-directory: src/app/testing/cypress
           spec: |
             src/app/testing/cypress/e2e/*.js
           browser: chrome
