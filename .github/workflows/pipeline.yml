@@ -127,13 +127,6 @@ jobs:
       - call-tf-deploy
     concurrency:
       group: stage-deployment
-    ## Run if the any previous step succeed, none fail, and on main branch
-    if: |
-      always() &&
-      !contains(needs.*.result, 'failure') &&
-      contains(needs.*.result, 'succeess') &&
-      github.ref == 'refs/heads/main' &&
-      github.event_name == 'push'
     with:
       target: stage
     secrets:
@@ -149,11 +142,6 @@ jobs:
     needs:
       - call-app-deploy
       - call-tf-deploy
-    ## If terraform or application deployments have succeeded, but one has been skipped, run anyways
-    if: |
-      always() &&
-      !contains(needs.*.result, 'failure') &&
-      contains(needs.*.result, 'success')
     concurrency:
       group: stage-deployment
     with:
