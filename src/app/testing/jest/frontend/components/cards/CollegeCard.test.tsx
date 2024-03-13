@@ -34,8 +34,12 @@ describe("Test CollegeCard", () => {
 
   test("CollegeCard should have apply button", () => {
     expect(screen.getByRole("button", { name: /apply/i })).toBeVisible();
-    expect(screen.getByRole("button", { name: /apply/i })).toHaveValue(
+    expect(screen.getByRole("button", { name: /apply/i })).toHaveTextContent(
       "Apply to this school",
     );
+  });
+
+  test("CollegeCard button group should have one button", () => {
+    expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 });
