@@ -9,7 +9,7 @@ on:
         type: boolean
         default: true
     secrets:
-      TERRAFORM_ROLE:
+      DEPLOY_ROLE:
         required: true
   workflow_dispatch:
     inputs:
@@ -20,8 +20,8 @@ on:
           - stage
           - prod
 jobs:
-  next-deploy:
-    name: "Deploy"
+  lambda-deploy:
+    name: "Frontend-Deploy"
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -37,6 +37,6 @@ jobs:
         run: |
           aws lambda update-function-code \
           --function-name  ${{ inputs.target}}-frontend \
-          --zip-file s3://${{ vars.artifact_bucket }}/$GITHUB_REF_NAME/frontend.zip
+          --s3-bucket ${{ vars.artifact_bucket }} --s3-key $GITHUB_REF_NAME/frontend.zip
       
         
