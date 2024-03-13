@@ -1,10 +1,12 @@
 import boto3
 import csv
+import logging
 
 
 s3_client = boto3.client("s3")
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table("institutions")
+logger = logging.getLogger()
 
 
 def lambda_handler(event, context):
@@ -22,6 +24,11 @@ def lambda_handler(event, context):
         # transform data into Item and write to table
         records_processed = 0
         items = []
+        logger.info(
+            "Processing questions for "
+            + str(len(institution_questions))
+            + " institutions"
+        )
         for questions in institution_questions:
             try:
                 # opting for csv reader due to commas in the questions and .split(",")
@@ -37,6 +44,7 @@ def lambda_handler(event, context):
             except Exception as err:
                 print(err)
 
+        logger.info("Preparing to write " + str(len(items)) + " to DynamoDB")
         with table.batch_writer() as batch:
             for item in items:
                 batch.put_item(Item=item)

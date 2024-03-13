@@ -30,7 +30,7 @@ def lambda_handler(event, context):
         # massage data
         data = object["Body"].read().decode("utf-8")
         institutions = data.split("\n")
-        institutions.pop(0)  # removes header row from csv
+        institutions.pop(0)  # removes header row
         records_processed = 0
 
         # transform data into Item and add to queue
@@ -214,6 +214,8 @@ def lambda_handler(event, context):
                 raise e
 
             records_processed += 1
+
+        print("Records processed: ", records_processed)
 
     except Exception as err:
         print(err)
