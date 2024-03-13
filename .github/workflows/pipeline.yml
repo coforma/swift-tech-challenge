@@ -183,6 +183,6 @@ jobs:
     concurrency:
       group: stage-deployment
     with:
-      application_endpoint: needs.get-tf-output.values.outputs.application_cloudfront_url
+      application_endpoint: ${{ needs.get-tf-output.values.outputs.application_cloudfront_url }}
 
 
