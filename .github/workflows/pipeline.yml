@@ -92,7 +92,11 @@ jobs:
     name: "Calling TF Deploy Stage"
     needs: call-tf-validation
     # Fix before merging!!!
-    if: github.ref == 'refs/heads/issue/front-end-infra' && github.event_name == 'push'
+    if: |
+      always() &&
+      !contains(needs.*.result, 'failure') &&
+      github.ref == 'refs/heads/issue/front-end-infra' &&
+      github.event_name == 'push'
     uses: ./.github/workflows/terraform-deploy.yml
     strategy:
       matrix:
