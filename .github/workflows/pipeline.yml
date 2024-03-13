@@ -95,7 +95,7 @@ jobs:
     if: |
       always() &&
       !contains(needs.*.result, 'failure') &&
-      github.ref == 'refs/heads/issue/front-end-infra' &&
+      github.ref == 'refs/heads/main' &&
       github.event_name == 'push'
     uses: ./.github/workflows/terraform-deploy.yml
     strategy:
@@ -144,7 +144,6 @@ jobs:
         run: terraform init -backend-config=env/stage.s3.tfbackend -reconfigure
       - name: Terraform Output
         working-directory: tf/projects/${{ matrix.project }}
-        id: values
         run: |
           terraform output | sed -r  -e 's|(.*) = "(.*)"|${{ matrix.project }}_\1=\2|' | grep '^[a-z].*' || true >> $GITHUB_OUTPUT
 
@@ -161,7 +160,7 @@ jobs:
     if: |
       always() &&
       !contains(needs.*.result, 'failure') &&
-      github.ref == 'refs/heads/issue/front-end-infra' &&
+      github.ref == 'refs/heads/main' &&
       github.event_name == 'push'
     with:
       target: stage
@@ -183,6 +182,6 @@ jobs:
     concurrency:
       group: stage-deployment
     with:
-      application_endpoint: ${{ needs.get-tf-output.values.outputs.application_cloudfront_url }}
+      application_endpoint: ${{ needs.get-tf-output.outputs.application_cloudfront_url }}
 
 
