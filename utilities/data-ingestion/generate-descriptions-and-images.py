@@ -15,9 +15,11 @@ def check_s3_file_exists(bucket, key):
     try:
         # checks that file exists
         s3_client.head_object(Bucket=bucket, Key=key)
+        logger.info("file exists in S3")
         return True
     except Exception as err:
         # assuming 404 error and returning false
+        logger.info("Catching error: ", err)
         return False
 
 
@@ -76,13 +78,14 @@ def lambda_handler(event, context):
 
         generated_image_response = bedrock_runtime.invoke_model(**bedrock_image_args)
         image_body = json.loads(generated_image_response.get("body").read())
+
+        # write image to S3
+        s3_client.put_object(
+            Body=image_body["images"][0], Bucket=bucketName, Key=fileName
+        )
     else:
         logger.info("Image already exists for " + institutionName)
 
-    # write image to S3
-    s3_response = s3_client.put_object(
-        Body=image_body["images"][0], Bucket=bucketName, Key=fileName
-    )
     resp["imagePath"] = image_path
 
     try:
