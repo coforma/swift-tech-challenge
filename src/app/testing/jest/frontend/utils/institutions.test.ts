@@ -10,7 +10,6 @@ const mockCollegeDbItem = {
   city: "Edtown",
   state: "AZ",
   description: "Description of university",
-  averageAttendanceCost: "60000.0",
   completionRates: { fourYearInstitution: "0.4784" },
   publicNetPrice: { averagePrice: "5687.0" },
 };
