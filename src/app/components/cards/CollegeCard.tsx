@@ -23,7 +23,7 @@ export const CollegeCard = ({ college }: Props) => {
       <CardBody>
         <p className="card_desc">{college.description}</p>
         <div className="card_grid">
-          <CardIcon subtitle={"Type"} highlight={college.type} />
+          <CardIcon subtitle={"Type"} highlight={college.type!} />
           <CardIcon
             subtitle={"Student population"}
             highlight={college.populationAmount}
