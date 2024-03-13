@@ -62,4 +62,4 @@ jobs:
           spec: |
             src/app/testing/cypress/e2e/*.js
           browser: chrome
-          config: baseUrl=${{ inputs.application_endpoint != '' && inputs.application_endpoint || steps.foo.outputs.cloudfront_url }}
+          config: baseUrl=https://${{ inputs.application_endpoint != '' && inputs.application_endpoint || steps.foo.outputs.cloudfront_url }}
