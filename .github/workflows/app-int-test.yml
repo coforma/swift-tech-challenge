@@ -48,7 +48,7 @@ jobs:
       - name: Terraform Init
         if: inputs.application_endpoint == ''
         working-directory: tf/projects/application
-        run: terraform init -backend-config=env/stage.s3.tfbackend -reconfigure
+        run: terraform init -backend-config=env/${{ inputs.target }}.s3.tfbackend -reconfigure
       - name: Terraform Output
         if: inputs.application_endpoint == ''
         working-directory: tf/projects/application
@@ -63,4 +63,3 @@ jobs:
             src/app/testing/cypress/e2e/*.js
           browser: chrome
           config: baseUrl=${{ inputs.application_endpoint != '' && inputs.application_endpoint || steps.foo.outputs.cloudfront_url }}
-          wait-on: ${{ inputs.application_endpoint != '' && inputs.application_endpoint || steps.foo.outputs.cloudfront_url }}
