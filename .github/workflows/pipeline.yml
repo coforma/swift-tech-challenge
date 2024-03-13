@@ -52,11 +52,12 @@ jobs:
 
   call-tf-plan:
     name: "Calling TF Plan Stage"
+    uses: ./.github/workflows/terraform-plan.yml
+    needs: changes
     ## Call terraform plan if pull request with terraform changes
     if: |
       github.event_name == 'pull_request' &&
       needs.changes.outputs.terraform == 'true'
-    uses: ./.github/workflows/terraform-plan.yml
     strategy:
       matrix:
         target: [stage, prod]
