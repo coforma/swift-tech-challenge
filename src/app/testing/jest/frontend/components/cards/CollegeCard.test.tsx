@@ -26,8 +26,7 @@ describe("Test CollegeCard", () => {
   test("CollegeCard is showing all details of college", () => {
     expect(screen.getByText(college.name)).toBeVisible();
     expect(screen.getByText(college.description)).toBeVisible();
-    expect(screen.getByText(college.city)).toBeVisible();
-    expect(screen.getByText(college.state)).toBeVisible();
+    expect(screen.getByText(`${college.city}, ${college.state}`)).toBeVisible();
     expect(screen.getByText(college.type)).toBeVisible();
     expect(screen.getByText(college.populationAmount)).toBeVisible();
     expect(screen.getByText(college.gradRate)).toBeVisible();
