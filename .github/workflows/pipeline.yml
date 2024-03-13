@@ -176,7 +176,7 @@ jobs:
     uses: ./.github/workflows/app-int-test.yml
     needs:
       - call-app-deploy
-      - call-tf-deploy
+      - get-tf-output
     concurrency:
       group: stage-deployment
     with:
