@@ -16,7 +16,7 @@ export const CollegeCard = ({ college }: Props) => {
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
       <CardHeader>
-        <h3 className="card_header-title">{college.name}</h3>
+        <h2 className="card_header-title">{college.name}</h2>
         <p className="card_header-subtitle">{`${college.city}, ${college.state}`}</p>
       </CardHeader>
       <CardMedia>{college.img}</CardMedia>

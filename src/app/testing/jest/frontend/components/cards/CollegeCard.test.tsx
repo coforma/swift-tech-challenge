@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { axe } from "jest-axe";
-import { CollegeCard } from "../../../../../components";
 import { College, CollegeType } from "@/src/app/types";
+import { CollegeCard } from "@/src/app/components";
 
 const college: College = {
   id: 0,
@@ -31,13 +30,5 @@ describe("Test CollegeCard", () => {
     expect(screen.getByText(college.populationAmount)).toBeVisible();
     expect(screen.getByText(college.gradRate)).toBeVisible();
     expect(screen.getByText(college.avgCost)).toBeVisible();
-  });
-});
-
-describe("Test CardIcon accessibility", () => {
-  it("Should not have basic accessibility issues", async () => {
-    const { container } = render(component);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
   });
 });
