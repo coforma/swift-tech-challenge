@@ -177,6 +177,9 @@ jobs:
     needs:
       - call-app-deploy
       - get-tf-output
+    if: |
+      always() &&
+      !contains(needs.*.result, 'failure')
     concurrency:
       group: stage-deployment
     with:

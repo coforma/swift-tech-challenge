@@ -31,6 +31,5 @@ jobs:
           spec: |
             src/app/testing/cypress/e2e/*.js
           browser: chrome
-          #TODO: needs output from deploy
           config: baseUrl=${{ inputs.application_endpoint }}
           wait-on: ${{ inputs.application_endpoint }}
