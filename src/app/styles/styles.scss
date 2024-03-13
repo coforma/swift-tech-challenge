@@ -4,7 +4,10 @@
 // global styles
 @forward "globals.scss";
 
-// scoped styles
+// page styles
+@forward "not-found.scss";
+
+// component styles
 @forward "./components/cards/CardIcon.scss";
 @forward "./components/cards/CollegeCard.scss";
 @forward "./components/layout/PageHeader.scss";

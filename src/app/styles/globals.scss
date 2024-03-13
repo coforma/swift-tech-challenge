@@ -1,3 +1,5 @@
+@use "uswds-core" as *;
+
 :root {
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
@@ -10,10 +12,51 @@
   margin: 0;
 }
 
-html,
-body {
-  max-width: 100vw;
-  min-height: 100vh;
-  height: 100vh;
-  overflow-x: hidden;
+html, body { height: 100%;}
+
+body > footer {
+  position: sticky;
+  top: 100vh;
+}
+
+.padding-y-0 {
+  @include u-padding-y(0)
+}
+
+.padding-y-1 {
+  @include u-padding-y(1)
+}
+
+.padding-y-2 {
+  @include u-padding-y(2)
+}
+
+.margin-y-0 {
+  @include u-margin-y(0)
+}
+
+.margin-y-1 {
+  @include u-margin-y(1)
+}
+
+.margin-y-2 {
+  @include u-margin-y(2)
+}
+
+h1 {
+  @include typeset("ui", "2xl", 1);
+  @include u-text("bold");
+  @include u-text('ls-1')
+}
+
+.site_text-intro {
+  @include typeset("ui", "lg", 1);
+  @include u-text('ls-1');
+  @include u-line-height('body', 3);
+  @include u-padding-bottom(2)
+}
+
+.site_text-p {
+  @include typeset("ui", "md", 1);
+  @include u-line-height('body', 3);
 }
