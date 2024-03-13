@@ -1,7 +1,24 @@
-name: "Front End Deploy"
+name: "Application Deploy"
 on:
   workflow_call:
+    inputs:
+      target:
+        required: true
+        type: string
+      deploy_frontend:
+        type: boolean
+        default: true
+    secrets:
+      TERRAFORM_ROLE:
+        required: true
   workflow_dispatch:
+    inputs:
+      target:
+        required: true
+        type: choice
+        options:
+          - stage
+          - prod
 jobs:
   next-deploy:
     name: "Deploy"
@@ -10,6 +27,16 @@ jobs:
       id-token: write
       contents: read
     steps:
-      ## Dummy step to clear up spurious pipeline failures
-      - name: Dummy
-        run: echo 'true'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEPLOY_ROLE }}
+          aws-region: us-east-1
+          role-session-name: GitHubAppDeploy
+      - name: Update Frontend Lambda Code
+        run: |
+          aws lambda update-function-code \
+          --function-name  ${{ inputs.target}}-frontend \
+          --zip-file s3://${{ vars.artifact_bucket }}/$GITHUB_REF_NAME/frontend.zip
+      
+        
