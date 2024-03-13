@@ -20,14 +20,14 @@ variable "frontend_zip_filename" {
 }
 
 variable "github_repo" {
-  type    = string
-  default = "coforma/swift-tech-challenge"
+  type        = string
+  default     = "coforma/swift-tech-challenge"
   description = "Github repo to grant lambda deployment permissions to"
 }
 
 variable "app_deploy_restrictions" {
-  type    = list(string)
-  default = ["environment:prod"]
+  type        = list(string)
+  default     = ["environment:prod"]
   description = "Github branches or environments to grant lambda deployment permissions to"
 }
 
