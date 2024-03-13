@@ -19,7 +19,7 @@ def check_s3_file_exists(bucket, key):
         return True
     except Exception as err:
         # assuming 404 error and returning false
-        logger.info("Catching error: ", err)
+        logger.info("Catching error: ", str(err))
         return False
 
 
