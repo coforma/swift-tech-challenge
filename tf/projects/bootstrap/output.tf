@@ -1,4 +1,4 @@
-output "s3_bucket" {
+output "tf_backend_bucket" {
   value = aws_s3_bucket.terraform.bucket
 }
 
@@ -8,4 +8,16 @@ output "iac_deployer" {
 
 output "iac_validator" {
   value = aws_iam_role.iac_validator.arn
+}
+
+output "artifact_deployer" {
+  value = aws_iam_role.artifact_deployer.arn
+}
+
+output "artifact_bucket" {
+  value = aws_s3_bucket.artifacts.bucket
+}
+
+output "unprotected_artifact_deployer" {
+  value = aws_iam_role.unprotected_artifact_deployer.arn
 }
