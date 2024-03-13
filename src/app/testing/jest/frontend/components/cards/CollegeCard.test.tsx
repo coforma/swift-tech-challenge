@@ -31,4 +31,11 @@ describe("Test CollegeCard", () => {
     expect(screen.getByText(college.gradRate)).toBeVisible();
     expect(screen.getByText(college.avgCost)).toBeVisible();
   });
+
+  test("CollegeCard should have apply button", () => {
+    expect(screen.getByRole("button", { name: /apply/i })).toBeVisible();
+    expect(screen.getByRole("button", { name: /apply/i })).toHaveValue(
+      "Apply to this school",
+    );
+  });
 });
