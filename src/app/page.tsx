@@ -1,6 +1,6 @@
 import { GridContainer } from "@trussworks/react-uswds";
 import { College, CollegeType } from "./types";
-import { CollegeCard } from "./components/cards/CollegeCard";
+import { CollegeCard } from "./components";
 
 export default function Home() {
   const cards: College[] = [

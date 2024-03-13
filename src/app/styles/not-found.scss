@@ -1,0 +1,11 @@
+@use "uswds-core" as *;
+
+.notfound_button-group {
+  @include u-padding-bottom(2);
+}
+
+.notfound_errorcode {
+  @include typeset("ui", "md", 1);
+  @include u-text("base", "normal");
+  @include u-line-height('body', 3);
+}

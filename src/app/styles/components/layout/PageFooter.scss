@@ -1,10 +1,5 @@
 @use "uswds-core" as *;
 
-.footer {
-  bottom: 0;
-  width: 100%;
-}
-
 .footer > div {
   @include u-bg("primary-darker");
 }
