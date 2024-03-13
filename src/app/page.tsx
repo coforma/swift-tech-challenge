@@ -1,8 +1,10 @@
 // components
 import { GridContainer } from "@trussworks/react-uswds";
-import { CollegeCard } from "./components/cards/CollegeCard";
+import { CollegeCard } from "./components";
 // utils
-import { getInstitutions } from "./utils/institutions";
+import { getInstitutions } from "@/src/app/utils/institutions";
+
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const cards = await getInstitutions();
