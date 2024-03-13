@@ -64,7 +64,7 @@ jobs:
 
   call-app-unit-testing:
     name: "Calling Unit Testing"
-    uses: ./.github/workflows/app-unit-testing.yml
+    uses: ./.github/workflows/app-unit-test.yml
     needs: changes
     if: needs.changes.filter.outputs.typescript == 'true' || needs.changes.filter.outputs.scss == 'true'
     secrets:
