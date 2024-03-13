@@ -10,10 +10,13 @@ jobs:
   changes:
     name: "Check for changes"
     runs-on: ubuntu-latest
+    outputs:
+      terraform: ${{ steps.changes.outputs.terraform }}
+      app: ${{ steps.changes.outputs.app }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
-        id: filter
+        id: changes
         with:
           filters: |
             terraform:
@@ -33,7 +36,7 @@ jobs:
     uses: ./.github/workflows/terraform-validate.yml
     needs: changes
     ## Skip if no changes in terraform files
-    if: needs.changes.filter.outputs.terraform == 'true'
+    if: needs.changes.outputs.terraform == 'true'
     strategy:
       matrix:
         project: [application]
@@ -45,14 +48,14 @@ jobs:
     name: "Calling Application Lint Stage"
     uses: ./.github/workflows/app-lint.yml
     needs: changes
-    if: needs.changes.filter.outputs.app == 'true'
+    if: needs.changes.outputs.app == 'true'
 
   call-tf-plan:
     name: "Calling TF Plan Stage"
     ## Call terraform plan if pull request with terraform changes
     if: |
       github.event_name == 'pull_request' &&
-      needs.changes.filter.outputs.terraform == 'true'
+      needs.changes.outputs.terraform == 'true'
     uses: ./.github/workflows/terraform-plan.yml
     strategy:
       matrix:
@@ -71,7 +74,7 @@ jobs:
     name: "Calling Unit Testing"
     uses: ./.github/workflows/app-unit-test.yml
     needs: changes
-    if: needs.changes.filter.outputs.app == 'true'
+    if: needs.changes.outputs.app == 'true'
     secrets:
       CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
     permissions:
@@ -85,7 +88,7 @@ jobs:
     needs: changes
     ## Always build on main. Build on others if changes
     if: |
-      needs.changes.filter.outputs.app == 'true' ||
+      needs.changes.outputs.app == 'true' ||
       (github.ref == 'refs/heads/main' && github.event_name == 'push')
     secrets:
       UPLOAD_ROLE: ${{ secrets.UPLOAD_ROLE }}
