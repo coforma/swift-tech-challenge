@@ -1,4 +1,4 @@
-name: Int Testing
+name: Integration Testing
 
 on:
   workflow_call:
@@ -6,9 +6,11 @@ on:
       application_endpoint:
         type: string
         required: false
+        description: "(Optional) Application Endpoint to test. Overrides variables set by target if set. One of target or endpoint must be set"
       target:
         type: string
         required: false
+        description: "(Optional) Target enviroment to test. Pulls application endpoint from target environment. One of target or endpoint must be set"
     secrets:
       TERRAFORM_ROLE:
         required: false
@@ -17,9 +19,11 @@ on:
       application_endpoint:
         type: string
         required: true
+        description: "(Optional) Application Endpoint to test. Overrides variables set by target if set. One of target or endpoint must be set"
       target:
         type: string
         required: false
+        description: "(Optional) Target enviroment to test. Pulls application endpoint from target environment. One of target or endpoint must be set"
 
 permissions:
   id-token: write

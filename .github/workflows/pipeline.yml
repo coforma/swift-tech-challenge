@@ -20,17 +20,19 @@ jobs:
               - 'tf/**/*.tf'
               - 'tf/**/*.tfvars'
               - 'tf/**/*.tfbackend'
-            typescript:
+            app:
+              - 'packages.json'
+              - '.eslintrc.yaml'
+              - '.codeclimate.yml'
+              - 'src/app/**/*'
               - '**/*.ts'
-              - '**/*.tsx'
-              - '**/*.js'
-              - '**/*.jsx'
-            scss:
-              - '**/*.scss'
+              
+            
 
   call-tf-validation:
     uses: ./.github/workflows/terraform-validate.yml
     needs: changes
+    ## Skip if no changes in terraform files
     if: needs.changes.filter.outputs.terraform == 'true'
     strategy:
       matrix:
@@ -43,16 +45,19 @@ jobs:
     name: "Calling Application Lint Stage"
     uses: ./.github/workflows/app-lint.yml
     needs: changes
-    if: needs.changes.filter.outputs.typescript == 'true' || needs.changes.filter.outputs.scss == 'true'
+    if: needs.changes.filter.outputs.app == 'true'
 
   call-tf-plan:
     name: "Calling TF Plan Stage"
-    if: github.event_name == 'pull_request'
+    ## Call terraform plan if pull request with terraform changes
+    if: |
+      github.event_name == 'pull_request' &&
+      needs.changes.filter.outputs.terraform == 'true'
     uses: ./.github/workflows/terraform-plan.yml
     strategy:
       matrix:
         target: [stage, prod]
-        project: [test]
+        project: [application]
     with:
       target: ${{ matrix.target }}
       project: ${{ matrix.project }}
@@ -66,7 +71,7 @@ jobs:
     name: "Calling Unit Testing"
     uses: ./.github/workflows/app-unit-test.yml
     needs: changes
-    if: needs.changes.filter.outputs.typescript == 'true' || needs.changes.filter.outputs.scss == 'true'
+    if: needs.changes.filter.outputs.app == 'true'
     secrets:
       CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
     permissions:
@@ -77,9 +82,14 @@ jobs:
   call-app-build:
     name: "Calling App Build Stage"
     uses: ./.github/workflows/app-build.yml
-    needs: call-app-lint
+    needs: changes
+    ## Always build on main. Build on others if changes
+    if: |
+      needs.changes.filter.outputs.app == 'true' ||
+      (github.ref == 'refs/heads/main' && github.event_name == 'push')
     secrets:
       UPLOAD_ROLE: ${{ secrets.UPLOAD_ROLE }}
+    ## If running on a protected branch, upload artifact with role in stage environment
     with:
       upload: ${{ github.ref_protected }}
       environment: ${{ github.ref_protected == true && 'stage' || '' }}
@@ -91,16 +101,14 @@ jobs:
   call-tf-deploy:
     name: "Calling TF Deploy Stage"
     needs: call-tf-validation
-    # Fix before merging!!!
+    ## Run if on main branch
     if: |
-      always() &&
-      !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main' &&
       github.event_name == 'push'
     uses: ./.github/workflows/terraform-deploy.yml
     strategy:
       matrix:
-        project: [test]
+        project: [test, application]
     with:
       target: stage
       project: ${{ matrix.project }}
@@ -113,15 +121,17 @@ jobs:
   call-app-deploy:
     name: "Calling App Deploy (Stage)"
     uses: ./.github/workflows/app-deploy.yml
+    ## Run after terraform deploy and app build
     needs:
       - call-app-build
       - call-tf-deploy
     concurrency:
       group: stage-deployment
-    ## Fix before merging
+    ## Run if the any previous step succeed, none fail, and on main branch
     if: |
       always() &&
       !contains(needs.*.result, 'failure') &&
+      contains(needs.*.result, 'succeess') &&
       github.ref == 'refs/heads/main' &&
       github.event_name == 'push'
     with:
@@ -135,11 +145,15 @@ jobs:
   call-integration-testing:
     name: "Calling Application Integration Testing"
     uses: ./.github/workflows/app-int-test.yml
+    ## Run after TF and Application deployments have finished
     needs:
       - call-app-deploy
+      - call-tf-deploy
+    ## If terraform or application deployments have succeeded, but one has been skipped, run anyways
     if: |
       always() &&
-      !contains(needs.*.result, 'failure')
+      !contains(needs.*.result, 'failure') &&
+      contains(needs.*.result, 'success')
     concurrency:
       group: stage-deployment
     with:
