@@ -26,8 +26,8 @@ jobs:
               - '.codeclimate.yml'
               - 'src/app/**/*'
               - '**/*.ts'
-              
-            
+
+
 
   call-tf-validation:
     uses: ./.github/workflows/terraform-validate.yml
@@ -36,7 +36,7 @@ jobs:
     if: needs.changes.filter.outputs.terraform == 'true'
     strategy:
       matrix:
-        project: [test]
+        project: [application]
     with:
       project: ${{ matrix.project }}
     name: Calling TF Validate
@@ -96,7 +96,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    
+
 
   call-tf-deploy:
     name: "Calling TF Deploy Stage"
@@ -108,7 +108,7 @@ jobs:
     uses: ./.github/workflows/terraform-deploy.yml
     strategy:
       matrix:
-        project: [test, application]
+        project: [application]
     with:
       target: stage
       project: ${{ matrix.project }}
@@ -117,7 +117,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-  
+
   call-app-deploy:
     name: "Calling App Deploy (Stage)"
     uses: ./.github/workflows/app-deploy.yml
@@ -134,7 +134,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-  
+
   call-integration-testing:
     name: "Calling Application Integration Testing"
     uses: ./.github/workflows/app-int-test.yml
@@ -148,5 +148,3 @@ jobs:
       target: stage
     secrets:
       TERRAFORM_ROLE: ${{ secrets.TERRAFORM_ROLE }}
-
-
