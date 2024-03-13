@@ -1,4 +1,7 @@
-# Description
+# U.S. College Finder
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/74f953d2eba0abd1f240/maintainability)](https://codeclimate.com/github/coforma/swift-tech-challenge/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/74f953d2eba0abd1f240/test_coverage)](https://codeclimate.com/github/coforma/swift-tech-challenge/test_coverage)
 
 Coforma's response to the SWIFT technical challenge
 
@@ -68,6 +71,10 @@ yarn dev # runs the development server
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the locally running application.
 
+### Connecting to DynamoDB locally
+
+Export AWS Credentials for a user with access to the AWS DynamoDB in your terminal before running the application
+
 ## Testing
 
 ### Unit Testing
@@ -80,6 +87,10 @@ To run manually, do one of the following:
 yarn test # runs all unit tests
 yarn test:cov # runs all unit tests and reports coverage
 ```
+
+#### Code Quality and Test Coverage
+
+We use [Code Climate](https://codeclimate.com/quality) for automated code review. You can track test coverage and maintainability by clicking the links at the top of this document.
 
 ### Integration Testing
 

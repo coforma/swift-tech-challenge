@@ -7,7 +7,7 @@ const homepage = <Home />;
 describe("Test Homepage", () => {
   test("Check that page renders", () => {
     render(homepage);
-    expect(screen.getByText("App running successfully")).toBeVisible();
+    expect(screen.getByText("Browse Schools")).toBeVisible();
   });
 });
 
