@@ -1,7 +1,7 @@
 import { GridContainer } from "@trussworks/react-uswds";
 import Image from "next/image";
 //assets
-import hero from "../../assets/hero-image.png";
+import hero from "../../assets/hero-image-transparent.png";
 
 export const HeroImage = () => {
   return (
