@@ -15,7 +15,7 @@ export async function getInstitutions() {
   const result = await dynamoClient.singleScan(params);
   const items = result?.Items;
 
-  items?.map((item) => {
+  items?.forEach((item) => {
     const college: College = {
       id: item?.institutionId,
       img: "",
