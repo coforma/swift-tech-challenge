@@ -1,0 +1,36 @@
+name: Int Testing
+
+on:
+  workflow_call:
+    inputs:
+      application_endpoint:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      application_endpoint:
+        type: string
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v5
+        with:
+          working-directory: src/app/testing/cypress
+          spec: |
+            src/app/testing/cypress/e2e/*.js
+          browser: chrome
+          #TODO: needs output from deploy
+          config: baseUrl=${{ inputs.application_endpoint }}
+          wait-on: ${{ inputs.application_endpoint }}

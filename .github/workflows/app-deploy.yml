@@ -8,6 +8,10 @@ on:
       deploy_frontend:
         type: boolean
         default: true
+      environment:
+        type: string
+        required: false
+        default: ''
     secrets:
       DEPLOY_ROLE:
         required: true
@@ -19,10 +23,16 @@ on:
         options:
           - stage
           - prod
+      environment:
+        required: false
+        default: ''
+
 jobs:
-  lambda-deploy:
-    name: "Frontend-Deploy"
+  frontend-deploy:
+    name: "Frontend Deploy"
     runs-on: ubuntu-latest
+    ## To allow for multiple targets in the same environment, default environment to target, but let environment be optionally declared
+    environment: ${{ inputs.environment != '' && inputs.environment || inputs.target }}
     permissions:
       id-token: write
       contents: read

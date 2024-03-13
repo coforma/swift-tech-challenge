@@ -11,6 +11,13 @@ on:
     secrets:
       TERRAFORM_ROLE:
         required: true
+    outputs:
+      api_gw_endpoint:
+        description: "Endpoint for Application Gateway"
+        value: ${{ jobs.terraform.outputs.api_gw_endpoint || "" }}
+      cloudfront_endpoint:
+        description: "Endpoint for Cloudfront Domain"
+        value: ${{ jobs.terraform.outputs.cloudfront_endpoint || "" }}
   workflow_dispatch:
     inputs:
       target:
@@ -53,4 +60,7 @@ jobs:
 
       - name: Terraform Apply
         working-directory: tf/projects/${{ inputs.project }}
-        run: terraform apply -auto-approve -input=false -var-file=env/${{ inputs.target }}.tfvars
+        run: |
+          terraform apply -auto-approve -input=false -var-file=env/${{ inputs.target }}.tfvars | tee tf-output.txt #Prints output to screen and saves to file
+          grep -E 'cloudfront_url = ".*"' tf-output.txt | sed -r 's|cloudfront_url = "(.*)"|cloudfront_url=\1|' >> $GITHUB_OUTPUTS
+          grep -E 'frontend_api_gw_url = ".*"' tf-output.txt | sed -r 's|frontend_api_gw_url = "(.*)"|frontend_api_gw_url=\1|' >> $GITHUB_OUTPUTS

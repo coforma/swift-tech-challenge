@@ -4,9 +4,35 @@ on:
     branches: ["*"]
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+
 jobs:
+  changes:
+    name: "Check for changes"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2.2.1
+        id: filter
+        with:
+          filters: |
+            terraform:
+              - 'tf/**/*.tf'
+              - 'tf/**/*.tfvars'
+              - 'tf/**/*.tfbackend'
+            typescript:
+              - '**/*.ts'
+              - '**/*.tsx'
+              - '**/*.js'
+              - '**/*.jsx'
+            scss:
+              - '**/*.scss'
+
   call-tf-validation:
     uses: ./.github/workflows/terraform-validate.yml
+    needs: changes
+    if: needs.changes.filter.outputs.terraform == 'true'
     strategy:
       matrix:
         project: [test]
@@ -17,6 +43,8 @@ jobs:
   call-app-lint:
     name: "Calling Application Lint Stage"
     uses: ./.github/workflows/app-lint.yml
+    needs: changes
+    if: needs.changes.filter.outputs.typescript == 'true' || needs.changes.filter.outputs.scss == 'true'
 
   call-tf-plan:
     name: "Calling TF Plan Stage"
@@ -35,9 +63,11 @@ jobs:
       id-token: write
       contents: read
 
-  call-testing:
-    name: "Calling Testing"
-    uses: ./.github/workflows/testing.yml
+  call-app-unit-testing:
+    name: "Calling Unit Testing"
+    uses: ./.github/workflows/app-unit-testing.yml
+    needs: changes
+    if: needs.changes.filter.outputs.typescript == 'true' || needs.changes.filter.outputs.scss == 'true'
     secrets:
       CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
     permissions:
@@ -62,7 +92,8 @@ jobs:
   call-tf-deploy:
     name: "Calling TF Deploy Stage"
     needs: call-tf-validation
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # Fix before merging!!!
+    if: github.ref == 'refs/heads/issue/front-end-infra' && github.event_name == 'push'
     uses: ./.github/workflows/terraform-deploy.yml
     strategy:
       matrix:
@@ -75,3 +106,33 @@ jobs:
     permissions:
       id-token: write
       contents: read
+  
+  call-app-deploy:
+    name: "Calling App Deploy (Stage)"
+    uses: ./.github/workflows/app-deploy.yml
+    needs:
+      - call-app-build
+      - call-tf-deploy
+    concurrency:
+      group: stage-deployment
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    with:
+      target: stage
+    secrets:
+      DEPLOY_ROLE: ${{ secrets.DEPLOY_ROLE }}
+    permissions:
+      id-token: write
+      contents: read
+  
+  call-integration-testing:
+    name: "Calling Application Integration Testing"
+    uses: ./.github/workflows/app-deploy.yml
+    needs:
+      - call-app-deploy
+      - call-tf-deploy
+    concurrency:
+      group: stage-deployment
+    with:
+      application_endpoint: needs.call-tf-deploy.outputs.cloudfront_url
+
+
