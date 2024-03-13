@@ -1,0 +1,47 @@
+@use "uswds-core" as *;
+
+.hero_container {
+  position: relative;
+
+  &-title {
+    position: absolute;
+    z-index:1;
+
+    display: flex;
+    align-items: center;
+
+    @include u-text("primary-darker", "bold");
+    @include typeset("heading", "lg", 1);
+    @include at-media("mobile-lg") {
+      @include typeset("heading", "xl", 1);
+    }
+    @include at-media("tablet") {
+      @include typeset("heading", "2xl", 1);
+    }
+    @include at-media("tablet-lg") {
+      @include typeset("heading", "3xl", 1);
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 17)
+    }
+    text-align: center;
+
+    top: 0;
+    bottom: 0;
+    margin: 20px 0;
+    width: 50%;
+    @include at-media("tablet-lg") {
+      width: 55%;
+    }
+  }
+
+
+  &-image {
+    position: relative;
+    max-inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 2 / 1;
+    object-fit: contain;
+    left: 29%;
+  }
+}

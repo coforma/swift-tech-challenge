@@ -1,6 +1,6 @@
 import { GridContainer } from "@trussworks/react-uswds";
 import { College, CollegeType } from "./types";
-import { CollegeCard } from "./components";
+import { CollegeCard, HeroImage } from "./components";
 
 export default function Home() {
   const cards: College[] = [
@@ -32,6 +32,7 @@ export default function Home() {
 
   return (
     <main>
+      <HeroImage />
       <GridContainer>
         <h1> Browse Schools </h1>
         <ul className="usa-card-group">
