@@ -1,23 +1,25 @@
 import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
-import { PageFooter } from "../../../components";
+import { PageHeader } from "../../../../../components";
 
-const component = <PageFooter />;
+const component = <PageHeader />;
 
-describe("Test Footer", () => {
+describe("Test Header", () => {
   beforeEach(() => {
     render(component);
   });
 
   test("Header is visible", () => {
-    const header = screen.getByText(
-      "An official website of the Department of Higher Ed",
-    );
+    const header = screen.getByRole("navigation");
     expect(header).toBeVisible();
+  });
+
+  test("Title is visible", () => {
+    expect(screen.getByText("U.S. College Finder")).toBeVisible();
   });
 });
 
-describe("Test Footer accessibility", () => {
+describe("Test Header accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
     const { container } = render(component);
     const results = await axe(container);

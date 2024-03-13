@@ -12,26 +12,26 @@ import { CardIcon } from "./CardIcon";
 //types
 import { College } from "../../types";
 
-export const CollegeCard = ({ card }: Props) => {
+export const CollegeCard = ({ college }: Props) => {
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
       <CardHeader>
-        <h3 className="card_header-title">{card.name}</h3>
-        <p className="card_header-subtitle">{`${card.city}, ${card.state}`}</p>
+        <h3 className="card_header-title">{college.name}</h3>
+        <p className="card_header-subtitle">{`${college.city}, ${college.state}`}</p>
       </CardHeader>
-      <CardMedia>{card.img}</CardMedia>
+      <CardMedia>{college.img}</CardMedia>
       <CardBody>
-        {card?.description && <p className="card_desc">{card.description}</p>}
+        <p className="card_desc">{college.description}</p>
         <div className="card_grid">
-          <CardIcon subtitle={"Type"} highlight={card.type} />
+          <CardIcon subtitle={"Type"} highlight={college.type} />
           <CardIcon
             subtitle={"Student population"}
-            highlight={card.populationAmount}
+            highlight={college.populationAmount}
           />
-          <CardIcon subtitle={"Graduation rate"} highlight={card.gradRate} />
+          <CardIcon subtitle={"Graduation rate"} highlight={college.gradRate} />
           <CardIcon
             subtitle={"Average cost per year"}
-            highlight={card.avgCost}
+            highlight={college.avgCost}
           />
         </div>
       </CardBody>
@@ -48,5 +48,5 @@ export const CollegeCard = ({ card }: Props) => {
 };
 
 type Props = {
-  card: College;
+  college: College;
 };

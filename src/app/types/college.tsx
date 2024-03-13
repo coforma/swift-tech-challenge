@@ -9,7 +9,7 @@ export interface College {
   name: string;
   city: string;
   state: string;
-  description?: string;
+  description: string;
   type: CollegeType;
   populationAmount: number;
   gradRate: number;
