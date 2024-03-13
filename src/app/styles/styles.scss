@@ -1,12 +1,11 @@
 // theme
 @forward "uswds-theme.scss";
 
-// USWDS components (only those used, for performance gain)
-@forward "usa-button";
-
 // global styles
 @forward "globals.scss";
 
 // scoped styles
-@use "./PageFooter.scss";
-@use "./PageHeader.scss";
+@forward "./components/cards/CardIcon.scss";
+@forward "./components/cards/CollegeCard.scss";
+@forward "./components/layout/PageHeader.scss";
+@forward "./components/layout/PageFooter.scss";

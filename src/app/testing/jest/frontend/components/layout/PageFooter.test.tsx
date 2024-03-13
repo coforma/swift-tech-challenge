@@ -1,6 +1,6 @@
+import { PageFooter } from "@/src/app/components";
 import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
-import { PageFooter } from "../../../components";
 
 const component = <PageFooter />;
 
