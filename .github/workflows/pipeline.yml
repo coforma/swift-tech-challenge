@@ -120,6 +120,8 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    outputs:
+      url: ${{ steps.foo.outputs.application_cloudfront_url}}
     runs-on: ubuntu-latest
     environment: validation
     strategy:
@@ -183,6 +185,6 @@ jobs:
     concurrency:
       group: stage-deployment
     with:
-      application_endpoint: ${{ needs.get-tf-output.foo.outputs.application_cloudfront_url }}
+      application_endpoint: ${{ needs.get-tf-output.outputs.url }}
 
 
