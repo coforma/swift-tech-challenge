@@ -111,7 +111,7 @@ jobs:
       contents: read
 
   get-tf-output:
-    name: "Get Terraform Application Output (Stage)"
+    name: "Get Terraform Output (Stage)"
     needs:
       - call-tf-deploy
     if: |
@@ -146,7 +146,8 @@ jobs:
         working-directory: tf/projects/${{ matrix.project }}
         id: values
         run: |
-          terraform output | sed -r  -e 's|(.*) = "(.*)"|${{ matrix.project }}_\1=\2|' >> $GITHUB_OUTPUT
+          terraform output | sed -r  -e 's|(.*) = "(.*)"|${{ matrix.project }}_\1=\2|' | grep '^[a-z].*' || true >> $GITHUB_OUTPUT
+
   
   call-app-deploy:
     name: "Calling App Deploy (Stage)"
