@@ -10,7 +10,7 @@ export async function getInstitutions() {
     TableName: INSTITUTIONS_TABLE_NAME,
     FilterExpression: "recordType = :recordType",
     ExpressionAttributeValues: { ":recordType": "data" },
-    Limit: 10,
+    Limit: 4,
   };
   const result = await dynamoClient.singleScan(params);
   const items = result?.Items;
@@ -23,7 +23,7 @@ export async function getInstitutions() {
       city: item?.city,
       state: item?.state,
       description: item?.description,
-      type: CollegeType.PUBLIC,
+      type: mapControlToCollegeType(item?.control),
       populationAmount: 0,
       gradRate: item?.completionRates.fourYearInstitution,
       avgCost: item?.publicNetPrice.averagePrice,
@@ -32,4 +32,17 @@ export async function getInstitutions() {
   });
 
   return colleges;
+}
+
+// maps control value from dataset to college type
+function mapControlToCollegeType(controlValue: string) {
+  switch (controlValue) {
+    case "1":
+      return CollegeType.PUBLIC;
+    case "2":
+      return CollegeType.PRIVATE_NP;
+    case "3":
+      return CollegeType.PRIVATE_FP;
+  }
+  return null;
 }
