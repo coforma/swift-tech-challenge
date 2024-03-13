@@ -5,12 +5,21 @@ on:
     inputs:
       application_endpoint:
         type: string
-        required: true
+        required: false
+      target:
+        type: string
+        required: false
+    secrets:
+      TERRAFORM_ROLE:
+        required: false
   workflow_dispatch:
     inputs:
       application_endpoint:
         type: string
         required: true
+      target:
+        type: string
+        required: false
 
 permissions:
   id-token: write
@@ -21,14 +30,37 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest
+    environment: validation
     steps:
+      - name: Fail if insufficient inputs
+        run: |
+          false
+        if: inputs.application_endpoint == '' && inputs.target == ''
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        if: inputs.application_endpoint == ''
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.TERRAFORM_ROLE }}
+          aws-region: us-east-1
+          role-session-name: GitHubTFDeployment
+      - name: Terraform Init
+        if: inputs.application_endpoint == ''
+        working-directory: tf/projects/application
+        run: terraform init -backend-config=env/stage.s3.tfbackend -reconfigure
+      - name: Terraform Output
+        if: inputs.application_endpoint == ''
+        working-directory: tf/projects/application
+        id: foo
+        run: |
+          cloudfront_url=$(terraform output -raw cloudfront_url)
+          echo cloudfront_url=$cloudfront_url >> $GITHUB_OUTPUT
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v5
         with:
           spec: |
             src/app/testing/cypress/e2e/*.js
           browser: chrome
-          config: baseUrl=${{ inputs.application_endpoint }}
-          wait-on: ${{ inputs.application_endpoint }}
+          config: baseUrl=${{ inputs.application_endpoint != '' && inputs.application_endpoint || steps.foo.outputs.cloudfront_url }}
+          wait-on: ${{ inputs.application_endpoint != '' && inputs.application_endpoint || steps.foo.outputs.cloudfront_url }}

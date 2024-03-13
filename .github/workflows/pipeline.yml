@@ -109,47 +109,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-
-  get-tf-output:
-    name: "Get Terraform Output (Stage)"
-    needs:
-      - call-tf-deploy
-    if: |
-      always() &&
-      !contains(needs.*.result, 'failure')
-    permissions:
-      id-token: write
-      contents: read
-    outputs:
-      url: ${{ steps.foo.outputs.application_cloudfront_url}}
-    runs-on: ubuntu-latest
-    environment: validation
-    strategy:
-      matrix:
-        project: ['test','application']
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.TERRAFORM_ROLE }}
-          aws-region: us-east-1
-          role-session-name: GitHubTFDeployment
-      
-      - name: Terraform Init
-        working-directory: tf/projects/${{ matrix.project }}
-        run: terraform init -backend-config=env/stage.s3.tfbackend -reconfigure
-      - name: Terraform Output
-        working-directory: tf/projects/${{ matrix.project }}
-        id: foo
-        run: |
-          terraform output | sed -r  -e 's|(.*) = "(.*)"|${{ matrix.project }}_\1=\2|' | grep 'application_cloudfront_url' || true >> $GITHUB_OUTPUT
-
   
   call-app-deploy:
     name: "Calling App Deploy (Stage)"
@@ -178,13 +137,14 @@ jobs:
     uses: ./.github/workflows/app-int-test.yml
     needs:
       - call-app-deploy
-      - get-tf-output
     if: |
       always() &&
       !contains(needs.*.result, 'failure')
     concurrency:
       group: stage-deployment
     with:
-      application_endpoint: ${{ needs.get-tf-output.outputs.url }}
+      target: stage
+    secrets:
+      TERRAFORM_ROLE: ${{ secrets.TERRAFORM_ROLE }}
 
 
