@@ -6,8 +6,6 @@ from datetime import datetime
 
 s3_client = boto3.client("s3")
 sqs = boto3.client("sqs")
-# dynamodb = boto3.resource("dynamodb")
-# table = dynamodb.Table("institutions")
 
 
 def lambda_handler(event, context):
@@ -32,8 +30,7 @@ def lambda_handler(event, context):
         # massage data
         data = object["Body"].read().decode("utf-8")
         institutions = data.split("\n")
-        institutions.pop(0)
-        institutions = institutions[:80]
+        institutions.pop(0)  # removes header row from csv
         records_processed = 0
 
         # transform data into Item and add to queue
@@ -49,12 +46,6 @@ def lambda_handler(event, context):
                             "updatedAt": datetime.now().strftime(
                                 "%Y-%m-%dT%H:%M:%S.%f"
                             ),
-                            "description": """Immerse yourself in cutting-edge
-                             academia at our university, where innovation meets
-                             tradition. Discover a vibrant campus community
-                             dedicated to fostering growth and excellence.
-                             Join us in shaping tomorrow's leaders and
-                             innovators!""",
                             "institutionName": institution_data[1],
                             "city": institution_data[3],
                             "state": institution_data[4],
@@ -223,8 +214,6 @@ def lambda_handler(event, context):
                 raise e
 
             records_processed += 1
-
-        print("Records processed: ", records_processed)
 
     except Exception as err:
         print(err)

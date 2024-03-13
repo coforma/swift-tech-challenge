@@ -59,9 +59,7 @@ def lambda_handler(event, context):
     # write image to S3
     fileName = str(institutionId) + ".json"
     bucketName = "swift-institution-images"
-    s3_response = s3_client.put_object(
-        Body=image_body["images"][0], Bucket=bucketName, Key=fileName
-    )
+    s3_client.put_object(Body=image_body["images"][0], Bucket=bucketName, Key=fileName)
     resp["imagePath"] = bucketName + "/" + fileName
 
     try:
