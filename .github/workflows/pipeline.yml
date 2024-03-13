@@ -125,7 +125,7 @@ jobs:
   
   call-integration-testing:
     name: "Calling Application Integration Testing"
-    uses: ./.github/workflows/app-deploy.yml
+    uses: ./.github/workflows/app-int-test.yml
     needs:
       - call-app-deploy
       - call-tf-deploy
