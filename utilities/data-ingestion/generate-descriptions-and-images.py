@@ -27,7 +27,7 @@ def lambda_handler(event, context):
     # load the json to a string
     resp = json.loads(json.loads(json.dumps(event))["Records"][0]["body"])
 
-    ## variable for use throughtout function
+    ## variable for use throughout function
     institutionName = resp["institutionName"]
     institutionId = resp["institutionId"]
     logger.info("Decription and image for " + institutionName)
