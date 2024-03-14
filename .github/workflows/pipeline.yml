@@ -140,6 +140,14 @@ jobs:
     needs:
       - call-app-build
       - call-tf-deploy
+    ## Needed to fix issue in github where needs dependency tree evaluates skip condition incorrectly
+    ## Always runs on deploy to main, unless failure in previous step
+    if: |
+      always() &&
+      !cancelled() &&
+      !contains(needs.*.result, 'failure') &&
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push'
     concurrency:
       group: stage-deployment
     with:
@@ -157,6 +165,14 @@ jobs:
     needs:
       - call-app-deploy
       - call-tf-deploy
+    ## Needed to fix issue in github where needs dependency tree evaluates skip condition incorrectly
+    ## Always runs on deploy to main, unless failure in previous step
+    if: |
+      always() &&
+      !cancelled() &&
+      !contains(needs.*.result, 'failure') &&
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push'
     concurrency:
       group: stage-deployment
     with:
