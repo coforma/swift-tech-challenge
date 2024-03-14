@@ -37,7 +37,7 @@ jobs:
     needs: changes
     ## Skip if no changes in terraform files, but not if PR
     if: |
-      needs.changes.outputs.terraform == 'true' &&
+      needs.changes.outputs.terraform == 'true' ||
       github.event_name == 'pull_request'
     strategy:
       matrix:
