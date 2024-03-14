@@ -35,8 +35,10 @@ jobs:
   call-tf-validation:
     uses: ./.github/workflows/terraform-validate.yml
     needs: changes
-    ## Skip if no changes in terraform files
-    if: needs.changes.outputs.terraform == 'true'
+    ## Skip if no changes in terraform files, but not if PR
+    if: |
+      needs.changes.outputs.terraform == 'true' ||
+      github.event_name == 'pull_request'
     strategy:
       matrix:
         project: [application]
@@ -48,16 +50,18 @@ jobs:
     name: "Calling Application Lint Stage"
     uses: ./.github/workflows/app-lint.yml
     needs: changes
-    if: needs.changes.outputs.app == 'true'
+    ## Skip if no changes in application files, but not if PR
+    if: |
+      needs.changes.outputs.app == 'true' ||
+      github.event_name == 'pull_request'
 
   call-tf-plan:
     name: "Calling TF Plan Stage"
     uses: ./.github/workflows/terraform-plan.yml
     needs: changes
-    ## Call terraform plan if pull request with terraform changes
+    ## Call terraform plan if pull request
     if: |
-      github.event_name == 'pull_request' &&
-      needs.changes.outputs.terraform == 'true'
+      github.event_name == 'pull_request'
     strategy:
       matrix:
         target: [stage, prod]
@@ -75,7 +79,10 @@ jobs:
     name: "Calling Unit Testing"
     uses: ./.github/workflows/app-unit-test.yml
     needs: changes
-    if: needs.changes.outputs.app == 'true'
+    ## Skip if not changes, but not if PR
+    if: |
+      needs.changes.outputs.app == 'true' ||
+      github.event_name == 'pull_request'
     secrets:
       CODE_CLIMATE_ID: ${{ secrets.CODE_CLIMATE_ID }}
     permissions:
@@ -87,10 +94,11 @@ jobs:
     name: "Calling App Build Stage"
     uses: ./.github/workflows/app-build.yml
     needs: changes
-    ## Always build on main. Build on others if changes
+    ## Always build on main && PR. Build on others if changes
     if: |
       needs.changes.outputs.app == 'true' ||
-      (github.ref == 'refs/heads/main' && github.event_name == 'push')
+      (github.ref == 'refs/heads/main' && github.event_name == 'push') ||
+      github.event_name == 'pull_request'
     secrets:
       UPLOAD_ROLE: ${{ secrets.UPLOAD_ROLE }}
     ## If running on a protected branch, upload artifact with role in stage environment
@@ -105,8 +113,11 @@ jobs:
   call-tf-deploy:
     name: "Calling TF Deploy Stage"
     needs: call-tf-validation
-    ## Run if on main branch
+    ## Run if on main branch and no previous steps have failed
     if: |
+      always() &&
+      !cancelled() &&
+      !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main' &&
       github.event_name == 'push'
     uses: ./.github/workflows/terraform-deploy.yml
@@ -129,6 +140,14 @@ jobs:
     needs:
       - call-app-build
       - call-tf-deploy
+    ## Needed to fix issue in github where needs dependency tree evaluates skip condition incorrectly
+    ## Always runs on deploy to main, unless failure in previous step
+    if: |
+      always() &&
+      !cancelled() &&
+      !contains(needs.*.result, 'failure') &&
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push'
     concurrency:
       group: stage-deployment
     with:
@@ -146,6 +165,14 @@ jobs:
     needs:
       - call-app-deploy
       - call-tf-deploy
+    ## Needed to fix issue in github where needs dependency tree evaluates skip condition incorrectly
+    ## Always runs on deploy to main, unless failure in previous step
+    if: |
+      always() &&
+      !cancelled() &&
+      !contains(needs.*.result, 'failure') &&
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push'
     concurrency:
       group: stage-deployment
     with:

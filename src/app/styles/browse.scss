@@ -1,0 +1,20 @@
+@use "uswds-core" as *;
+
+.browse_header {
+
+  @include u-margin-top(4);
+  @include u-margin-bottom(4);
+
+  &-title {
+    text-align: left;
+
+    @include u-text("primary-darker", "bold");
+    @include u-margin-y(2);
+  }
+
+  &-subtitle {
+    text-align: left;
+    @include u-padding-bottom(2);
+    font-size: 20px;
+  }
+}
