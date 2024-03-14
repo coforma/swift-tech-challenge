@@ -1,56 +1,36 @@
+
+
 resource "aws_iam_role" "iam_for_lambda" {
   name               = format("%sFrontendLambdaRole", title(var.environment))
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
-resource "aws_iam_role_policy_attachment" "exec" {
-  role       = aws_iam_role.iam_for_lambda.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaDynamoDBExecutionRole"
-}
-
-data "aws_iam_policy_document" "backend" {
+#Policy Doc for creating logs in CloudWatch
+data "aws_iam_policy_document" "logging" {
   statement {
-    sid    = "ReadDynamoDB"
+    effect    = "Allow"
+    actions   = ["logs:CreateGroup"]
+    resources = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
+  }
+  statement {
     effect = "Allow"
     actions = [
-      "dynamodb:GetItem",
-      "dynamodb:BatchGetItem",
-      "dynamodb:Scan",
-      "dynamodb:Query",
-      "dynamodb:ConditionCheckItem"
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
     ]
-    resources = [
-      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${var.institutions_dynamodb_table}"
-    ]
-  }
-  statement {
-    sid = "ListImagesBucket"
-    actions = [
-      "s3:ListBucket"
-    ]
-    resources = [
-      var.images_bucket_arn
-    ]
-  }
-  statement {
-    sid = "ReadImagesBucket"
-    actions = [
-      "s3:GetObject"
-    ]
-    resources = [
-      "${var.images_bucket_arn}/*"
-    ]
+    resources = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:aws/lambda/${aws_lambda_function.frontend.function_name}:*"]
   }
 }
 
-resource "aws_iam_policy" "backend" {
-  policy = data.aws_iam_policy_document.backend.json
-  name   = format("%sAppBackendAccessPolicy", title(var.environment))
+resource "aws_iam_policy" "logging" {
+  name        = format("%sFrontendLoggingPolicy", title(var.environment))
+  description = "Allows creating and writing to Frontend log group"
+  policy      = data.aws_iam_policy_document.logging.json
 }
 
-resource "aws_iam_role_policy_attachment" "backend" {
+resource "aws_iam_role_policy_attachment" "logging" {
   role       = aws_iam_role.iam_for_lambda.name
-  policy_arn = aws_iam_policy.backend.arn
+  policy_arn = aws_iam_policy.logging.arn
 }
 
 resource "aws_lambda_function" "frontend" {
@@ -71,9 +51,6 @@ resource "aws_lambda_function" "frontend" {
   layers = [
     "arn:aws:lambda:${data.aws_region.current.name}:753240598075:layer:LambdaAdapterLayerX86:20"
   ]
-  logging_config {
-    log_format = "JSON"
-  }
 }
 
 

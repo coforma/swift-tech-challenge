@@ -19,12 +19,11 @@ data "terraform_remote_state" "bootstrap" {
 }
 
 module "frontend" {
-  source            = "../../modules/frontend"
-  environment       = var.environment
-  artifact_bucket   = var.artifact_bucket
-  artifact_path     = var.frontend_artifact_path
-  zip_file_name     = var.frontend_zip_filename
-  images_bucket_arn = var.images_bucket_arn
+  source          = "../../modules/frontend"
+  environment     = var.environment
+  artifact_bucket = var.artifact_bucket
+  artifact_path   = var.frontend_artifact_path
+  zip_file_name   = var.frontend_zip_filename
   github = {
     repo                    = var.github_repo
     app_deploy_restrictions = var.app_deploy_restrictions

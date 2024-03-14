@@ -9,5 +9,3 @@ bootstrap_remote_state_config = {
   region = "us-east-1"
   key    = "bootstrap-global.tfstate"
 }
-#TODO switch to stage images bucket when available
-images_bucket_arn = "arn:aws:s3:::swift-institution-images"
