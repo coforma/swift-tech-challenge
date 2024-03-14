@@ -43,6 +43,10 @@ body > footer {
   @include u-margin-y(2)
 }
 
+.grid-container {
+  max-width: 100rem;
+}
+
 h1 {
   @include typeset("ui", "2xl", 1);
   @include u-text("bold");
