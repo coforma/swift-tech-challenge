@@ -1,4 +1,5 @@
 // components
+import Image from "next/image";
 import {
   Button,
   ButtonGroup,
@@ -19,7 +20,14 @@ export const CollegeCard = ({ college }: Props) => {
         <h2 className="card_header-title">{college.name}</h2>
         <p className="card_header-subtitle">{`${college.city}, ${college.state}`}</p>
       </CardHeader>
-      <CardMedia>{college.img}</CardMedia>
+      <CardMedia>
+        <Image
+          src={college.img}
+          alt={`AI generated image of ${college.name}`}
+          width={400}
+          height={400}
+        />
+      </CardMedia>
       <CardBody>
         <p className="card_desc">{college.description}</p>
         <div className="card_grid">
