@@ -94,10 +94,11 @@ jobs:
     name: "Calling App Build Stage"
     uses: ./.github/workflows/app-build.yml
     needs: changes
-    ## Always build on main. Build on others if changes
+    ## Always build on main && PR. Build on others if changes
     if: |
       needs.changes.outputs.app == 'true' ||
-      (github.ref == 'refs/heads/main' && github.event_name == 'push')
+      (github.ref == 'refs/heads/main' && github.event_name == 'push') ||
+      github.event_name == 'pull_request'
     secrets:
       UPLOAD_ROLE: ${{ secrets.UPLOAD_ROLE }}
     ## If running on a protected branch, upload artifact with role in stage environment
