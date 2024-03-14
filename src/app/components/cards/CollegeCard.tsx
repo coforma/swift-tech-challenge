@@ -11,6 +11,10 @@ import {
 import { CardIcon } from "./CardIcon";
 //types
 import { College } from "../../types";
+import {
+  convertToThousandsSeparatedString,
+  convertPercentage,
+} from "../../utils/masking";
 
 export const CollegeCard = ({ college }: Props) => {
   return (
@@ -26,19 +30,24 @@ export const CollegeCard = ({ college }: Props) => {
           <CardIcon subtitle={"Type"} highlight={college.type} />
           <CardIcon
             subtitle={"Student population"}
-            highlight={college.populationAmount}
+            highlight={convertToThousandsSeparatedString(
+              college.populationAmount,
+            )}
           />
-          <CardIcon subtitle={"Graduation rate"} highlight={college.gradRate} />
+          <CardIcon
+            subtitle={"Graduation rate"}
+            highlight={`${convertPercentage(college.gradRate)} %`}
+          />
           <CardIcon
             subtitle={"Average cost per year"}
-            highlight={college.avgCost}
+            highlight={`$${convertToThousandsSeparatedString(college.avgCost)}`}
           />
         </div>
       </CardBody>
       <CardFooter>
         <ButtonGroup data-testid="card-button-group">
           <Button name="apply" type={"button"}>
-            Apply to this school
+            Apply
           </Button>
         </ButtonGroup>
       </CardFooter>
