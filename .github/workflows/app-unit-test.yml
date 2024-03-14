@@ -1,4 +1,4 @@
-name: Testing
+name: Unit Testing
 
 on:
   workflow_call:
@@ -6,9 +6,6 @@ on:
       CODE_CLIMATE_ID:
         required: true
   workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref_name }}
 
 permissions:
   id-token: write
@@ -50,23 +47,3 @@ jobs:
         with:
           name: unit_test_results
           path: ${{github.workspace}}/coverage/lcov.info
-
-  # TODO: get integration tests running in pipeline after deploy outputs are configured
-  # integration-tests:
-  #   name: Integration Tests
-  #   needs: deploy #TODO: relies on deploy
-  #   if: ${{ github.ref_name != 'production' }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Run Cypress Tests
-  #       uses: cypress-io/github-action@v5
-  #       with:
-  #         working-directory: src/app/testing/cypress
-  #         spec: |
-  #           src/app/testing/cypress/e2e/*.js
-  #         browser: chrome
-  #         #TODO: needs output from deploy
-  #         config: baseUrl=${{ needs.deploy.outputs.application_endpoint }}
-  #         wait-on: ${{ needs.deploy.outputs.application_endpoint }}
