@@ -108,6 +108,7 @@ jobs:
     ## Run if on main branch and no previous steps have failed
     if: |
       always() &&
+      !cancelled() &&
       !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main' &&
       github.event_name == 'push'
