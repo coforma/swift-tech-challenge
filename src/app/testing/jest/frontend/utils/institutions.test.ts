@@ -7,13 +7,14 @@ const dynamoClientMock = mockClient(DynamoDBDocumentClient);
 
 const mockCollegeDbItem = {
   institutionId: 123456,
-  institutionName: "Test Institute of Technology",
+  institutionName: "Test College",
   city: "Edtown",
   state: "AZ",
-  description: "Description of university",
+  description: "Description of college",
   completionRates: { fourYearInstitution: "0.4784" },
-  publicNetPrice: { averagePrice: "5687.0" },
-  control: "1",
+  averageAttendanceCost: "5687.0",
+  institutionType: "Public",
+  studentPopulation: "99500",
 };
 
 describe("test institutions utils", () => {
@@ -22,7 +23,7 @@ describe("test institutions utils", () => {
     const result = await getInstitutions();
     expect(result.length).toBe(1);
     expect(result[0].id).toBe(123456);
-    expect(result[0].name).toBe("Test Institute of Technology");
+    expect(result[0].name).toBe("Test College");
     expect(result[0].type).toBe(CollegeType.PUBLIC);
   });
 

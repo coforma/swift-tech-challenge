@@ -1,7 +1,7 @@
 export enum CollegeType {
   PUBLIC = "Public",
-  PRIVATE_NP = "Private Nonprofit",
-  PRIVATE_FP = "Private For-profit",
+  PRIVATE_NP = "Private nonprofit",
+  PRIVATE_FP = "Private for-profit",
 }
 
 export interface College {
@@ -11,7 +11,7 @@ export interface College {
   city: string;
   state: string;
   description: string;
-  type: CollegeType | null;
+  type: CollegeType;
   populationAmount: number;
   gradRate: number;
   avgCost: number;

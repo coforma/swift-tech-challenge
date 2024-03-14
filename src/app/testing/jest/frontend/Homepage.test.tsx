@@ -8,10 +8,10 @@ jest.mock("../../../utils/institutions", () => ({
     {
       id: 123456,
       img: "",
-      name: "Test Institute of Technology",
+      name: "Test College",
       city: "Edtown",
       state: "AZ",
-      description: "Description of university",
+      description: "Description of college",
       type: CollegeType.PUBLIC,
       populationAmount: 0,
       gradRate: "0.4784",
