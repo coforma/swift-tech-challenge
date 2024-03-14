@@ -32,3 +32,8 @@ variable "github" {
   })
   description = "Github settings for deployment. Requires 'repo', 'app_deploy_restrictions', and 'oidc_arn'"
 }
+
+variable "institutions_dynamodb_table" {
+  type    = string
+  default = "institutions"
+}
