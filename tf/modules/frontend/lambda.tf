@@ -23,6 +23,24 @@ data "aws_iam_policy_document" "backend" {
       "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${var.institutions_dynamodb_table}"
     ]
   }
+  statement {
+    sid = "ListImagesBucket"
+    actions = [
+      "s3:ListBucket"
+    ]
+    resources = [
+      var.images_bucket_arn
+    ]
+  }
+  statement {
+    sid = "ReadBucket"
+    actions = [
+      "s3:GetObject"
+    ]
+    resources = [
+      "${var.images_bucket_arn}/*"
+    ]
+  }
 }
 
 resource "aws_iam_policy" "backend" {
