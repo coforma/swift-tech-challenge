@@ -1,7 +1,6 @@
 // components
 import Image from "next/image";
 import {
-  Button,
   ButtonGroup,
   Card,
   CardBody,
@@ -9,6 +8,7 @@ import {
   CardHeader,
   CardMedia,
 } from "@trussworks/react-uswds";
+import Link from "next/link";
 import { CardIcon } from "./CardIcon";
 // types
 import { College } from "../../types";
@@ -45,9 +45,9 @@ export const CollegeCard = ({ college }: Props) => {
       </CardBody>
       <CardFooter className="card_footer">
         <ButtonGroup>
-          <Button name="apply" type={"button"}>
+          <Link className="usa-button" href={`apply/${college.id}`}>
             Apply to this school
-          </Button>
+          </Link>
         </ButtonGroup>
       </CardFooter>
     </Card>

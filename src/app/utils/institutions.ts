@@ -52,3 +52,12 @@ async function getImage(institutionId: Number) {
   }
   return image;
 }
+
+export async function getInsitutionApplication(institutionId: Number) {
+  const params = {
+    TableName: INSTITUTIONS_TABLE_NAME,
+    Key: { institutionId: institutionId, recordType: "application" },
+  };
+  const result = await dynamoClient.get(params);
+  return result?.Item;
+}
