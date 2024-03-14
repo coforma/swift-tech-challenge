@@ -3,7 +3,7 @@ data "aws_cloudfront_cache_policy" "disabled" {
 }
 
 data "aws_cloudfront_origin_request_policy" "all" {
-  name = Managed-AllViewerExceptHostHeader
+  name = "Managed-AllViewerExceptHostHeader"
 }
 
 
