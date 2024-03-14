@@ -7,43 +7,16 @@ variable "institutions_dynamodb_table" {
   default = "institutions"
 }
 
-variable "source" {
+variable "source_bucket" {
   type = object({
-    bucket  = string
+    name    = string
     account = string
   })
 }
 
-variable "images" {
+variable "images_bucket" {
   type = object({
-    bucket  = string
+    name    = string
     account = string
   })
-}
-
-variable "arifact" {
-  type = object({
-    bucket = string
-    path   = string
-  })
-}
-
-variable "proccess_application_handler_file" {
-  type    = string
-  default = ""
-}
-
-variable "proccess_institutions_handler_file" {
-  type    = string
-  default = "institutions"
-}
-
-variable "get_descriptions_handler_file" {
-  type    = string
-  default = ""
-}
-
-variable "get_images_handler_file" {
-  type    = string
-  default = ""
 }

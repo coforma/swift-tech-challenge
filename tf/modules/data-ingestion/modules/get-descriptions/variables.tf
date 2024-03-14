@@ -6,17 +6,10 @@ variable "institutions_dynamodb_table" {
 variable "environment" {
   type = string
 }
-variable "source" {
+variable "source_bucket" {
   type = object({
-    bucket  = string
+    name    = string
     account = string
-  })
-}
-
-variable "artifact" {
-  type = object({
-    bucket = string
-    path   = string
   })
 }
 
@@ -26,13 +19,14 @@ variable "queue" {
     account = string
   })
 }
-
-variable "handler" {
-  type    = string
-  default = "lambda_function.lambda_handler"
-}
-
-variable "source_file" {
-  type    = string
-  default = "get-descriptions.py"
+variable "source_code" {
+  type = object({
+    path     = string
+    relative = bool
+  })
+  description = "Absolute path of file containing lambda code, set relative to true if path is relative"
+  default = {
+    path     = "../../../utilities/data-ingestion/get-institution-description-from-bedrock.py"
+    relative = true
+  }
 }

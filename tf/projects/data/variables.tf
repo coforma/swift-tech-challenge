@@ -12,6 +12,3 @@ variable "source_bucket" {
 variable "institution_images_bucket" {
   type = string
 }
-variable "artifact_bucket" {
-  type = string
-}

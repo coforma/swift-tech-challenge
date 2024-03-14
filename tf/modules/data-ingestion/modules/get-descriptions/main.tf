@@ -1,10 +1,33 @@
 
 locals {
-  lambda_s3_key = var.artifact.path != "" ? "${var.artifact.path}/${source_file}" : var.source_file
+  content_path = var.source_code.relative ? "${path.module}/${var.source_code.path}" : var.source_code.path
+}
+
+data "archive_file" "lambda_zip" {
+  type        = "zip"
+  output_path = "${path.module}/tmp/lambda.zip"
+
+  source {
+    content  = file("${path.module}/../../../../../utilities/data-ingestion/get-institution-description-from-bedrock.py")
+    filename = "lambda_function.py"
+  }
+}
+
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
 }
 
 resource "aws_iam_role" "role" {
-  name               = format("%GetDescriptionsRole", title(var.environment))
+  name               = format("%sGetDescriptionsRole", title(var.environment))
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -43,7 +66,7 @@ data "aws_iam_policy_document" "policy_doc" {
     sid       = "ListBuckets"
     actions   = ["s3:ListBucket"]
     effect    = "Allow"
-    resources = [var.source.bucket]
+    resources = [var.source_bucket.name]
   }
   statement {
     sid = "S3ReadWrite"
@@ -54,7 +77,7 @@ data "aws_iam_policy_document" "policy_doc" {
       "s3:List*"
     ]
     effect    = "Allow"
-    resources = ["arn:aws:s3:::${var.source.bucket}/*"]
+    resources = ["arn:aws:s3:::${var.source_bucket.name}/*"]
   }
   statement {
     sid    = "WriteQueue"
@@ -91,13 +114,12 @@ resource "aws_iam_role_policy_attachment" "bedrock" {
 }
 
 resource "aws_lambda_function" "function" {
-  s3_bucket     = var.artifact.bucket
-  s3_key        = local.lambda_s3_key
-  function_name = "${var.environment}-get-descriptions"
-  role          = aws_iam_role.role.arn
-  handler       = "${var.artifact.handler_file}.lambda_handler"
-
-  runtime = "python3.12"
+  filename         = "${path.module}/tmp/lambda.zip"
+  function_name    = "${var.environment}-get-descriptions"
+  role             = aws_iam_role.role.arn
+  handler          = "lambda_function.lambda_handler"
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  runtime          = "python3.12"
 
   environment {
     variables = {
@@ -107,7 +129,7 @@ resource "aws_lambda_function" "function" {
   }
   logging_config {
     application_log_level = "INFO"
-    log_format            = "json"
+    log_format            = "JSON"
     system_log_level      = "INFO"
   }
 }
@@ -117,6 +139,6 @@ resource "aws_lambda_permission" "sqs_lambda" {
   action         = "lambda:InvokeFunction"
   function_name  = aws_lambda_function.function.function_name
   principal      = "sqs.amazonaws.com"
-  source_account = var.source.account
+  source_account = var.source_bucket.account
   source_arn     = "arn:aws:sqs:::${var.queue.name}"
 }
