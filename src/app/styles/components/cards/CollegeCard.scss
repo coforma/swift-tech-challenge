@@ -4,15 +4,48 @@
   width: 100%;
 }
 
+.usa-card__container {
+  border-radius: .75rem;
+  @include at-media("mobile-lg") {
+    border-radius: 1rem;
+  }
+  @include at-media("tablet-lg") {
+    border-radius: 2rem;
+  }
+  @include at-media("desktop") {
+    border-radius: 3rem;
+  }
+}
+
 .card_header {
 
+  @include u-padding-top(5);
+
   &-title {
-    @include typeset("heading", "xl", 1);
+    @include typeset("heading", 9, 1);
+    @include at-media("mobile-lg") {
+      @include u-font-size("heading", 10)
+    }
+    @include at-media("tablet-lg") {
+      @include u-font-size("heading", 11)
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 12)
+    }
     @include u-text("primary-darker", "normal");
   }
 
   &-subtitle {
-    @include typeset("ui", "lg", 1);
+    @include typeset("heading", 5, 1);
+    @include at-media("mobile-lg") {
+      @include u-font-size("heading", 6)
+    }
+    @include at-media("tablet-lg") {
+      @include u-font-size("heading", 8)
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 9)
+    }
     @include u-text("base-dark", "normal");
     @include u-padding-y(2)
   }
@@ -20,6 +53,17 @@
 
 .card_desc {
   @include u-margin-bottom(2);
+  @include typeset("ui", 5, 4);
+  @include at-media("mobile-lg") {
+    @include u-font-size("ui", 6)
+  }
+  @include at-media("tablet-lg") {
+    @include u-font-size("ui", 8)
+  }
+  @include at-media("desktop") {
+    @include u-font-size("ui", 9);
+  }
+  @include u-text("base-darker", "normal");
 }
 
 .card_grid {
@@ -39,4 +83,5 @@
 
 .usa-card__footer {
   @include u-margin-top(2);
+  @include u-padding-bottom(5);
 }

@@ -9,6 +9,13 @@
   @include u-flex("align-center");
   gap: 20px;
 }
+.usa-footer__primary-section>.grid-container {
+  max-width: 100rem;
+}
+
+.usa-footer__secondary-section>.grid-container {
+  max-width: 100rem;
+}
 
 .footer_logo {
   @include u-margin-y(3);
@@ -35,6 +42,7 @@
 
 .footer_nav {
   list-style-type: none;
+  max-width: 59.375rem;
   @include u-display("flex");
   @include u-flex("wrap");
   @include u-padding-bottom(1);
