@@ -23,7 +23,7 @@ jest.mock("../../../utils/institutions", () => ({
 describe("Test Homepage", () => {
   test("Check that page renders", async () => {
     render(await Home());
-    expect(screen.getByText("Browse Schools")).toBeVisible();
+    expect(screen.getByText("Browse colleges")).toBeVisible();
   });
 });
 
