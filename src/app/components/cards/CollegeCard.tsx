@@ -9,7 +9,7 @@ import {
   CardMedia,
 } from "@trussworks/react-uswds";
 import { CardIcon } from "./CardIcon";
-//types
+// types
 import { College } from "../../types";
 
 export const CollegeCard = ({ college }: Props) => {
@@ -37,9 +37,8 @@ export const CollegeCard = ({ college }: Props) => {
       </CardBody>
       <CardFooter>
         <ButtonGroup>
-          <Button type={"button"}>Apply to this school</Button>
-          <Button type={"button"} outline={true}>
-            More information
+          <Button name="apply" type={"button"}>
+            Apply to this school
           </Button>
         </ButtonGroup>
       </CardFooter>

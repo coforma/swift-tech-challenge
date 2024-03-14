@@ -1,0 +1,69 @@
+name: Integration Testing
+
+on:
+  workflow_call:
+    inputs:
+      application_endpoint:
+        type: string
+        required: false
+        description: "(Optional) Application Endpoint to test. Overrides variables set by target if set. One of target or endpoint must be set"
+      target:
+        type: string
+        required: false
+        description: "(Optional) Target enviroment to test. Pulls application endpoint from target environment. One of target or endpoint must be set"
+    secrets:
+      TERRAFORM_ROLE:
+        required: false
+  workflow_dispatch:
+    inputs:
+      application_endpoint:
+        type: string
+        required: true
+        description: "(Optional) Application Endpoint to test. Overrides variables set by target if set. One of target or endpoint must be set"
+      target:
+        type: string
+        required: false
+        description: "(Optional) Target enviroment to test. Pulls application endpoint from target environment. One of target or endpoint must be set"
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+
+jobs:
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    environment: validation
+    steps:
+      - name: Fail if insufficient inputs
+        run: |
+          false
+        if: inputs.application_endpoint == '' && inputs.target == ''
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        if: inputs.application_endpoint == ''
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.TERRAFORM_ROLE }}
+          aws-region: us-east-1
+          role-session-name: GitHubTFDeployment
+      - name: Terraform Init
+        if: inputs.application_endpoint == ''
+        working-directory: tf/projects/application
+        run: terraform init -backend-config=env/${{ inputs.target }}.s3.tfbackend -reconfigure
+      - name: Terraform Output
+        if: inputs.application_endpoint == ''
+        working-directory: tf/projects/application
+        id: foo
+        run: |
+          cloudfront_url=$(terraform output -raw cloudfront_url)
+          echo cloudfront_url=$cloudfront_url >> $GITHUB_OUTPUT
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v5
+        with:
+          spec: |
+            src/app/testing/cypress/e2e/*.js
+          browser: chrome
+          config: baseUrl=https://${{ inputs.application_endpoint != '' && inputs.application_endpoint || steps.foo.outputs.cloudfront_url }}

@@ -11,6 +11,13 @@ on:
     secrets:
       TERRAFORM_ROLE:
         required: true
+    outputs:
+      api_gw_endpoint:
+        description: "Endpoint for Application Gateway"
+        value: ${{ jobs.terraform.outputs.api_gw_endpoint }}
+      cloudfront_endpoint:
+        description: "Endpoint for Cloudfront Domain"
+        value: ${{ jobs.terraform.outputs.cloudfront_endpoint }}
   workflow_dispatch:
     inputs:
       target:
