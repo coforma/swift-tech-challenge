@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 //  components
+import { InitAnalytics } from "./utils/analytics";
 import { PageHeader, PageFooter } from "./components";
 // styles
 import "@trussworks/react-uswds/lib/uswds.css";
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <title>U.S. College Finder</title>
+        <InitAnalytics />
       </head>
       <body className={inter.className}>
         <PageHeader />
