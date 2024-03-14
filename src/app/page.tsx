@@ -1,4 +1,4 @@
-import { GridContainer } from "@trussworks/react-uswds";
+import { Button, GridContainer } from "@trussworks/react-uswds";
 import { College, CollegeType } from "./types";
 import { CollegeCard, HeroImage } from "./components";
 
@@ -34,7 +34,15 @@ export default function Home() {
     <main>
       <HeroImage />
       <GridContainer>
-        <h1> Browse Schools </h1>
+        <div className="browse_header">
+          <h1 className="browse_header-title"> Browse colleges </h1>
+          <p className="site_text-intro browse_header-subtitle">
+            Find the college thats right for you
+          </p>
+          <Button type={"button"} outline={true}>
+            Add filters
+          </Button>
+        </div>
         <ul className="usa-card-group">
           {cards.map((card) => (
             <CollegeCard key={card.id} college={card} />
