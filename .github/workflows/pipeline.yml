@@ -105,8 +105,10 @@ jobs:
   call-tf-deploy:
     name: "Calling TF Deploy Stage"
     needs: call-tf-validation
-    ## Run if on main branch
+    ## Run if on main branch and no previous steps have failed
     if: |
+      always() &&
+      !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main' &&
       github.event_name == 'push'
     uses: ./.github/workflows/terraform-deploy.yml
