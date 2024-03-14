@@ -1,6 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import { College, CollegeType } from "@/src/app/types";
+import mixpanel from "mixpanel-browser";
 import { CollegeCard } from "@/src/app/components";
+import { College, CollegeType } from "@/src/app/types";
+import userEvent from "@testing-library/user-event";
+import { act } from "react-dom/test-utils";
 import { axe } from "jest-axe";
 
 const college: College = {
@@ -15,6 +18,11 @@ const college: College = {
   gradRate: 65,
   avgCost: 17980,
 };
+
+jest.mock("mixpanel-browser", () => ({
+  ...jest.requireActual("mixpanel-browser"),
+  track: jest.fn(() => {}),
+}));
 
 const component = (
   <ul>
@@ -42,6 +50,16 @@ describe("Test CollegeCard", () => {
     expect(screen.getByRole("button", { name: /apply/i })).toHaveTextContent(
       "Apply to this school",
     );
+  });
+
+  test("On click, apply button fires tracking event", async () => {
+    const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
+    const applyButton = screen.getByRole("button", { name: /apply/i });
+    expect(screen.getByRole("button", { name: /apply/i })).toBeVisible();
+    await act(async () => {
+      await userEvent.click(applyButton);
+    });
+    expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
   });
 
   test("CollegeCard button group should have one button", () => {
