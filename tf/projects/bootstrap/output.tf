@@ -21,3 +21,7 @@ output "artifact_bucket" {
 output "unprotected_artifact_deployer" {
   value = aws_iam_role.unprotected_artifact_deployer.arn
 }
+
+output "github_oidc_arn" {
+  value = aws_iam_openid_connect_provider.github.arn
+}
