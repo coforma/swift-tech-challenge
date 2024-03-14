@@ -10,7 +10,7 @@ export async function getInstitutions() {
     TableName: INSTITUTIONS_TABLE_NAME,
     FilterExpression: "recordType = :recordType",
     ExpressionAttributeValues: { ":recordType": "data" },
-    Limit: 4,
+    Limit: 12,
   };
   const result = await dynamoClient.singleScan(params);
   const items = result?.Items;
@@ -31,5 +31,10 @@ export async function getInstitutions() {
     colleges.push(college);
   });
 
+  /*
+   * Sort colleges by name in alpha order, could optimize but inserting
+   * in sorted order if performance becomes an issue
+   */
+  colleges.sort((a, b) => (a.name > b.name ? 1 : -1));
   return colleges;
 }

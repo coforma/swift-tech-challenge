@@ -17,6 +17,18 @@ const mockCollegeDbItem = {
   studentPopulation: "99500",
 };
 
+const mockCollegeDbItemTwo = {
+  institutionId: 122456,
+  institutionName: " A University of College",
+  city: "Beanington",
+  state: "KY",
+  description: "Description of description",
+  completionRates: { fourYearInstitution: "0.4784" },
+  averageAttendanceCost: "5687.0",
+  institutionType: "Public",
+  studentPopulation: "99500",
+};
+
 describe("test institutions utils", () => {
   test("test getInstitutions", async () => {
     dynamoClientMock.on(ScanCommand).resolves({ Items: [mockCollegeDbItem] });
@@ -31,5 +43,14 @@ describe("test institutions utils", () => {
     dynamoClientMock.on(ScanCommand).resolves({});
     const result = await getInstitutions();
     expect(result.length).toBe(0);
+  });
+
+  test("test getInstitutions returns sorted array by name", async () => {
+    dynamoClientMock
+      .on(ScanCommand)
+      .resolves({ Items: [mockCollegeDbItem, mockCollegeDbItemTwo] });
+    const result = await getInstitutions();
+    expect(result.length).toBe(2);
+    expect(result[0].id).toBe(122456);
   });
 });

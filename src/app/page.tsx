@@ -1,5 +1,5 @@
 // components
-import { Button, GridContainer } from "@trussworks/react-uswds";
+import { GridContainer } from "@trussworks/react-uswds";
 import { CollegeCard, HeroImage } from "./components";
 // utils
 import { getInstitutions } from "@/src/app/utils/institutions";
@@ -17,9 +17,6 @@ export default async function Home() {
           <p className="site_text-intro browse_header-subtitle">
             Find the college thats right for you
           </p>
-          <Button type={"button"} outline={true}>
-            Add filters
-          </Button>
         </div>
         <ul className="usa-card-group">
           {cards.map((card) => (
