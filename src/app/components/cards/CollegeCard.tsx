@@ -1,4 +1,5 @@
 // components
+import Image from "next/image";
 import {
   Button,
   ButtonGroup,
@@ -19,11 +20,18 @@ import {
 export const CollegeCard = ({ college }: Props) => {
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
-      <CardHeader>
+      <CardHeader className="card_header">
         <h2 className="card_header-title">{college.name}</h2>
         <p className="card_header-subtitle">{`${college.city}, ${college.state}`}</p>
       </CardHeader>
-      <CardMedia>{college.img}</CardMedia>
+      <CardMedia className="card_media">
+        <Image
+          src={college.img}
+          alt={`AI generated image of ${college.name}`}
+          width={400}
+          height={400}
+        />
+      </CardMedia>
       <CardBody>
         <p className="card_desc">{college.description}</p>
         <div className="card_grid">
@@ -44,8 +52,8 @@ export const CollegeCard = ({ college }: Props) => {
           />
         </div>
       </CardBody>
-      <CardFooter>
-        <ButtonGroup data-testid="card-button-group">
+      <CardFooter className="card_footer">
+        <ButtonGroup>
           <Button name="apply" type={"button"}>
             Apply
           </Button>
