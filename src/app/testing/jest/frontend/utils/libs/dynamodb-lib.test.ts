@@ -1,4 +1,4 @@
-import dynamoLib from "../../../../utils/dynamodb-lib";
+import dynamoLib from "@/src/app/utils/libs/dynamodb-lib";
 import {
   GetCommand,
   DynamoDBDocumentClient,

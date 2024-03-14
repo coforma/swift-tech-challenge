@@ -1,15 +1,47 @@
-name: "Front End Deploy"
+name: "Application Deploy"
 on:
   workflow_call:
+    inputs:
+      target:
+        required: true
+        type: string
+      environment:
+        type: string
+        required: false
+        default: ''
+    secrets:
+      DEPLOY_ROLE:
+        required: true
   workflow_dispatch:
+    inputs:
+      target:
+        required: true
+        type: choice
+        options:
+          - stage
+          - prod
+      environment:
+        required: false
+        default: ''
+
 jobs:
-  next-deploy:
-    name: "Deploy"
+  frontend-deploy:
+    name: "Frontend Deploy"
     runs-on: ubuntu-latest
+    ## To allow for multiple targets in the same environment, default environment to target, but let environment be optionally declared
+    environment: ${{ inputs.environment != '' && inputs.environment || inputs.target }}
     permissions:
       id-token: write
       contents: read
     steps:
-      ## Dummy step to clear up spurious pipeline failures
-      - name: Dummy
-        run: echo 'true'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEPLOY_ROLE }}
+          aws-region: us-east-1
+          role-session-name: GitHubAppDeploy
+      - name: Update Frontend Lambda Code
+        run: |
+          aws lambda update-function-code \
+          --function-name  ${{ inputs.target}}-frontend \
+          --s3-bucket ${{ vars.artifact_bucket }} --s3-key $GITHUB_REF_NAME/frontend.zip

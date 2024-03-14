@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { College, CollegeType } from "@/src/app/types";
 import { CollegeCard } from "@/src/app/components";
+import { axe } from "jest-axe";
 
 const college: College = {
   id: 0,
@@ -15,7 +16,11 @@ const college: College = {
   avgCost: 17980,
 };
 
-const component = <CollegeCard college={college} />;
+const component = (
+  <ul>
+    <CollegeCard college={college} />
+  </ul>
+);
 
 describe("Test CollegeCard", () => {
   beforeEach(() => {
@@ -30,5 +35,24 @@ describe("Test CollegeCard", () => {
     expect(screen.getByText(college.populationAmount)).toBeVisible();
     expect(screen.getByText(college.gradRate)).toBeVisible();
     expect(screen.getByText(college.avgCost)).toBeVisible();
+  });
+
+  test("CollegeCard should have apply button", () => {
+    expect(screen.getByRole("button", { name: /apply/i })).toBeVisible();
+    expect(screen.getByRole("button", { name: /apply/i })).toHaveTextContent(
+      "Apply to this school",
+    );
+  });
+
+  test("CollegeCard button group should have one button", () => {
+    expect(screen.getAllByRole("button")).toHaveLength(1);
+  });
+});
+
+describe("Test CollegeCard accessibility", () => {
+  it("Should not have basic accessibility issues", async () => {
+    const { container } = render(component);
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

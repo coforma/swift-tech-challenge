@@ -11,10 +11,12 @@
     @include u-text("base-lightest", "bold");
     @include typeset("heading", "xl", 1);
     @include u-margin-bottom(2);
+    @include u-text('ls-1')
   }
 
   &-subtitle {
     @include u-text("base-lightest", "bold");
     @include typeset("heading", "xs", 1);
+    @include u-text('ls-1')
   }
 }

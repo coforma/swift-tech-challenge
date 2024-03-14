@@ -11,7 +11,7 @@ import {
   CardMedia,
 } from "@trussworks/react-uswds";
 import { CardIcon } from "./CardIcon";
-//types
+// types
 import { College } from "../../types";
 
 export const CollegeCard = ({ college }: Props) => {
@@ -40,13 +40,11 @@ export const CollegeCard = ({ college }: Props) => {
       <CardFooter>
         <ButtonGroup>
           <Button
+            name="apply"
             type={"button"}
             onClick={() => mixpanel.track("click_launch-application")}
           >
             Apply to this school
-          </Button>
-          <Button type={"button"} outline={true}>
-            More information
           </Button>
         </ButtonGroup>
       </CardFooter>

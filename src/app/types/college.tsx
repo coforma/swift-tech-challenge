@@ -1,6 +1,7 @@
 export enum CollegeType {
   PUBLIC = "Public",
-  PRIVATE = "Private",
+  PRIVATE_NP = "Private nonprofit",
+  PRIVATE_FP = "Private for-profit",
 }
 
 export interface College {
