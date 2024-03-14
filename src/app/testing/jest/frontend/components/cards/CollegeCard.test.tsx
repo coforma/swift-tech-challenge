@@ -44,8 +44,8 @@ describe("Test CollegeCard", () => {
     );
   });
 
-  test("CollegeCard button group should have two buttons", () => {
-    expect(screen.getAllByRole("button")).toHaveLength(2);
+  test("CollegeCard button group should have one button", () => {
+    expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 });
 

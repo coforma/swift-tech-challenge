@@ -40,9 +40,6 @@ export const CollegeCard = ({ college }: Props) => {
           <Button name="apply" type={"button"}>
             Apply to this school
           </Button>
-          <Button name="information" type={"button"} outline={true}>
-            More information
-          </Button>
         </ButtonGroup>
       </CardFooter>
     </Card>
