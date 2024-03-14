@@ -12,17 +12,16 @@ logger = logging.getLogger()
 def lambda_handler(event, context):
     try:
         # Grab file from S3, based on Lambda trigger
-        s3_Bucket_Name = event["Records"][0]["s3"]["bucket"]["name"]
-        s3_File_Name = event["Records"][0]["s3"]["object"]["key"]
-        object = s3_client.get_object(Bucket=s3_Bucket_Name, Key=s3_File_Name)
+        s3_bucket_name = event["Records"][0]["s3"]["bucket"]["name"]
+        s3_file_name = event["Records"][0]["s3"]["object"]["key"]
+        csv_object = s3_client.get_object(Bucket=s3_bucket_name, Key=s3_file_name)
 
         # massage data
-        data = object["Body"].read().decode("utf-8")
+        data = csv_object["Body"].read().decode("utf-8")
         institution_questions = data.split("\n")
         institution_questions.pop(0)
 
         # transform data into Item and write to table
-        records_processed = 0
         items = []
         logger.info(
             "Processing questions for "
