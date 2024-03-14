@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "backend" {
     ]
   }
   statement {
-    sid = "ReadBucket"
+    sid = "ReadImagesBucket"
     actions = [
       "s3:GetObject"
     ]
