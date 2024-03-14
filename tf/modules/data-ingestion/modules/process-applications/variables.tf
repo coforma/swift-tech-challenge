@@ -13,23 +13,12 @@ variable "source_bucket" {
   })
 }
 
-variable "images_bucket" {
-  type = object({
-    name    = string
-    account = string
-  })
-}
-
 variable "artifact" {
   type = object({
-    bucket = string
-    path   = string
+    bucket       = string
+    path         = string
+    handler_file = string
   })
-}
-
-variable "proccess_application_handler_file" {
-  type    = string
-  default = ""
 }
 
 variable "handler" {
@@ -39,14 +28,5 @@ variable "handler" {
 
 variable "source_file" {
   type    = string
-  default = "ingest-institutions.py"
-}
-
-
-variable "descriptions_queue" {
-  type = string
-}
-
-variable "images_queue" {
-  type = string
+  default = "ingest-applications.py"
 }

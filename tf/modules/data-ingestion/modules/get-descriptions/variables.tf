@@ -6,16 +6,9 @@ variable "institutions_dynamodb_table" {
 variable "environment" {
   type = string
 }
-variable "source_bucket" {
+variable "source" {
   type = object({
-    name    = string
-    account = string
-  })
-}
-
-variable "images_bucket" {
-  type = object({
-    name    = string
+    bucket  = string
     account = string
   })
 }
@@ -27,9 +20,11 @@ variable "artifact" {
   })
 }
 
-variable "proccess_application_handler_file" {
-  type    = string
-  default = ""
+variable "queue" {
+  type = object({
+    name    = string
+    account = string
+  })
 }
 
 variable "handler" {
@@ -39,14 +34,5 @@ variable "handler" {
 
 variable "source_file" {
   type    = string
-  default = "ingest-institutions.py"
-}
-
-
-variable "descriptions_queue" {
-  type = string
-}
-
-variable "images_queue" {
-  type = string
+  default = "get-descriptions.py"
 }
