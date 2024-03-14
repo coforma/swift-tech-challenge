@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 //  components
-import { InitAnalytics } from "./analytics";
+import { InitAnalytics } from "./utils/analytics";
 import { PageHeader, PageFooter } from "./components";
 // styles
 import "@trussworks/react-uswds/lib/uswds.css";
