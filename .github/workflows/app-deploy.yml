@@ -53,13 +53,20 @@ jobs:
           role-session-name: GitHubAppDeploy
       - name: Update Frontend Lambda Code
         run: |
+          ## Update the code from s3
           aws lambda update-function-code \
           --function-name  $LAMBDA_NAME \
           --s3-bucket $ARTIFACT_BUCKET --s3-key $GITHUB_REF_NAME/frontend.zip | tee update.json
+          ## Wait for function to complete update
+          aws lambda wait function-updated-v2 --function-name $LAMBDA_NAME
           LAMBDA_CODE_SHA=$(cat update.json | jq .CodeSha256 )
+          ## Publish new version
           aws lambda publish-version --function-name  $LAMBDA_NAME --code-sha256 $LAMBDA_CODE_SHA | tee publish.json
           LAMBDA_VERSION=$(cat publish.json | jq -r .Version)
+          ## Wait for new version to become availabled
+          aws lambda wait published-version-active --function-name $LAMBDA_FUNCTION --qualifier $LAMBDA_VERSION
           aws lambda update-alias --function-name $LAMBDA_NAME --name $LAMBDA_ALIAS --function-version $LAMBDA_VERSION
+          aws lambda wait published-version-active --function-name ${LAMBDA_FUNCTION}:${LAMBDA_ALIAS}
       ## AWS Lambda can take a while to change traffic from old verison to new. This optional step will check if other
       ## versions are running and wait if they are. When Additonal versions returns null, process ends
       - name: Wait for lambda alias to update

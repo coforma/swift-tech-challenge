@@ -13,8 +13,6 @@ resource "aws_iam_role" "github_deployer" {
         Condition = {
           StringEquals = {
             "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
-          }
-          StringLike = {
             "token.actions.githubusercontent.com:sub" : [for rest in var.github.app_deploy_restrictions : "repo:${var.github.repo}:${rest}"]
           }
         }
@@ -30,7 +28,12 @@ resource "aws_iam_policy" "app_deploy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action   = ["lambda:UpdateFunctionCode"]
+        Action = [
+          "lambda:UpdateFunctionCode",
+          "lambda:PublishVersion",
+          "lambda:Get*",
+          "lambda:UpdateAlias"
+        ]
         Effect   = "Allow"
         Resource = [aws_lambda_function.frontend.arn]
       },

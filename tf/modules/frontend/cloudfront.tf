@@ -41,7 +41,7 @@ resource "aws_cloudfront_distribution" "distribution" {
       "HEAD",
       "OPTIONS",
     ]
-    cache_policy_id = data.aws_cloudfront_cache_policy.optimized
+    cache_policy_id = data.aws_cloudfront_cache_policy.optimized.id
     cached_methods = [
       "GET",
       "HEAD",
@@ -63,7 +63,7 @@ resource "aws_cloudfront_distribution" "distribution" {
       "HEAD",
       "OPTIONS",
     ]
-    cache_policy_id = data.aws_cloudfront_cache_policy.optimized
+    cache_policy_id = data.aws_cloudfront_cache_policy.optimized.id
     cached_methods = [
       "GET",
       "HEAD",
