@@ -1,6 +1,6 @@
 import dynamoClient from "./libs/dynamodb-lib";
 // types
-import { College } from "../types";
+import { College, degreeMap } from "../types";
 
 const INSTITUTIONS_TABLE_NAME = "institutions";
 
@@ -16,20 +16,87 @@ export async function getInstitutions() {
   if (Array.isArray(items)) {
     for (const item of items) {
       const college: College = {
+        // basics
         id: item?.institutionId,
-        img: "", // image loading addressed separately
         name: item?.institutionName,
         city: item?.city,
         state: item?.state,
-        description: item?.description,
+        zip: item?.zip,
+        url: item?.url,
         type: item?.institutionType,
-        populationAmount: item?.studentPopulation,
-        gradRate: item?.completionRates.fourYearInstitution,
-        avgCost: item?.averageAttendanceCost,
+        description: item?.description,
+        img: "", // image loading addressed separately
+        // focus
+        predominantUndergradDegree: mapToDegreeString(
+          item?.predominantUndergradDegree,
+        ),
+        highestDegreeAwarded: mapToDegreeString(item?.highestDegreeAwarded),
+        specialties: convertStringToBoolObject(item?.specialties),
+        // enrollment
+        population: parseInt(item?.studentPopulation),
+        demographics: convertFloatToObject(item?.raceDemographics),
+        // admissions
+        admissionRate: parseFloat(item?.admissionRate),
+        satScores: convertIntToObject(item?.satScores),
+        // cost
+        avgCost: parseInt(item?.averageAttendanceCost),
+        tuitionInState: parseInt(item?.tuitionInState),
+        tuitionOutOfState: parseInt(item?.tuitionOutOfState),
+        undergradWithFedLoan: parseFloat(item?.percentUndergradWithLoan),
+        npcUrl: item?.netPriceCalculatorUrl,
+        netPricePublic: convertIntToObject(item?.publicNetPrice),
+        netPricePrivate: convertIntToObject(item?.netPricePrivate),
+        // faculty & expenditures
+        facultyAvgSalary: parseInt(item?.facultyAverageSalary),
+        facultyEmployedFullTime: parseFloat(
+          item?.facultyPercentageEmployedFull,
+        ),
+        studentFacultyRatio: parseInt(item?.studentToFacultyRatio),
+        instructionalExpPerStudent: parseInt(
+          item?.instructionalExpenditurePerSt,
+        ),
+        // outcomes
+        completionRate: parseFloat(
+          item?.completionRates.fourYearInstitution ||
+            item?.completionRates.underFourYearInstitution,
+        ),
+        // awardIn8Yrs: "", TODO: Get after data ingestion update
+        earnings: convertIntToObject(item?.earnings),
+        retentionRate: parseFloat(
+          item?.retentionRate.fourYearInstitution ||
+            item?.retentionRate.underFourYearInstitution,
+        ),
       };
       colleges.push(college);
     }
   }
-
   return colleges;
 }
+
+// TODO: Add tests for utility methods here
+const mapToDegreeString = (key: number | string) =>
+  degreeMap[key as keyof typeof degreeMap];
+
+const convertStringToBoolObject: any = (obj: { [key: string]: string }) => {
+  if (obj) {
+    return Object.fromEntries(
+      Object.keys(obj).map((el) => [el, obj[el] === "True"]),
+    );
+  } else return undefined;
+};
+
+const convertFloatToObject: any = (obj: { [key: string]: any }) => {
+  if (obj) {
+    return Object.fromEntries(
+      Object.keys(obj).map((el) => [el, parseFloat(obj[el])]),
+    );
+  } else return undefined;
+};
+
+const convertIntToObject: any = (obj: { [key: string]: any }) => {
+  if (obj) {
+    return Object.fromEntries(
+      Object.keys(obj).map((el) => [el, parseFloat(obj[el])]),
+    );
+  } else return undefined;
+};
