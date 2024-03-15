@@ -3,6 +3,7 @@ import {
   GetCommand,
   DynamoDBDocumentClient,
   ScanCommand,
+  ScanCommandInput,
 } from "@aws-sdk/lib-dynamodb";
 import { mockClient } from "aws-sdk-client-mock";
 
@@ -21,12 +22,25 @@ describe("Test DynamoDB lib", () => {
     expect(mockGet).toHaveBeenCalled();
   });
 
-  test("Can perform a single scan", async () => {
-    const mockItem = { foo: "bar" };
-    dynamoClientMock.on(ScanCommand).resolves({ Items: [mockItem] });
+  test("Can scan all", async () => {
+    const mockKey = {};
+    const mockItem1 = { foo: "bar" };
+    const mockItem2 = { foo: "baz" };
+    const extraCall = jest.fn();
+    dynamoClientMock
+      .on(ScanCommand)
+      .resolvesOnce({ Items: [mockItem1], LastEvaluatedKey: mockKey })
+      .callsFakeOnce((command: ScanCommandInput) => {
+        expect(command.ExclusiveStartKey).toBe(mockKey);
+        return Promise.resolve({ Items: [mockItem2] });
+      })
+      .callsFake(extraCall);
 
-    const result = await dynamoLib.singleScan({ TableName: "foos" });
+    const result = await dynamoLib.scanAll({ TableName: "foos" });
 
-    expect(result.Items?.[0]).toBe(mockItem);
+    expect(result).toHaveLength(2);
+    expect(result[0]).toBe(mockItem1);
+    expect(result[1]).toBe(mockItem2);
+    expect(extraCall).not.toHaveBeenCalled();
   });
 });

@@ -44,7 +44,7 @@ describe("Test CollegeCard", () => {
   test("On click, apply link fires tracking event", async () => {
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
     const applyButton = screen.getByRole("link", { name: /apply/i });
-    expect(screen.getByRole("link", { name: /apply/i })).toBeVisible();
+    expect(applyButton).toBeVisible();
     await act(async () => {
       await userEvent.click(applyButton);
     });
