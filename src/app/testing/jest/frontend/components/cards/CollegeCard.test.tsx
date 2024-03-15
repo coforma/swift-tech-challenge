@@ -34,25 +34,21 @@ describe("Test CollegeCard", () => {
     expect(screen.getByText(mockCollege.avgCost!)).toBeVisible();
   });
 
-  test("CollegeCard should have apply button", () => {
-    expect(screen.getByRole("button", { name: /apply/i })).toBeVisible();
-    expect(screen.getByRole("button", { name: /apply/i })).toHaveTextContent(
+  test("CollegeCard should have apply link", () => {
+    expect(screen.getByRole("link", { name: /apply/i })).toBeVisible();
+    expect(screen.getByRole("link", { name: /apply/i })).toHaveTextContent(
       "Apply to this school",
     );
   });
 
-  test("On click, apply button fires tracking event", async () => {
+  test("On click, apply link fires tracking event", async () => {
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
-    const applyButton = screen.getByRole("button", { name: /apply/i });
-    expect(screen.getByRole("button", { name: /apply/i })).toBeVisible();
+    const applyButton = screen.getByRole("link", { name: /apply/i });
+    expect(screen.getByRole("link", { name: /apply/i })).toBeVisible();
     await act(async () => {
       await userEvent.click(applyButton);
     });
     expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
-  });
-
-  test("CollegeCard button group should have one button", () => {
-    expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 });
 
