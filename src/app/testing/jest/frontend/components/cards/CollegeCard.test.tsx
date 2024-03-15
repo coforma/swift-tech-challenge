@@ -1,23 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import mixpanel from "mixpanel-browser";
 import { CollegeCard } from "@/src/app/components";
-import { College, CollegeType } from "@/src/app/types";
+import { mockCollege } from "../../../setupJest";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { axe } from "jest-axe";
-
-const college: College = {
-  id: 0,
-  img: "",
-  name: "Name of school",
-  description: "School Description",
-  city: "City",
-  state: "State",
-  type: CollegeType.PUBLIC,
-  population: 123,
-  completionRate: 65,
-  avgCost: 17980,
-};
 
 jest.mock("mixpanel-browser", () => ({
   ...jest.requireActual("mixpanel-browser"),
@@ -26,7 +13,7 @@ jest.mock("mixpanel-browser", () => ({
 
 const component = (
   <ul>
-    <CollegeCard college={college} />
+    <CollegeCard college={mockCollege} />
   </ul>
 );
 
@@ -36,13 +23,15 @@ describe("Test CollegeCard", () => {
   });
 
   test("CollegeCard is showing all details of college", () => {
-    expect(screen.getByText(college.name)).toBeVisible();
-    expect(screen.getByText(college.description)).toBeVisible();
-    expect(screen.getByText(`${college.city}, ${college.state}`)).toBeVisible();
-    expect(screen.getByText(college.type)).toBeVisible();
-    expect(screen.getByText(college.population)).toBeVisible();
-    expect(screen.getByText(college.completionRate)).toBeVisible();
-    expect(screen.getByText(college.avgCost)).toBeVisible();
+    expect(screen.getByText(mockCollege.name)).toBeVisible();
+    expect(screen.getByText(mockCollege.description)).toBeVisible();
+    expect(
+      screen.getByText(`${mockCollege.city}, ${mockCollege.state}`),
+    ).toBeVisible();
+    expect(screen.getByText(mockCollege.type)).toBeVisible();
+    expect(screen.getByText(mockCollege.population!)).toBeVisible();
+    expect(screen.getByText(mockCollege.completionRate!)).toBeVisible();
+    expect(screen.getByText(mockCollege.avgCost!)).toBeVisible();
   });
 
   test("CollegeCard should have apply button", () => {
