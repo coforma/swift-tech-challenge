@@ -45,7 +45,7 @@ export async function getInstitutions() {
         admissionRate: parseFloat(item?.admissionRate),
         satScores: convertIntToObject(item?.satScores),
         // cost
-        avgCost: item?.averageAttendanceCost,
+        avgCost: parseInt(item?.averageAttendanceCost),
         tuitionInState: parseInt(item?.tuitionInState),
         tuitionOutOfState: parseInt(item?.tuitionOutOfState),
         undergradWithFedLoan: parseFloat(item?.percentUndergradWithLoan),
@@ -76,7 +76,6 @@ export async function getInstitutions() {
       colleges.push(college);
     }
   }
-
   return colleges;
 }
 
@@ -86,19 +85,25 @@ const mapToDegreeString = (key: number | string) =>
 
 const convertStringToBoolObject = (obj: { [key: string]: string }) => {
   if (obj) {
-    Object.fromEntries(Object.keys(obj).map((el) => [el, obj[el] === "True"]));
+    return Object.fromEntries(
+      Object.keys(obj).map((el) => [el, obj[el] === "True"]),
+    );
   } else return undefined;
 };
 
 const convertFloatToObject = (obj: { [key: string]: any }) => {
   if (obj) {
-    Object.fromEntries(Object.keys(obj).map((el) => [el, parseFloat(obj[el])]));
+    return Object.fromEntries(
+      Object.keys(obj).map((el) => [el, parseFloat(obj[el])]),
+    );
   } else return undefined;
 };
 
 const convertIntToObject = (obj: { [key: string]: any }) => {
   if (obj) {
-    Object.fromEntries(Object.keys(obj).map((el) => [el, parseFloat(obj[el])]));
+    return Object.fromEntries(
+      Object.keys(obj).map((el) => [el, parseFloat(obj[el])]),
+    );
   } else return undefined;
 };
 
