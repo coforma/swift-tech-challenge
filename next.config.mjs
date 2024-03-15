@@ -13,7 +13,12 @@ const nextConfig = {
     includePaths: ["./node_modules/@uswds/uswds/packages"],
   },
   output: 'standalone',
-   assetPrefix: process.env.CDN_HOST ? process.env.CDN_HOST : ''
+  assetPrefix: process.env.CDN_HOST ? `https://process.env.CDN_HOST` : '',
+  experimental: {
+    serverActions: {
+      allowedOrigins: process.env.CDN_HOST ? [`https://${process.env.CDN_HOST}` ] : [],
+    }
+  }
 };
 
 export default nextConfig;
