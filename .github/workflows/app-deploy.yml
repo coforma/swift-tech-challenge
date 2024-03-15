@@ -68,6 +68,13 @@ jobs:
           aws lambda wait published-version-active --function-name $LAMBDA_NAME --qualifier $LAMBDA_VERSION
           aws lambda update-alias --function-name $LAMBDA_NAME --name $LAMBDA_ALIAS --function-version $LAMBDA_VERSION
           aws lambda wait published-version-active --function-name ${LAMBDA_NAME}:${LAMBDA_ALIAS}
+      - name: Upload Static Assets
+        run: |
+          PUBLIC_BUCKET=$(grep)
+          aws s3 cp s3://${ARTIFACT_BUCKET}/${GITHUB_REF_NAME}/static.zip ./static.zip
+          mkdir -p static
+          unzip ./static.zip -d ./static/
+          aws s3 cp ./static s3://${PUBLIC_BUCKET}/_next/static --recursive
       ## AWS Lambda can take a while to change traffic from old verison to new. This optional step will check if other
       ## versions are running and wait if they are. When Additonal versions returns null, process ends
       - name: Wait for lambda alias to update
@@ -82,9 +89,3 @@ jobs:
             weight=$(aws lambda get-alias --function-name $LAMBDA_NAME --name $LAMBDA_ALIAS | jq -r ".RoutingConfig.AdditionalVersionWeights" )
             printf "."
           done
-      - name: Upload Static Assets
-        run: |
-          aws s3 cp s3://${ARTIFACT_BUCKET}/${GITHUB_REF_NAME}/static.zip ./static.zip
-          mkdir -p static
-          unzip ./static.zip -d ./static/
-          aws s3 cp ./static s3://${PUBLIC_BUCKET}/_next/static --recursive
