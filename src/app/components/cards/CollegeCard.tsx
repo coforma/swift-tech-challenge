@@ -38,12 +38,10 @@ export const CollegeCard = ({ college }: Props) => {
         <p className="card_desc">{college.description}</p>
         <div className="card_grid">
           <CardIcon
-            id={"type"}
             subtitle={"Type"}
             highlight={college.type ? college.type : "--"}
           />
           <CardIcon
-            id={"population"}
             subtitle={"Undergraduate population"}
             highlight={
               college.population
@@ -52,7 +50,6 @@ export const CollegeCard = ({ college }: Props) => {
             }
           />
           <CardIcon
-            id={"graduation"}
             subtitle={"Graduation rate"}
             highlight={
               college.completionRate
@@ -61,7 +58,6 @@ export const CollegeCard = ({ college }: Props) => {
             }
           />
           <CardIcon
-            id={"cost"}
             subtitle={"Average cost per year"}
             highlight={
               college.avgCost
