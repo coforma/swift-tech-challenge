@@ -70,7 +70,6 @@ jobs:
           aws lambda wait published-version-active --function-name ${LAMBDA_NAME}:${LAMBDA_ALIAS}
       - name: Upload Static Assets
         run: |
-          PUBLIC_BUCKET=$(grep)
           aws s3 cp s3://${ARTIFACT_BUCKET}/${GITHUB_REF_NAME}/static.zip ./static.zip
           mkdir -p static
           unzip ./static.zip -d ./static/
