@@ -65,9 +65,10 @@ resource "aws_lambda_function" "frontend" {
 
   environment {
     variables = {
-      AWS_LAMBDA_EXEC_WRAPPER = "/opt/bootstrap"
-      PORT                    = "8080"
-      CDN_HOST                = aws_cloudfront_distribution.distribution.domain_name
+      AWS_LAMBDA_EXEC_WRAPPER            = "/opt/bootstrap"
+      PORT                               = "8080"
+      CDN_HOST                           = aws_cloudfront_distribution.distribution.domain_name
+      NEXT_PUBLIC_MIXPANEL_PROJECT_TOKEN = data.aws_secretsmanager_secret_version.mixpanel.secret_string
     }
   }
   layers = [
@@ -95,4 +96,12 @@ resource "aws_lambda_provisioned_concurrency_config" "baseline" {
   function_name                     = aws_lambda_function.frontend.function_name
   provisioned_concurrent_executions = var.provisioned_concurrency
   qualifier                         = aws_lambda_alias.alias.name
+}
+
+resource "aws_secretsmanager_secret" "mixpanel" {
+  name = "${var.environment}/app/mixpanel"
+}
+
+data "aws_secretsmanager_secret_version" "mixpanel" {
+  secret_id = aws_secretsmanager_secret.mixpanel.id
 }
