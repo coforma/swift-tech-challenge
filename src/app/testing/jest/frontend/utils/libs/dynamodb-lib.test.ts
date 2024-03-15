@@ -3,6 +3,7 @@ import {
   GetCommand,
   DynamoDBDocumentClient,
   ScanCommand,
+  PutCommand,
 } from "@aws-sdk/lib-dynamodb";
 import { mockClient } from "aws-sdk-client-mock";
 
@@ -19,6 +20,15 @@ describe("Test DynamoDB lib", () => {
     await dynamoLib.get({ TableName: "foos", Key: { id: "foo1" } });
 
     expect(mockGet).toHaveBeenCalled();
+  });
+
+  test("Can put", async () => {
+    const mockPut = jest.fn();
+    dynamoClientMock.on(PutCommand).callsFake(mockPut);
+
+    await dynamoLib.put({ TableName: "foos", Item: { id: "foo1" } });
+
+    expect(mockPut).toHaveBeenCalled();
   });
 
   test("Can perform a single scan", async () => {

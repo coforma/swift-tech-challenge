@@ -5,6 +5,8 @@ import {
   DynamoDBDocumentClient,
   ScanCommand,
   ScanCommandInput,
+  PutCommandInput,
+  PutCommand,
 } from "@aws-sdk/lib-dynamodb";
 
 const awsConfig = {
@@ -17,6 +19,8 @@ const dynamoClient = {
   get: async function (params: GetCommandInput) {
     return await client.send(new GetCommand(params));
   },
+  put: async (params: PutCommandInput) =>
+    await client.send(new PutCommand(params)),
   singleScan: async function (params: ScanCommandInput) {
     return await client.send(new ScanCommand(params));
   },
