@@ -12,12 +12,14 @@ import {
   CardMedia,
 } from "@trussworks/react-uswds";
 import { CardIcon } from "./CardIcon";
+// utils
+import {
+  maskCurrency,
+  maskThousands,
+  maskPercentage,
+} from "../../utils/masking";
 //types
 import { College } from "../../types";
-import {
-  convertToThousandsSeparatedString,
-  convertPercentage,
-} from "../../utils/masking";
 
 export const CollegeCard = ({ college }: Props) => {
   return (
@@ -37,18 +39,25 @@ export const CollegeCard = ({ college }: Props) => {
       <CardBody>
         <p className="card_desc">{college.description}</p>
         <div className="card_grid">
-          <CardIcon subtitle={"Type"} highlight={college.type} />
+          <CardIcon
+            subtitle={"Type"}
+            highlight={college.type}
+            icon="account_balance"
+          />
           <CardIcon
             subtitle={"Undergraduate population"}
-            highlight={convertToThousandsSeparatedString(college.population!)}
+            highlight={maskThousands(college.population)}
+            icon="people"
           />
           <CardIcon
             subtitle={"Graduation rate"}
-            highlight={`${convertPercentage(college.completionRate!)} %`}
+            highlight={maskPercentage(college.completionRate)}
+            icon="school"
           />
           <CardIcon
             subtitle={"Average cost per year"}
-            highlight={`$${convertToThousandsSeparatedString(college.avgCost!)}`}
+            highlight={maskCurrency(college.avgCost)}
+            icon="local_offer"
           />
         </div>
       </CardBody>

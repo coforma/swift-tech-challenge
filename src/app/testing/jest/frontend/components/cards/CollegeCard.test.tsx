@@ -5,10 +5,7 @@ import { mockCollege } from "../../../setupJest";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { axe } from "jest-axe";
-import {
-  convertPercentage,
-  convertToThousandsSeparatedString,
-} from "@/src/app/utils/masking";
+import { maskPercentage, maskThousands } from "@/src/app/utils/masking";
 
 jest.mock("mixpanel-browser", () => ({
   ...jest.requireActual("mixpanel-browser"),
@@ -35,12 +32,10 @@ describe("Test CollegeCard", () => {
     expect(screen.getByText(mockCollege.type)).toBeVisible();
     expect(screen.getByText(mockCollege.population!)).toBeVisible();
     expect(
-      screen.getByText(`${convertPercentage(mockCollege.completionRate!)} %`),
+      screen.getByText(`${maskPercentage(mockCollege.completionRate!)} %`),
     ).toBeVisible();
     expect(
-      screen.getByText(
-        `$${convertToThousandsSeparatedString(mockCollege.avgCost!)}`,
-      ),
+      screen.getByText(`$${maskThousands(mockCollege.avgCost!)}`),
     ).toBeVisible();
   });
 
