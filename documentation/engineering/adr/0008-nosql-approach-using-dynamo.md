@@ -12,6 +12,8 @@ There are multiple ways to store data for the application. You could us a relati
 
 ## Decision
 
+Using a noSQL approach, see expanded comments below.
+
 ### Storage
 
 For storing data about institutions we settled on a NoSQL approach. This came down to three overarching factors that weighed in.
