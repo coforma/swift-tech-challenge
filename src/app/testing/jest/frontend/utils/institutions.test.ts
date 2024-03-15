@@ -3,20 +3,9 @@ import { getInstitutions } from "@/src/app/utils/institutions";
 import s3Lib from "@/src/app/utils/libs/s3-lib";
 import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { mockClient } from "aws-sdk-client-mock";
+import { mockCollegeDbItem } from "../../setupJest";
 
 const dynamoClientMock = mockClient(DynamoDBDocumentClient);
-
-const mockCollegeDbItem = {
-  institutionId: 123456,
-  institutionName: "Test College",
-  city: "Edtown",
-  state: "AZ",
-  description: "Description of college",
-  completionRates: { fourYearInstitution: "0.4784" },
-  averageAttendanceCost: "5687.0",
-  institutionType: "Public",
-  studentPopulation: "99500",
-};
 
 describe("test institutions utils", () => {
   beforeEach(() => {

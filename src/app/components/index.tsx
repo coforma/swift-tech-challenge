@@ -8,3 +8,8 @@ export { TextField } from "./form/TextField";
 export { HeroImage } from "./layout/HeroImage";
 export { PageHeader } from "./layout/PageHeader";
 export { PageFooter } from "./layout/PageFooter";
+// context provider
+export {
+  InstitutionContext,
+  InstitutionProvider,
+} from "./institutions/InstitutionProvider";

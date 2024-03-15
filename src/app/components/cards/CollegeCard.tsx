@@ -1,3 +1,5 @@
+"use client";
+import mixpanel from "mixpanel-browser";
 // components
 import Image from "next/image";
 import {
@@ -34,9 +36,12 @@ export const CollegeCard = ({ college }: Props) => {
           <CardIcon subtitle={"Type"} highlight={college.type} />
           <CardIcon
             subtitle={"Student population"}
-            highlight={college.populationAmount}
+            highlight={college.population}
           />
-          <CardIcon subtitle={"Graduation rate"} highlight={college.gradRate} />
+          <CardIcon
+            subtitle={"Graduation rate"}
+            highlight={college.completionRate}
+          />
           <CardIcon
             subtitle={"Average cost per year"}
             highlight={college.avgCost}
@@ -45,7 +50,11 @@ export const CollegeCard = ({ college }: Props) => {
       </CardBody>
       <CardFooter className="card_footer">
         <ButtonGroup>
-          <Link className="usa-button" href={`apply/${college.id}`}>
+          <Link
+            className="usa-button"
+            href={`apply/${college.id}`}
+            onClick={() => mixpanel.track("click_launch-application")}
+          >
             Apply to this school
           </Link>
         </ButtonGroup>
