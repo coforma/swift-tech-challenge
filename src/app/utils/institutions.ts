@@ -70,6 +70,12 @@ export async function getInstitutions() {
       colleges.push(college);
     }
   }
+
+  /*
+   * Sort colleges by name in alpha order, could optimize but inserting
+   * in sorted order if performance becomes an issue
+   */
+  colleges.sort((a, b) => (a.name > b.name ? 1 : -1));
   return colleges;
 }
 
