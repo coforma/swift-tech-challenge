@@ -11,8 +11,7 @@ export async function getInstitutions() {
     FilterExpression: "recordType = :recordType",
     ExpressionAttributeValues: { ":recordType": "data" },
   };
-  const result = await dynamoClient.singleScan(params);
-  const items = result?.Items;
+  const items = await dynamoClient.scanAll(params);
 
   if (Array.isArray(items)) {
     for (const item of items) {
