@@ -16,6 +16,7 @@ const nextConfig = {
   assetPrefix: process.env.CDN_HOST ? `https://process.env.CDN_HOST` : '',
   experimental: {
     serverActions: {
+      allowedForwardedHosts: ['rm93rrjzid.execute-api.us-east-1.amazonaws.com']
       allowedOrigins: process.env.CDN_HOST ? [`https://${process.env.CDN_HOST}` ] : [],
     }
   }
