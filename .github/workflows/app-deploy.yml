@@ -59,7 +59,7 @@ jobs:
           --s3-bucket $ARTIFACT_BUCKET --s3-key $GITHUB_REF_NAME/frontend.zip | tee update.json
           ## Wait for function to complete update
           aws lambda wait function-updated-v2 --function-name $LAMBDA_NAME
-          LAMBDA_CODE_SHA=$(cat update.json | jq .CodeSha256 )
+          LAMBDA_CODE_SHA=$(cat update.json | jq -r .CodeSha256 )
           ## Publish new version
           aws lambda publish-version --function-name  $LAMBDA_NAME --code-sha256 $LAMBDA_CODE_SHA | tee publish.json
           LAMBDA_VERSION=$(cat publish.json | jq -r .Version)
