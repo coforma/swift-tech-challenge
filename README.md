@@ -9,7 +9,8 @@ Coforma's response to the SWIFT technical challenge
 
 - [Getting Started](#getting-started)
 - [Testing](#testing)
-- [Documentation](#documentation)
+- [Analytics](#analytics)
+- [Decision Documentation](#decision-documentation)
 
 ## Getting Started
 
@@ -109,7 +110,17 @@ We use [axe](https://www.deque.com/axe/) for automated accessibility testing. Ad
 
 These tests can be run manually via the CLI by running unit tests and integration tests, but will also run on every commit for each branch in the CI pipeline.
 
-## Documentation
+## Analytics
+
+Mixpanel is a customer and product analytics platform that we use to track analytics related to traffic and user behavior. This helps us better meet user needs by monitoring application usage so we can improve product performance and behavior.
+
+It's best practice to separate your tracked data by environment. We have two separate Mixpanel projects set up: [Test](https://mixpanel.com/project/3250005/view/3758561/app/boards#discover) (used for testing conducted in lower environments) and [Prod](https://mixpanel.com/project/3250083/view/3758651/app/boards) (used for tracking production data). This data can be seen after invitation and authentication.
+
+### Using Mixpanel
+
+Mixpanel has excellent documentation for JavaScript, which can be found in the [JavaScript documentation here](https://docs.mixpanel.com/docs/tracking-methods/sdks/javascript). This includes information on user and event tracking. While client-side tracking is necessary to an extent, server-side tracking is more reliable. Documentation for server-side tracking can be found in the [Node.js documentation here](https://docs.mixpanel.com/docs/tracking-methods/sdks/nodejs).
+
+## Decision Documentation
 
 ### Using adr-tools
 

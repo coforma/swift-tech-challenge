@@ -3,11 +3,12 @@ import { GridContainer } from "@trussworks/react-uswds";
 import { CollegeCard, HeroImage } from "./components";
 // utils
 import { getInstitutions } from "@/src/app/utils/institutions";
+import { College } from "./types";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const cards = await getInstitutions();
+  const institutions = await getInstitutions();
   return (
     <main>
       <HeroImage />
@@ -19,8 +20,8 @@ export default async function Home() {
           </p>
         </div>
         <ul className="usa-card-group">
-          {cards.map((card) => (
-            <CollegeCard key={card.id} college={card} />
+          {institutions.map((school: College) => (
+            <CollegeCard key={school.id} college={school} />
           ))}
         </ul>
       </GridContainer>
