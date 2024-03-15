@@ -17,7 +17,7 @@ import { College } from "../../types";
 
 const imageLoader = ({ src }: { src: string }) => {
   if (process.env.CDN_HOST) {
-    return `https://d2z6xcoh14f3wb.cloudfront.net/institution-images/${src}`;
+    return `https://${process.env.CDN_HOST}/institution-images/${src}`;
   }
   return `https://swift-institution-images.s3.amazonaws.com/${src}`;
 };
