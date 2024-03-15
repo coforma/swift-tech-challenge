@@ -1,6 +1,7 @@
 import { PageFooter } from "@/src/app/components";
 import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
+import { act } from "react-dom/test-utils";
 
 const component = <PageFooter />;
 
@@ -20,7 +21,9 @@ describe("Test Footer", () => {
 describe("Test Footer accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
     const { container } = render(component);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await act(async () => {
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
   });
 });

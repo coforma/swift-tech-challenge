@@ -5,3 +5,8 @@ export { CollegeCard } from "./cards/CollegeCard";
 export { HeroImage } from "./layout/HeroImage";
 export { PageHeader } from "./layout/PageHeader";
 export { PageFooter } from "./layout/PageFooter";
+// context provider
+export {
+  InstitutionContext,
+  InstitutionProvider,
+} from "./institutions/InstitutionProvider";

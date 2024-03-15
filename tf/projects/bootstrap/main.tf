@@ -134,6 +134,17 @@ resource "aws_iam_policy" "tfstate_access" {
         Effect   = "Allow"
         Resource = ["arn:aws:dynamodb:*:*:table/${var.dynamodb_table}"]
       },
+      {
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+        Effect = "Allow"
+        Resource = [
+          "arn:aws:secretsmanager:us-east-1:905418154281:secret:test/app/mixpanel*",
+          "arn:aws:secretsmanager:us-east-1:905418154281:secret:stage/app/mixpanel*",
+          "arn:aws:secretsmanager:us-east-1:905418154281:secret:prod/app/mixpanel*"
+        ]
+      }
     ]
   })
 }
