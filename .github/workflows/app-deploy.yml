@@ -44,6 +44,7 @@ jobs:
       LAMBDA_NAME: ${{ inputs.target}}-frontend
       LAMBDA_ALIAS: ${{ inputs.target}}-app-latest
       ARTIFACT_BUCKET: ${{ vars.artifact_bucket }}
+      PUBLIC_BUCKET: ${{ vars.public_bucket }}
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
