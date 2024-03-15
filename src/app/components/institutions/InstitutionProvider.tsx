@@ -3,11 +3,15 @@ import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
 // import types
 import { College } from "../../types";
 
-export const InstitutionContext = createContext({
+export interface InstitutionContextShape {
+  institutionData: College[] | undefined;
+}
+
+export const InstitutionContext = createContext<InstitutionContextShape>({
   institutionData: undefined as College[] | undefined,
 });
 
-export const InstitutionProvider = (children?: ReactNode) => {
+export const InstitutionProvider = ({ children }: Props) => {
   const [institutionData, setInstitutionData] = useState<
     College[] | undefined
   >();
@@ -30,3 +34,7 @@ export const InstitutionProvider = (children?: ReactNode) => {
     </InstitutionContext.Provider>
   );
 };
+
+interface Props {
+  children?: ReactNode;
+}
