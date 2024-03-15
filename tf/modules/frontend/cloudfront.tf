@@ -116,8 +116,8 @@ resource "aws_s3_bucket" "static" {
 }
 
 resource "aws_cloudfront_origin_access_control" "default" {
-  name                              = "cloudfront OAC"
-  description                       = "Default S3 OAC"
+  name                              = "cloudfront OAC (${var.environment})"
+  description                       = "Default S3 OAC (${var.environment})"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
@@ -153,4 +153,13 @@ data "aws_iam_policy_document" "static" {
 resource "aws_s3_bucket_policy" "static" {
   bucket = aws_s3_bucket.static.id
   policy = data.aws_iam_policy_document.static.json
+}
+
+resource "aws_s3_bucket_public_access_block" "static" {
+  bucket = aws_s3_bucket.static.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
 }
