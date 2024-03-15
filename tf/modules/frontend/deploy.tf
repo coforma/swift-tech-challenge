@@ -41,16 +41,33 @@ resource "aws_iam_policy" "app_deploy" {
         aws_lambda_alias.alias.arn]
       },
       {
-        Action   = ["s3:ListBucket"]
-        Effect   = "Allow"
-        Resource = ["arn:aws:s3:::${var.artifact_bucket}"]
+        Action = ["s3:ListBucket"]
+        Effect = "Allow"
+        Resource = [
+          "arn:aws:s3:::${var.artifact_bucket}",
+          "arn:aws:s3:::${var.static_bucket}"
+        ]
       },
       {
         Action = [
           "s3:GetObject"
         ]
-        Effect   = "Allow"
-        Resource = ["arn:aws:s3:::${var.artifact_bucket}/*"]
+        Effect = "Allow"
+        Resource = [
+          "arn:aws:s3:::${var.artifact_bucket}/*",
+          "arn:aws:s3:::${var.static_bucket}/*",
+        ]
+      },
+      {
+        Action = [
+          "s3:PutObject",
+          "s3:PutObjectAcl",
+          "s3:PutObjectTagging"
+        ]
+        Effect = "Allow"
+        Resource = [
+          "arn:aws:s3:::${var.static_bucket}/*"
+        ]
       }
     ]
   })
