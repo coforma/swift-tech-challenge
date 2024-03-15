@@ -12,5 +12,5 @@ export const CardIcon = ({ subtitle, highlight }: Props) => {
 
 type Props = {
   subtitle: string;
-  highlight: string | number;
+  highlight: string | number | undefined;
 };

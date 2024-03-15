@@ -83,7 +83,7 @@ export async function getInstitutions() {
 const mapToDegreeString = (key: number | string) =>
   degreeMap[key as keyof typeof degreeMap];
 
-const convertStringToBoolObject = (obj: { [key: string]: string }) => {
+const convertStringToBoolObject: any = (obj: { [key: string]: string }) => {
   if (obj) {
     return Object.fromEntries(
       Object.keys(obj).map((el) => [el, obj[el] === "True"]),
@@ -91,7 +91,7 @@ const convertStringToBoolObject = (obj: { [key: string]: string }) => {
   } else return undefined;
 };
 
-const convertFloatToObject = (obj: { [key: string]: any }) => {
+const convertFloatToObject: any = (obj: { [key: string]: any }) => {
   if (obj) {
     return Object.fromEntries(
       Object.keys(obj).map((el) => [el, parseFloat(obj[el])]),
@@ -99,7 +99,7 @@ const convertFloatToObject = (obj: { [key: string]: any }) => {
   } else return undefined;
 };
 
-const convertIntToObject = (obj: { [key: string]: any }) => {
+const convertIntToObject: any = (obj: { [key: string]: any }) => {
   if (obj) {
     return Object.fromEntries(
       Object.keys(obj).map((el) => [el, parseFloat(obj[el])]),
