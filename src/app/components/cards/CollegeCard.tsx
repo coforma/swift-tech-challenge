@@ -37,7 +37,7 @@ export const CollegeCard = ({ college }: Props) => {
         <div className="card_grid">
           <CardIcon subtitle={"Type"} highlight={college.type} />
           <CardIcon
-            subtitle={"Student population"}
+            subtitle={"Undergraduate population"}
             highlight={convertToThousandsSeparatedString(
               college.populationAmount,
             )}
