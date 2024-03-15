@@ -1,5 +1,4 @@
 "use server";
-
 import dynamoClient from "./libs/dynamodb-lib";
 // types
 import { College, degreeMap } from "../types";
@@ -27,7 +26,6 @@ export async function getInstitutions() {
         url: item?.url,
         type: item?.institutionType,
         description: item?.description,
-        img: "", // image loading addressed separately
         // focus
         predominantUndergradDegree: mapToDegreeString(
           item?.predominantUndergradDegree,
@@ -72,6 +70,12 @@ export async function getInstitutions() {
       colleges.push(college);
     }
   }
+
+  /*
+   * Sort colleges by name in alpha order, could optimize but inserting
+   * in sorted order if performance becomes an issue
+   */
+  colleges.sort((a, b) => (a.name > b.name ? 1 : -1));
   return colleges;
 }
 

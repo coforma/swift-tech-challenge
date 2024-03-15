@@ -1,5 +1,6 @@
 "use client";
 import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
+import { getInstitutions } from "@/src/app/utils/institutions";
 // import types
 import { College } from "../../types";
 
@@ -16,17 +17,25 @@ export const InstitutionProvider = ({ children }: Props) => {
     College[] | undefined
   >();
 
+  const fetchInstitutions = async () => {
+    try {
+      const result = await getInstitutions();
+      setInstitutionData(result);
+    } catch (e: any) {
+      throw new Error("Institution data could not be loaded.");
+    }
+  };
+
+  useEffect(() => {
+    fetchInstitutions();
+  }, []); // ← runs once on app load
+
   const providerValue = useMemo(
     () => ({
       institutionData,
     }),
-    [], // define deps here
+    [institutionData],
   );
-
-  useEffect(() => {
-    // TODO: put initial api call here
-    setInstitutionData(undefined); // TODO: set institution data here
-  }, []); // ← runs once on app load
 
   return (
     <InstitutionContext.Provider value={providerValue}>

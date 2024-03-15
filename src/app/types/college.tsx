@@ -1,5 +1,3 @@
-import { StaticImageData } from "next/image";
-
 export enum CollegeType {
   PUBLIC = "Public",
   PRIVATE_NP = "Private nonprofit",
@@ -23,7 +21,6 @@ export interface College {
   url: string;
   type: CollegeType;
   description: string;
-  img: string | StaticImageData;
   // focus
   predominantUndergradDegree: string;
   highestDegreeAwarded: string;

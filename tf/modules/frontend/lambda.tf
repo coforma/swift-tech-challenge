@@ -61,11 +61,13 @@ resource "aws_lambda_function" "frontend" {
   handler       = "run.sh"
 
   runtime = "nodejs20.x"
+  timeout = 10
 
   environment {
     variables = {
       AWS_LAMBDA_EXEC_WRAPPER = "/opt/bootstrap"
       PORT                    = "8080"
+      CDN_HOST                = aws_cloudfront_distribution.distribution.domain_name
     }
   }
   layers = [
@@ -74,20 +76,23 @@ resource "aws_lambda_function" "frontend" {
   logging_config {
     log_format = "JSON"
   }
+  publish = true
 }
 
-
-
-
-data "aws_iam_policy_document" "gw_assume_role" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["apigateway.amazonaws.com"]
-    }
-
-    actions = ["sts:AssumeRole"]
+resource "aws_lambda_alias" "alias" {
+  name             = "${var.environment}-app-latest"
+  description      = "Lambda Alias exposed to API Gateway"
+  function_name    = aws_lambda_function.frontend.arn
+  function_version = aws_lambda_function.frontend.version
+  lifecycle {
+    ignore_changes = [routing_config]
   }
+}
+
+resource "aws_lambda_provisioned_concurrency_config" "baseline" {
+  #If provisioned concurrency is 0 then do not create this resource
+  count                             = var.provisioned_concurrency == 0 ? 0 : 1
+  function_name                     = aws_lambda_function.frontend.function_name
+  provisioned_concurrent_executions = var.provisioned_concurrency
+  qualifier                         = aws_lambda_alias.alias.name
 }

@@ -12,7 +12,6 @@ export const mockCollege: College = {
   url: "/image",
   type: CollegeType.PUBLIC,
   description: "School Description",
-  img: "",
   predominantUndergradDegree: "",
   highestDegreeAwarded: "",
   specialties: {
@@ -81,6 +80,92 @@ export const mockCollege: College = {
     medianGraduateEarnings10Years: 50000,
   },
   retentionRate: 0.125,
+};
+
+export const mockCollegeDbItemTwo = {
+  institutionId: 122456,
+  institutionName: " A University of College",
+  city: "Beanington",
+  state: "KY",
+  zip: "00000",
+  url: "/image",
+  institutionType: "Public",
+  description: "Description of college",
+  img: "",
+  predominantUndergradDegree: 3,
+  highestDegreeAwarded: 4,
+  specialties: {
+    humanities: "True",
+    interdisciplinary: "True",
+    occupational: "True",
+    socialScience: "True",
+    stem: "True",
+  },
+  studentPopulation: "99500",
+  raceDemographics: {
+    percentAian: "0.125",
+    percentAsian: "0.125",
+    percentBlack: "0.125",
+    percentHispanic: "0.125",
+    percentNhpi: "0.125",
+    percentNonResidentAlien: "0.125",
+    percentTwoOrMore: "0.125",
+    percentUnknownRace: "0.125",
+    percentWhite: "0.125",
+  },
+  admissionRate: "0.125",
+  satScores: {
+    satAverageScore: "800",
+    satMathPercentile25: "800",
+    satMathPercentile50: "800",
+    satMathPercentile75: "800",
+    satReadingPercentile25: "800",
+    satReadingPercentile50: "800",
+    satReadingPercentile75: "800",
+    satWritingPercentile25: "800",
+    satWritingPercentile50: "800",
+    satWritingPercentile75: "800",
+  },
+  // cost
+  averageAttendanceCost: "5687.0",
+  tuitionInState: "20000",
+  tuitionOutOfState: "30000",
+  percentUndergradWithLoan: "0.125",
+  netPriceCalculatorUrl: "npcurl",
+  publicNetPrice: {
+    averagePrice: "20000",
+    averagePriceUnder30k: "20000",
+    averagePriceUnder30To48k: "20000",
+    averagePriceUnder48To75k: "20000",
+    averagePriceUnder75To110k: "20000",
+    averagePriceUnder110kPlus: "20000",
+  },
+  netPricePrivate: {
+    averagePrice: null,
+    averagePriceUnder30k: null,
+    averagePriceUnder30To48k: null,
+    averagePriceUnder48To75k: null,
+    averagePriceUnder75To110k: null,
+    averagePriceUnder110kPlus: null,
+  },
+  // faculty & expenditures
+  facultyAverageSalary: "50000",
+  facultyPercentageEmployedFull: ".125",
+  studentToFacultyRatio: "20",
+  instructionalExpenditurePerSt: "3000",
+  // outcomes
+  completionRates: {
+    fourYearInstitution: "0.125",
+    underFourYearInstitution: null,
+  },
+  earnings: {
+    meanGraduateEarnings10Years: "50000",
+    medianGraduateEarnings10Years: "50000",
+  },
+  retentionRate: {
+    fourYearInstitution: "0.125",
+    underFourYearInstitution: null,
+  },
 };
 
 export const mockCollegeDbItem = {
