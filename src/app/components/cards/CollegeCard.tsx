@@ -1,6 +1,4 @@
 // components
-
-"use client";
 import Image from "next/image";
 import {
   Button,
@@ -15,13 +13,6 @@ import { CardIcon } from "./CardIcon";
 // types
 import { College } from "../../types";
 
-const imageLoader = ({ src }: { src: string }) => {
-  if (process.env.CDN_HOST) {
-    return `https://${process.env.CDN_HOST}/institution-images/${src}`;
-  }
-  return `https://swift-institution-images.s3.amazonaws.com/${src}`;
-};
-
 export const CollegeCard = ({ college }: Props) => {
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
@@ -31,7 +22,6 @@ export const CollegeCard = ({ college }: Props) => {
       </CardHeader>
       <CardMedia className="card_media">
         <Image
-          loader={imageLoader}
           src={college.img}
           alt={`AI generated image of ${college.name}`}
           width={400}
