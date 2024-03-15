@@ -65,7 +65,9 @@ describe("Test CollegeCard", () => {
 describe("Test CollegeCard accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
     const { container } = render(component);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await act(async () => {
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
   });
 });
