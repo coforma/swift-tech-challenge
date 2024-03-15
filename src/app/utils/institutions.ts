@@ -25,7 +25,6 @@ export async function getInstitutions() {
         url: item?.url,
         type: item?.institutionType,
         description: item?.description,
-        img: "", // image loading addressed separately
         // focus
         predominantUndergradDegree: mapToDegreeString(
           item?.predominantUndergradDegree,
