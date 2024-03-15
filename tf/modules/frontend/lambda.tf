@@ -77,6 +77,7 @@ resource "aws_lambda_function" "frontend" {
       AWS_LAMBDA_EXEC_WRAPPER = "/opt/bootstrap"
       PORT                    = "8080"
       CDN_HOST                = aws_cloudfront_distribution.distribution.domain_name
+      MIXPANEL_SECRET_ID      = aws_secretsmanager_secret.mixpanel.id
     }
   }
   layers = [

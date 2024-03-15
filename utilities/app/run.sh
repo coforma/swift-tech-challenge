@@ -1,2 +1,3 @@
-export NEXT_PUBLIC_MIXPANEL_PROJECT_TOKEN=$(curl http://localhost:$PARAMETERS_SECRETS_EXTENSION_HTTP_PORT/secretsmanager/get -d secretId=${MIXPANEL_SECRET_ID})
+export NEXT_PUBLIC_MIXPANEL_PROJECT_TOKEN=$(curl http://localhost:${PARAMETERS_SECRETS_EXTENSION_HTTP_PORT:2773}/secretsmanager/get -d secretId=${MIXPANEL_SECRET_ID})
+echo $NEXT_PUBLIC_MIXPANEL_PROJECT_TOKEN
 node server.js
