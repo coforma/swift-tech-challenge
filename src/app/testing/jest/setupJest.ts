@@ -12,7 +12,6 @@ export const mockCollege: College = {
   url: "/image",
   type: CollegeType.PUBLIC,
   description: "School Description",
-  img: "",
   predominantUndergradDegree: "",
   highestDegreeAwarded: "",
   specialties: {
