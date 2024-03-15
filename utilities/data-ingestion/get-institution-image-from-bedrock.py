@@ -3,6 +3,7 @@ import boto3
 import random
 import logging
 import base64
+from io import BytesIO
 
 logger = logging.getLogger()
 bedrock_runtime = boto3.client("bedrock-runtime", "us-east-1")
@@ -66,13 +67,10 @@ def lambda_handler(event, context):
 
         # convert to png
         decoded_data = base64.b64decode(image_body["images"][0])
-        tmp_path = "/tmp/" + file_name
-        image_file = open(tmp_path, "wb")
-        image_file.write(decoded_data)
+        img_data = BytesIO(decoded_data)
 
         # write image to S3
-        s3_client.put_object(Body=tmp_path, Bucket=bucket_name, Key=file_name)
-        image_file.close()
+        s3_client.put_object(Body=img_data, Bucket=bucket_name, Key=file_name)
     else:
         logger.info("Image already exists for " + institution_name)
 
