@@ -52,6 +52,18 @@ jobs:
           role-to-assume: ${{ secrets.DEPLOY_ROLE }}
           aws-region: us-east-1
           role-session-name: GitHubAppDeploy
+      - name: Wait for lambda alias to update
+        if: inputs.wait_enabled == 'true' || inputs.wait_enabled == true
+        timeout-minutes: 5
+        run: |
+          weight="not_null"
+          printf "Waiting on Lambda Alias to update."
+          while [ "$weight" != "null" ];
+          do
+            sleep 5
+            weight=$(aws lambda get-alias --function-name $LAMBDA_NAME --name $LAMBDA_ALIAS | jq -r ".RoutingConfig.AdditionalVersionWeights" )
+            printf "."
+          done
       - name: Update Frontend Lambda Code
         run: |
           ## Update the code from s3

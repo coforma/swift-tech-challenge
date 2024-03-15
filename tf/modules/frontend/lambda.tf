@@ -86,7 +86,10 @@ resource "aws_lambda_alias" "alias" {
   function_name    = aws_lambda_function.frontend.arn
   function_version = aws_lambda_function.frontend.version
   lifecycle {
-    ignore_changes = [routing_config]
+    ignore_changes = [
+      routing_config,
+      function_version
+    ]
   }
 }
 
