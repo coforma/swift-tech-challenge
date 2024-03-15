@@ -4,7 +4,6 @@ import mixpanel from "mixpanel-browser";
 import Image from "next/image";
 import {
   Button,
-  ButtonGroup,
   Card,
   CardBody,
   CardFooter,
@@ -62,15 +61,14 @@ export const CollegeCard = ({ college }: Props) => {
         </div>
       </CardBody>
       <CardFooter className="card_footer">
-        <ButtonGroup>
-          <Button
-            name="apply"
-            type={"button"}
-            onClick={() => mixpanel.track("click_launch-application")}
-          >
-            Apply to this school
-          </Button>
-        </ButtonGroup>
+        <Button
+          name="apply"
+          type={"button"}
+          className="card_footer-apply-button"
+          onClick={() => mixpanel.track("click_launch-application")}
+        >
+          Apply to this school
+        </Button>
       </CardFooter>
     </Card>
   );
