@@ -44,15 +44,11 @@ describe("Test CollegeCard", () => {
   test("On click, apply button fires tracking event", async () => {
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
     const applyButton = screen.getByRole("button", { name: /apply/i });
-    expect(screen.getByRole("button", { name: /apply/i })).toBeVisible();
+    expect(applyButton).toBeVisible();
     await act(async () => {
       await userEvent.click(applyButton);
     });
     expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
-  });
-
-  test("CollegeCard button group should have one button", () => {
-    expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 });
 

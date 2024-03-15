@@ -15,7 +15,7 @@ resource "aws_apigatewayv2_integration" "app" {
   description            = "Lambda Integration"
   integration_method     = "POST"
   payload_format_version = "2.0"
-  integration_uri        = aws_lambda_function.frontend.invoke_arn
+  integration_uri        = aws_lambda_alias.alias.invoke_arn
 }
 
 resource "aws_apigatewayv2_route" "app" {
@@ -30,13 +30,25 @@ resource "aws_apigatewayv2_stage" "stage" {
   auto_deploy = true
 }
 
+data "aws_iam_policy_document" "gw_assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["apigateway.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
 resource "aws_lambda_permission" "apigw_lambda" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.frontend.function_name
   principal     = "apigateway.amazonaws.com"
-
+  qualifier     = aws_lambda_alias.alias.name
   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
   source_arn = "${aws_apigatewayv2_api.app.execution_arn}/*/*/{proxy+}"
 }
-
