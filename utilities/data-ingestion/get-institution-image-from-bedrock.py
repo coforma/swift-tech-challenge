@@ -2,6 +2,7 @@ import json
 import boto3
 import random
 import logging
+import base64
 
 logger = logging.getLogger()
 bedrock_runtime = boto3.client("bedrock-runtime", "us-east-1")
@@ -30,13 +31,13 @@ def lambda_handler(event, context):
     # load the json to a string
     resp = json.loads(json.loads(json.dumps(event))["Records"][0]["body"])
 
-    ## variable for use throughout function
+    # variable for use throughout function
     institution_name = resp["institutionName"]
     institution_id = resp["institutionId"]
 
     # Create image
-    file_name = str(institution_id) + ".json"
-    bucket_name = "swift-institution-images"
+    file_name = str(institution_id) + ".png"
+    bucket_name = "swift-institution-images-public"
     image_path = bucket_name + "/" + file_name
 
     # since this is randomly generated and a temp solution to meet a design need
@@ -63,10 +64,15 @@ def lambda_handler(event, context):
         generated_image_response = bedrock_runtime.invoke_model(**bedrock_image_args)
         image_body = json.loads(generated_image_response.get("body").read())
 
+        # convert to png
+        decoded_data = base64.b64decode(image_body["images"][0])
+        tmp_path = "/tmp/" + file_name
+        image_file = open(tmp_path, "wb")
+        image_file.write(decoded_data)
+
         # write image to S3
-        s3_client.put_object(
-            Body=image_body["images"][0], Bucket=bucket_name, Key=file_name
-        )
+        s3_client.put_object(Body=tmp_path, Bucket=bucket_name, Key=file_name)
+        image_file.close()
     else:
         logger.info("Image already exists for " + institution_name)
 

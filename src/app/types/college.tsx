@@ -1,5 +1,3 @@
-import { StaticImageData } from "next/image";
-
 export enum CollegeType {
   PUBLIC = "Public",
   PRIVATE_NP = "Private nonprofit",
@@ -8,7 +6,6 @@ export enum CollegeType {
 
 export interface College {
   id: number;
-  img: string | StaticImageData;
   name: string;
   city: string;
   state: string;
