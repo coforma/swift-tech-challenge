@@ -1,5 +1,6 @@
 "use client";
 import mixpanel from "mixpanel-browser";
+import { useRouter } from "next/navigation";
 // components
 import Image from "next/image";
 import {
@@ -16,8 +17,14 @@ import { CardIcon } from "./CardIcon";
 import { College } from "../../types";
 
 export const CollegeCard = ({ college }: Props) => {
+  const router = useRouter();
   return (
-    <Card layout="flagDefault" headerFirst={true} className="card">
+    <Card
+      layout="flagDefault"
+      headerFirst={true}
+      className="card"
+      onClick={() => router.push(`/${college.id}`)}
+    >
       <CardHeader className="card_header">
         <h2 className="card_header-title">{college.name}</h2>
         <p className="card_header-subtitle">{`${college.city}, ${college.state}`}</p>
