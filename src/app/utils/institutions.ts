@@ -1,3 +1,4 @@
+"use server";
 import dynamoClient from "./libs/dynamodb-lib";
 import s3Client from "./libs/s3-lib";
 import emptyPictureIcon from "@/src/app/public/picture_icon.png";
