@@ -23,6 +23,8 @@
       @include u-font-size("heading", 12)
     }
     @include u-text("primary-darker", "bold");
+
+    @include u-margin-bottom(0);
   }
   &-subtitle {
     text-align: center;

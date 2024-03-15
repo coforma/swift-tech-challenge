@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // components
 import {
   Button,
@@ -12,29 +12,25 @@ import {
 } from "@trussworks/react-uswds";
 import { TextField, TextArea } from "../../components";
 import Link from "next/link";
+import { getInsitutionApplication } from "../../utils/institutions";
 
 export const ApplicationForm = ({ institutionId }: Props) => {
-  const [institution] = useState<Record<string, any> | undefined>({
-    questions: [
-      "First and last name",
-      "Email",
-      "Phone",
-      "No SAT score required.",
-      "The lessons we take from obstacles we encounter can be fundamental to later success. Recount a time when you faced a challenge, setback, or failure. How did it affect you, and what did you learn from the experience?",
-      "Describe a topic, idea, or concept you find so engaging that it makes you lose all track of time. Why does it captivate you? What or who do you turn to when you want to learn more?",
-      "Where Do You Stand on Unconcealed Handguns?",
-    ],
-    institutionName: "California State University-Northridge",
-    institutionId: institutionId,
-    recordType: "application",
-  });
+  const [application, setApplication] = useState<
+    Record<string, any> | undefined
+  >();
+
+  useEffect(() => {
+    getInsitutionApplication(Number(institutionId)).then((application) => {
+      setApplication(application);
+    });
+  }, [institutionId]);
 
   const { handleSubmit, register } = useForm();
 
   // eslint-disable-next-line no-console
   const onSubmit = (data: any) => console.log(data);
 
-  const appq = institution?.questions;
+  const appq = application?.questions;
 
   //Handle personal questions
   const hasNameQ: boolean = appq?.includes("First and last name");
@@ -57,7 +53,7 @@ export const ApplicationForm = ({ institutionId }: Props) => {
             NEW APPLICATION (2024-2025)
           </p>
           <h1 className="application_header-title">
-            {institution?.institutionName}
+            {application?.institutionName}
           </h1>
         </div>
         <GridContainer className="application_questions">
@@ -112,35 +108,37 @@ export const ApplicationForm = ({ institutionId }: Props) => {
               </Card>
             )}
             {hasSATQ && (
-              <Card>
+              <Card className="card">
                 <CardBody>
                   <fieldset className="usa-fieldset">
                     <legend className="usa-legend usa-legend--large">
                       SAT scores
                     </legend>
-                    <TextField
-                      id={"math-sat"}
-                      label={"Math"}
-                      name={"math-score"}
-                      required
-                      registerField={register}
-                    />
+                    <div className="application_questions-grid">
+                      <TextField
+                        id={"math-sat"}
+                        label={"Math"}
+                        name={"math-score"}
+                        required
+                        registerField={register}
+                      />
 
-                    <TextField
-                      id={"crit-reading-sat"}
-                      label={"Critical reading"}
-                      name={"reading-score"}
-                      required
-                      registerField={register}
-                    />
+                      <TextField
+                        id={"crit-reading-sat"}
+                        label={"Critical reading"}
+                        name={"reading-score"}
+                        required
+                        registerField={register}
+                      />
 
-                    <TextField
-                      id={"writing-sat"}
-                      label={"Writing"}
-                      name={"writing-score"}
-                      required
-                      registerField={register}
-                    />
+                      <TextField
+                        id={"writing-sat"}
+                        label={"Writing"}
+                        name={"writing-score"}
+                        required
+                        registerField={register}
+                      />
+                    </div>
                   </fieldset>
                 </CardBody>
               </Card>
