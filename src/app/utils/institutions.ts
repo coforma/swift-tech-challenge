@@ -1,3 +1,4 @@
+"use server";
 import dynamoClient from "./libs/dynamodb-lib";
 // types
 import { College, degreeMap } from "../types";
