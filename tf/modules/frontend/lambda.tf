@@ -41,6 +41,15 @@ data "aws_iam_policy_document" "backend" {
       "${var.images_bucket_arn}/*"
     ]
   }
+  statement {
+    sid = "GetSecrets"
+    actions = [
+      "secretsmanager:GetSecrets"
+    ]
+    resources = [
+      aws_secretsmanager_secret.mixpanel.arn
+    ]
+  }
 }
 
 resource "aws_iam_policy" "backend" {
@@ -71,7 +80,8 @@ resource "aws_lambda_function" "frontend" {
     }
   }
   layers = [
-    "arn:aws:lambda:${data.aws_region.current.name}:753240598075:layer:LambdaAdapterLayerX86:20"
+    "arn:aws:lambda:${data.aws_region.current.name}:753240598075:layer:LambdaAdapterLayerX86:20",
+    "arn:aws:lambda:${data.aws_region.current.name}:177933569100:layer:AWS-Parameters-and-Secrets-Lambda-Extension:11"
   ]
   logging_config {
     log_format = "JSON"
@@ -95,4 +105,8 @@ resource "aws_lambda_provisioned_concurrency_config" "baseline" {
   function_name                     = aws_lambda_function.frontend.function_name
   provisioned_concurrent_executions = var.provisioned_concurrency
   qualifier                         = aws_lambda_alias.alias.name
+}
+
+resource "aws_secretsmanager_secret" "mixpanel" {
+  name = "${var.environment}/app/mixpanel"
 }

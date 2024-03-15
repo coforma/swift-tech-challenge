@@ -58,8 +58,8 @@ jobs:
         run: |
           cp -r .next/standalone $GITHUB_WORKSPACE/pkg
           cp -r .next/static $GITHUB_WORKSPACE/pkg/.next/
+          cp utilities/app/run.sh $GITHUB_WORKSPACE/pkg
           cd $GITHUB_WORKSPACE/pkg
-          echo "node server.js" > run.sh
           zip -r frontend.zip .
           mv frontend.zip $GITHUB_WORKSPACE/
           cd $GITHUB_WORKSPACE/.next/static
