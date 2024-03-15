@@ -1,14 +1,15 @@
+"use client";
+import { useContext } from "react";
 // components
 import { Button, GridContainer } from "@trussworks/react-uswds";
-import { CollegeCard, HeroImage } from "./components";
+import { CollegeCard, HeroImage, InstitutionContext } from "./components";
 // utils
-import { getInstitutions } from "@/src/app/utils/institutions";
 import { College } from "./types";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const institutions = await getInstitutions();
+  const { institutionData } = useContext(InstitutionContext);
   return (
     <main>
       <HeroImage />
@@ -23,7 +24,7 @@ export default async function Home() {
           </Button>
         </div>
         <ul className="usa-card-group">
-          {institutions.map((school: College) => (
+          {institutionData?.map((school: College) => (
             <CollegeCard key={school.id} college={school} />
           ))}
         </ul>
