@@ -4,17 +4,16 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 // components
 import {
+  Button,
+  ButtonGroup,
   Card,
   CardBody,
-  CardHeader,
   GridContainer,
 } from "@trussworks/react-uswds";
-/*
- * utils
- * import { getInsitutionApplication } from "@/src/app/utils/institutions";
- */
+import { TextField, TextArea } from "../../components";
+import Link from "next/link";
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: Props) {
   const [institution] = useState<Record<string, any> | undefined>({
     questions: [
       "First and last name",
@@ -26,36 +25,32 @@ export default function Page({ params }: { params: { id: string } }) {
       "Where Do You Stand on Unconcealed Handguns?",
     ],
     institutionName: "California State University-Northridge",
-    institutionId: 110608,
+    institutionId: params.id,
     recordType: "application",
   });
-  // const [isLoading, setLoading] = useState(true);
 
-  // eslint-disable-next-line no-console
-  console.log(params);
-
-  /*
-   * useEffect(() => {
-   *   getInsitutionApplication(Number(params.id)).then((application) => {
-   *     setApplication(application);
-   *     setLoading(false);
-   *   });
-   * }, [params.id]);
-   */
-
-  const { handleSubmit } = useForm();
+  const { handleSubmit, register } = useForm();
 
   // eslint-disable-next-line no-console
   const onSubmit = (data: any) => console.log(data);
 
   const appq = institution?.questions;
-  const hasApplicantQuestions =
-    appq.includes("First and last name") ||
-    appq.includes("email") ||
-    appq.includes("Phone");
 
+  //Handle personal questions
+  const hasNameQ: boolean = appq?.includes("First and last name");
+  const hasEmailQ: boolean = appq?.includes("Email");
+  const hasPhoneQ: boolean = appq?.includes("Phone");
+  const hasPersonalQ: boolean = hasNameQ || hasEmailQ || hasPhoneQ;
+
+  //Handle SAT score questions
+  const hasSATQ: boolean = appq?.includes("What is your SAT score?");
+
+  //Handle EssayQuestions
+  const essayQ1: string | undefined = appq?.[4];
+  const essayQ2: string | undefined = appq?.[5];
+  const essayQ3: string | undefined = appq?.[6];
   return (
-    <main>
+    <main className="application">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="application_header">
           <p className="application_header-subtitle">
@@ -66,48 +61,182 @@ export default function Page({ params }: { params: { id: string } }) {
           </h1>
         </div>
         <GridContainer className="application_questions">
-          <Card>
-            <CardHeader>Applicant info</CardHeader>
-            <CardBody>
-              <fieldset className="usa-fieldset">
-                {" "}
-                {hasApplicantQuestions && (
-                  <>
+          <ul className="usa-card-group">
+            {hasPersonalQ && (
+              <Card className="card">
+                <CardBody>
+                  <fieldset className="usa-fieldset">
                     <legend className="usa-legend usa-legend--large">
-                      Name
+                      Applicant info
                     </legend>
-                    <label className="usa-label" htmlFor="given-name">
-                      First or given name
-                    </label>
-                    <div className="usa-hint" id="gnHint">
-                      For example, Jose, Darren, or Mai
+                    <div className="application_questions-grid">
+                      {hasNameQ && (
+                        <>
+                          <TextField
+                            id={"given-name"}
+                            label={"First name"}
+                            name={"first-name"}
+                            required
+                            registerField={register}
+                          />
+                          <TextField
+                            id={"family-name"}
+                            label={"Last name"}
+                            name={"last-name"}
+                            required
+                            registerField={register}
+                          />
+                        </>
+                      )}
+                      {hasEmailQ && (
+                        <TextField
+                          id={"email-address"}
+                          label={"Email"}
+                          name={"email"}
+                          required
+                          registerField={register}
+                        />
+                      )}
+                      {hasPhoneQ && (
+                        <TextField
+                          id={"phone-number"}
+                          label={"Phone number"}
+                          name={"phone"}
+                          required
+                          registerField={register}
+                        />
+                      )}
                     </div>
-                    <input
-                      className="usa-input usa-input--xl"
-                      id="given-name"
-                      name="first-name"
-                      aria-describedby="gnHint"
+                  </fieldset>
+                </CardBody>
+              </Card>
+            )}
+            {hasSATQ && (
+              <Card>
+                <CardBody>
+                  <fieldset className="usa-fieldset">
+                    <legend className="usa-legend usa-legend--large">
+                      SAT scores
+                    </legend>
+                    <TextField
+                      id={"math-sat"}
+                      label={"Math"}
+                      name={"math-score"}
+                      required
+                      registerField={register}
                     />
-                    <label className="usa-label" htmlFor="family-name">
-                      Last or family name
-                    </label>
-                    <div className="usa-hint" id="lnHint">
-                      For example, Martinez Gonzalez, Gu, or Smith
-                    </div>
-                    <input
-                      className="usa-input usa-input--xl"
-                      id="family-name"
-                      name="last-name"
-                      aria-describedby="lnHint"
+
+                    <TextField
+                      id={"crit-reading-sat"}
+                      label={"Critical reading"}
+                      name={"reading-score"}
+                      required
+                      registerField={register}
                     />
-                  </>
-                )}
-              </fieldset>
-            </CardBody>
-          </Card>
-          <input type="submit" />
+
+                    <TextField
+                      id={"writing-sat"}
+                      label={"Writing"}
+                      name={"writing-score"}
+                      required
+                      registerField={register}
+                    />
+                  </fieldset>
+                </CardBody>
+              </Card>
+            )}
+            {essayQ1 && (
+              <Card>
+                <CardBody>
+                  <fieldset className="usa-fieldset">
+                    <legend className="usa-legend usa-legend--large">
+                      Essay Question 1
+                    </legend>
+                    <p className="application_questions-essay-guidance">
+                      Answer the following essay question. We encourage you to
+                      write the essays in separate word processing program,
+                      check them for grammar and spelling, and then copy/paste
+                      into the boxes here.
+                    </p>
+                    <h3 className="application_questions-essay-q">Question</h3>
+                    <TextArea
+                      id={"essay-question-1"}
+                      label={essayQ1}
+                      name={"question-1"}
+                      required={false}
+                      registerField={register}
+                    />
+                  </fieldset>
+                </CardBody>
+              </Card>
+            )}
+            {essayQ2 && (
+              <Card>
+                <CardBody>
+                  <fieldset className="usa-fieldset">
+                    <legend className="usa-legend usa-legend--large">
+                      Essay Question 2
+                    </legend>
+                    <p className="application_questions-essay-guidance">
+                      Answer the following essay question. We encourage you to
+                      write the essays in separate word processing program,
+                      check them for grammar and spelling, and then copy/paste
+                      into the boxes here.
+                    </p>
+                    <h3 className="application_questions-essay-q">Question</h3>
+                    <TextArea
+                      id={"essay-question-2"}
+                      label={essayQ2}
+                      name={"question-2"}
+                      required={false}
+                      registerField={register}
+                    />
+                  </fieldset>
+                </CardBody>
+              </Card>
+            )}
+            {essayQ3 && (
+              <Card>
+                <CardBody>
+                  <fieldset className="usa-fieldset">
+                    <legend className="usa-legend usa-legend--large">
+                      Essay Question 3
+                    </legend>
+                    <p className="application_questions-essay-guidance">
+                      Answer the following essay question. We encourage you to
+                      write the essays in separate word processing program,
+                      check them for grammar and spelling, and then copy/paste
+                      into the boxes here.
+                    </p>
+                    <h3 className="application_questions-essay-q">Question</h3>
+                    <TextArea
+                      id={"essay-question-3"}
+                      label={essayQ3}
+                      name={"question-3"}
+                      required={false}
+                      registerField={register}
+                    />
+                  </fieldset>
+                </CardBody>
+              </Card>
+            )}
+          </ul>
         </GridContainer>
+        <div className="application_footer">
+          <ButtonGroup className="application_footer-buttons">
+            <Link href={"/"} className="usa-button usa-button--unstyled">
+              Close application
+            </Link>
+            <Button type={"submit"}>Submit application</Button>
+          </ButtonGroup>
+        </div>
       </form>
     </main>
   );
 }
+
+type Props = {
+  params: {
+    id: string;
+  };
+};
