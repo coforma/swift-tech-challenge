@@ -225,34 +225,38 @@ const CostsCard = ({ college }: Props) => {
             get it.
           </p>
           <table>
-            <tr>
-              <th>
-                <b>Household income</b>
-              </th>
-              <th>
-                <b>Average net price</b>
-              </th>
-            </tr>
-            <tr>
-              <td>{"<$30,000"}</td>
-              <td>{netPriceForType?.averagePriceUnder30k}</td>
-            </tr>
-            <tr>
-              <td>{"$30,000–48,000"}</td>
-              <td>{netPriceForType?.averagePriceUnder30To48k}</td>
-            </tr>
-            <tr>
-              <td>{"$48,000–75,000"}</td>
-              <td>{netPriceForType?.averagePriceUnder48To75k}</td>
-            </tr>
-            <tr>
-              <td>{"$75,000–110,000"}</td>
-              <td>{netPriceForType?.averagePriceUnder75To110k}</td>
-            </tr>
-            <tr>
-              <td>{"$110,000+"}</td>
-              <td>{netPriceForType?.averagePriceUnder110kPlus}</td>
-            </tr>
+            <thead>
+              <tr>
+                <th>
+                  <b>Household income</b>
+                </th>
+                <th>
+                  <b>Average net price</b>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{"<$30,000"}</td>
+                <td>{netPriceForType?.averagePriceUnder30k}</td>
+              </tr>
+              <tr>
+                <td>{"$30,000–48,000"}</td>
+                <td>{netPriceForType?.averagePriceUnder30To48k}</td>
+              </tr>
+              <tr>
+                <td>{"$48,000–75,000"}</td>
+                <td>{netPriceForType?.averagePriceUnder48To75k}</td>
+              </tr>
+              <tr>
+                <td>{"$75,000–110,000"}</td>
+                <td>{netPriceForType?.averagePriceUnder75To110k}</td>
+              </tr>
+              <tr>
+                <td>{"$110,000+"}</td>
+                <td>{netPriceForType?.averagePriceUnder110kPlus}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div>
