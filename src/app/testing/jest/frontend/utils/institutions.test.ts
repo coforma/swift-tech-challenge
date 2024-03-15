@@ -1,9 +1,8 @@
 import { CollegeType } from "@/src/app/types";
 import { getInstitutions } from "@/src/app/utils/institutions";
-import s3Lib from "@/src/app/utils/libs/s3-lib";
 import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { mockClient } from "aws-sdk-client-mock";
-import { mockCollegeDbItem } from "../../setupJest";
+import { mockCollegeDbItem, mockCollegeDbItemTwo } from "../../setupJest";
 
 const dynamoClientMock = mockClient(DynamoDBDocumentClient);
 
@@ -11,7 +10,6 @@ describe("test institutions utils", () => {
   beforeEach(() => {
     jest.restoreAllMocks();
     dynamoClientMock.reset();
-    jest.spyOn(s3Lib, "get").mockResolvedValueOnce("superlongbase64string");
   });
   test("test getInstitutions", async () => {
     dynamoClientMock.on(ScanCommand).resolves({ Items: [mockCollegeDbItem] });
@@ -26,5 +24,14 @@ describe("test institutions utils", () => {
     dynamoClientMock.on(ScanCommand).resolves({});
     const result = await getInstitutions();
     expect(result.length).toBe(0);
+  });
+
+  test("test getInstitutions returns sorted array by name", async () => {
+    dynamoClientMock
+      .on(ScanCommand)
+      .resolves({ Items: [mockCollegeDbItem, mockCollegeDbItemTwo] });
+    const result = await getInstitutions();
+    expect(result.length).toBe(2);
+    expect(result[0].id).toBe(122456);
   });
 });

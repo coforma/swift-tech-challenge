@@ -5,6 +5,10 @@ import { mockCollege } from "../../../setupJest";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { axe } from "jest-axe";
+import {
+  convertPercentage,
+  convertToThousandsSeparatedString,
+} from "@/src/app/utils/masking";
 
 jest.mock("mixpanel-browser", () => ({
   ...jest.requireActual("mixpanel-browser"),
@@ -30,14 +34,20 @@ describe("Test CollegeCard", () => {
     ).toBeVisible();
     expect(screen.getByText(mockCollege.type)).toBeVisible();
     expect(screen.getByText(mockCollege.population!)).toBeVisible();
-    expect(screen.getByText(mockCollege.completionRate!)).toBeVisible();
-    expect(screen.getByText(mockCollege.avgCost!)).toBeVisible();
+    expect(
+      screen.getByText(`${convertPercentage(mockCollege.completionRate!)} %`),
+    ).toBeVisible();
+    expect(
+      screen.getByText(
+        `$${convertToThousandsSeparatedString(mockCollege.avgCost!)}`,
+      ),
+    ).toBeVisible();
   });
 
   test("CollegeCard should have apply button", () => {
     expect(screen.getByRole("button", { name: /apply/i })).toBeVisible();
     expect(screen.getByRole("button", { name: /apply/i })).toHaveTextContent(
-      "Apply to this school",
+      "Apply",
     );
   });
 

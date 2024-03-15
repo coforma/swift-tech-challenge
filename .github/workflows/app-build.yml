@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Nodejs and npm
         uses: actions/setup-node@v4
         with:
@@ -56,11 +56,15 @@ jobs:
         run: yarn run build --no-lint
       - name: Package
         run: |
-          cp -r .next/standalone pkg
-          cp -r .next/static pkg/.next/
-          cd pkg
+          cp -r .next/standalone $GITHUB_WORKSPACE/pkg
+          cp -r .next/static $GITHUB_WORKSPACE/pkg/.next/
+          cd $GITHUB_WORKSPACE/pkg
           echo "node server.js" > run.sh
           zip -r frontend.zip .
+          mv frontend.zip $GITHUB_WORKSPACE/
+          cd $GITHUB_WORKSPACE/.next/static
+          zip -r static.zip .
+          mv static.zip $GITHUB_WORKSPACE/
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -70,6 +74,5 @@ jobs:
       - name: Upload Zip
         if: ${{ inputs.upload == true || inputs.upload == 'true' }}
         run: |
-          aws s3 cp pkg/frontend.zip s3://${{ vars.artifact_bucket }}/$GITHUB_REF_NAME/frontend.zip
-        
-
+          aws s3 cp $GITHUB_WORKSPACE/frontend.zip s3://${{ vars.artifact_bucket }}/$GITHUB_REF_NAME/frontend.zip
+          aws s3 cp $GITHUB_WORKSPACE/static.zip s3://${{ vars.artifact_bucket }}/$GITHUB_REF_NAME/static.zip
