@@ -34,8 +34,11 @@ resource "aws_iam_policy" "app_deploy" {
           "lambda:Get*",
           "lambda:UpdateAlias"
         ]
-        Effect   = "Allow"
-        Resource = [aws_lambda_function.frontend.arn]
+        Effect = "Allow"
+        Resource = [
+          aws_lambda_function.frontend.arn,
+          "${aws_lambda_function.frontend.arn}:*",
+        aws_lambda_alias.alias.arn]
       },
       {
         Action   = ["s3:ListBucket"]

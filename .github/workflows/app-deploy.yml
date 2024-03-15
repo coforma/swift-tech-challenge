@@ -86,4 +86,4 @@ jobs:
           aws s3 cp s3://${ARTIFACT_BUCKET}/${GITHUB_REF_NAME}/static.zip ./static.zip
           mkdir -p static
           unzip ./static.zip -d ./static/
-          aws s3 ./static cp s3://${PUBLIC_BUCKET}/_next/ --recursive
+          aws s3 cp ./static s3://${PUBLIC_BUCKET}/_next/ --recursive
