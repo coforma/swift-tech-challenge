@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
 import { CollegeType } from "@/src/app/types";
 import Home from "../../../page";
+import { act } from "react-dom/test-utils";
 
 jest.mock("../../../utils/institutions", () => ({
   getInstitutions: jest.fn().mockReturnValue([
@@ -30,7 +31,9 @@ describe("Test Homepage", () => {
 describe("Test Homepage accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
     const { container } = render(await Home());
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await act(async () => {
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
   });
 });
