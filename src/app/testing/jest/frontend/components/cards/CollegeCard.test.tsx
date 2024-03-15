@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import mixpanel from "mixpanel-browser";
 import { CollegeCard } from "@/src/app/components";
-import { mockCollege } from "../../../setupJest";
+import { mockCollege, mockEmptyCollege } from "../../../setupJest";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { axe } from "jest-axe";
@@ -18,6 +18,12 @@ jest.mock("mixpanel-browser", () => ({
 const component = (
   <ul>
     <CollegeCard college={mockCollege} />
+  </ul>
+);
+
+const emptyComponent = (
+  <ul>
+    <CollegeCard college={mockEmptyCollege} />
   </ul>
 );
 
@@ -59,6 +65,15 @@ describe("Test CollegeCard", () => {
       await userEvent.click(applyButton);
     });
     expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("Test CollegeCard", () => {
+  beforeEach(() => {
+    render(emptyComponent);
+  });
+  test("Card icons should render defaults if no value returned", () => {
+    expect(screen.getAllByText(/--/i).length).toBe(3);
   });
 });
 
