@@ -13,6 +13,8 @@ resource "aws_iam_role" "github_deployer" {
         Condition = {
           StringEquals = {
             "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
+          }
+          StringLike = {
             "token.actions.githubusercontent.com:sub" : [for rest in var.github.app_deploy_restrictions : "repo:${var.github.repo}:${rest}"]
           }
         }
