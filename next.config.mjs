@@ -13,11 +13,11 @@ const nextConfig = {
     includePaths: ["./node_modules/@uswds/uswds/packages"],
   },
   output: 'standalone',
-  assetPrefix: process.env.CDN_HOST ? `https://process.env.CDN_HOST` : '',
+  assetPrefix: "https://d2z6xcoh14f3wb.cloudfront.net",
   experimental: {
     serverActions: {
       allowedForwardedHosts: ['rm93rrjzid.execute-api.us-east-1.amazonaws.com'],
-      allowedOrigins: process.env.CDN_HOST ? [`https://${process.env.CDN_HOST}` ] : [],
+      allowedOrigins: ['https://d2z6xcoh14f3wb.cloudfront.net','d2z6xcoh14f3wb.cloudfront.net','http://d2z6xcoh14f3wb.cloudfront.net' ]
     }
   }
 };
