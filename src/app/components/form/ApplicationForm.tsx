@@ -12,7 +12,7 @@ import {
 } from "@trussworks/react-uswds";
 import { TextField, TextArea } from "../../components";
 import Link from "next/link";
-import { getInsitutionApplication } from "../../utils/institutions";
+import { getInstitutionApplication } from "../../utils/institutions";
 
 export const ApplicationForm = ({ institutionId }: Props) => {
   const [application, setApplication] = useState<
@@ -20,7 +20,7 @@ export const ApplicationForm = ({ institutionId }: Props) => {
   >();
 
   useEffect(() => {
-    getInsitutionApplication(Number(institutionId)).then((application) => {
+    getInstitutionApplication(Number(institutionId)).then((application) => {
       setApplication(application);
     });
   }, [institutionId]);
