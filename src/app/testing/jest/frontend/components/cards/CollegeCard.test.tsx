@@ -11,8 +11,8 @@ const college: College = {
   city: "City",
   state: "State",
   type: CollegeType.PUBLIC,
-  populationAmount: 123,
-  gradRate: 65,
+  population: 123,
+  completionRate: 65,
   avgCost: 17980,
 };
 
@@ -32,8 +32,8 @@ describe("Test CollegeCard", () => {
     expect(screen.getByText(college.description)).toBeVisible();
     expect(screen.getByText(`${college.city}, ${college.state}`)).toBeVisible();
     expect(screen.getByText(college.type)).toBeVisible();
-    expect(screen.getByText(college.populationAmount)).toBeVisible();
-    expect(screen.getByText(college.gradRate)).toBeVisible();
+    expect(screen.getByText(college.population)).toBeVisible();
+    expect(screen.getByText(college.completionRate)).toBeVisible();
     expect(screen.getByText(college.avgCost)).toBeVisible();
   });
 
