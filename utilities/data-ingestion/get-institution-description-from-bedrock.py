@@ -18,7 +18,7 @@ def lambda_handler(event, context):
     logger.info("Generating description for " + institution_name)
 
     # create text prompt
-    text_prompt = "Create a 40 word description for " + institution_name
+    text_prompt = "Create a 20 word description for " + institution_name
 
     # get description -- from the bedrock docs
     bedrock_text_args = {
