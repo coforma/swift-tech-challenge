@@ -1,3 +1,5 @@
+"use client";
+import mixpanel from "mixpanel-browser";
 // components
 import Image from "next/image";
 import {
@@ -48,7 +50,11 @@ export const CollegeCard = ({ college }: Props) => {
       </CardBody>
       <CardFooter className="card_footer">
         <ButtonGroup>
-          <Button name="apply" type={"button"}>
+          <Button
+            name="apply"
+            type={"button"}
+            onClick={() => mixpanel.track("click_launch-application")}
+          >
             Apply to this school
           </Button>
         </ButtonGroup>
