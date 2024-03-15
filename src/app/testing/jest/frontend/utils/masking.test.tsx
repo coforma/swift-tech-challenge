@@ -9,6 +9,7 @@ describe("test convert percentage", () => {
     expect(convertPercentage(0.5623454322453)).toBe("56");
     expect(convertPercentage(0.1)).toBe("10");
     expect(convertPercentage(0.567)).toBe("57");
+    expect(convertPercentage(0.65)).toBe("65");
   });
 });
 

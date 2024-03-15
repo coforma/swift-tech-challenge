@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import mixpanel from "mixpanel-browser";
-import { College, CollegeType } from "@/src/app/types";
 import { CollegeCard } from "@/src/app/components";
 import { mockCollege } from "../../../setupJest";
 import userEvent from "@testing-library/user-event";
@@ -11,22 +10,6 @@ import {
   convertToThousandsSeparatedString,
 } from "@/src/app/utils/masking";
 
-const college: College = {
-  id: 0,
-  img: "",
-  name: "Name of school",
-  description: "School Description",
-  city: "City",
-  state: "State",
-  type: CollegeType.PUBLIC,
-  population: 123,
-  completionRate: 0.65,
-  avgCost: 17980,
-  zip: "",
-  url: "",
-  predominantUndergradDegree: "",
-  highestDegreeAwarded: "",
-};
 jest.mock("mixpanel-browser", () => ({
   ...jest.requireActual("mixpanel-browser"),
   track: jest.fn(() => {}),
@@ -44,17 +27,19 @@ describe("Test CollegeCard", () => {
   });
 
   test("CollegeCard is showing all details of college", () => {
-    expect(screen.getByText(college.name)).toBeVisible();
-    expect(screen.getByText(college.description)).toBeVisible();
-    expect(screen.getByText(`${college.city}, ${college.state}`)).toBeVisible();
-    expect(screen.getByText(college.type)).toBeVisible();
-    expect(screen.getByText(college.population!)).toBeVisible();
+    expect(screen.getByText(mockCollege.name)).toBeVisible();
+    expect(screen.getByText(mockCollege.description)).toBeVisible();
     expect(
-      screen.getByText(`${convertPercentage(college.completionRate!)} %`),
+      screen.getByText(`${mockCollege.city}, ${mockCollege.state}`),
+    ).toBeVisible();
+    expect(screen.getByText(mockCollege.type)).toBeVisible();
+    expect(screen.getByText(mockCollege.population!)).toBeVisible();
+    expect(
+      screen.getByText(`${convertPercentage(mockCollege.completionRate!)} %`),
     ).toBeVisible();
     expect(
       screen.getByText(
-        `$${convertToThousandsSeparatedString(college.avgCost!)}`,
+        `$${convertToThousandsSeparatedString(mockCollege.avgCost!)}`,
       ),
     ).toBeVisible();
   });
