@@ -1,4 +1,8 @@
 const nextConfig = {
+  env: {
+    CDN_HOST: '',
+    API_GATEWAY: ''
+  },
   images: {
     remotePatterns: [
       {
