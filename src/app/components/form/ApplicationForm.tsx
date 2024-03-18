@@ -36,7 +36,7 @@ export const ApplicationForm = ({ institutionId }: Props) => {
       questions: appq,
       answers: data,
       email: data.email,
-      institution: application?.institutionName,
+      institutionId: institutionId,
     };
     saveApplication(submission);
   };
