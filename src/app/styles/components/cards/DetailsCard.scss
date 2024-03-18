@@ -29,6 +29,7 @@
     &-text {
       @include typeset("ui", 5, 1);
       @include u-text("base-dark", "normal");
+      @include u-line-height('body', 3);
       @include at-media("mobile-lg") {
         @include u-font-size("ui", 6);
       }
@@ -63,6 +64,35 @@
         @include typeset("ui", 9, 1);
         @include u-text("primary", "bold");
         @include u-padding-bottom(2);
+        @include u-line-height('body', 3);
+      }
+    }
+
+    &-table {
+      border-collapse: collapse;
+      @include typeset("ui", 5, 1);
+
+      width: 100%;
+
+      th {
+        @include u-text("base-darkest", "bold");
+        @include u-border-y('1px');
+        @include u-border-x(0);
+        @include u-border('base-lighter');
+      }
+
+      thead tr {
+        text-align: left;
+      }
+
+      th, td {
+        padding: .75rem 1rem;
+      }
+
+      tbody tr {
+        @include u-border-y('1px');
+        @include u-border-x(0);
+        @include u-border('base-lighter');
       }
     }
   }

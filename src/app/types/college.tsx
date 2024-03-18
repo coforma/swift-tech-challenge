@@ -11,6 +11,23 @@ export const degreeMap = {
   "4": "Graduate",
 };
 
+export interface Specialties {
+  humanities: boolean;
+  interdisciplinary: boolean;
+  occupational: boolean;
+  socialScience: boolean;
+  stem: boolean;
+}
+
+export interface netPrice {
+  averagePrice: number;
+  averagePriceUnder30k: number;
+  averagePriceUnder30To48k: number;
+  averagePriceUnder48To75k: number;
+  averagePriceUnder75To110k: number;
+  averagePriceUnder110kPlus: number;
+}
+
 export interface College {
   // basics
   id: number;
@@ -24,13 +41,7 @@ export interface College {
   // focus
   predominantUndergradDegree: string;
   highestDegreeAwarded: string;
-  specialties?: {
-    humanities: boolean;
-    interdisciplinary: boolean;
-    occupational: boolean;
-    socialScience: boolean;
-    stem: boolean;
-  };
+  specialties?: Specialties;
   // enrollment
   population?: number;
   demographics?: {
@@ -64,22 +75,8 @@ export interface College {
   tuitionOutOfState?: number;
   undergradWithFedLoan?: number;
   npcUrl?: string;
-  netPricePublic?: {
-    averagePrice: number;
-    averagePriceUnder30k: number;
-    averagePriceUnder30To48k: number;
-    averagePriceUnder48To75k: number;
-    averagePriceUnder75To110k: number;
-    averagePriceUnder110kPlus: number;
-  };
-  netPricePrivate?: {
-    averagePrice: number;
-    averagePriceUnder30k: number;
-    averagePriceUnder30To48k: number;
-    averagePriceUnder48To75k: number;
-    averagePriceUnder75To110k: number;
-    averagePriceUnder110kPlus: number;
-  };
+  netPricePublic?: netPrice;
+  netPricePrivate?: netPrice;
   // faculty & expenditures
   facultyAvgSalary?: number;
   facultyEmployedFullTime?: number;

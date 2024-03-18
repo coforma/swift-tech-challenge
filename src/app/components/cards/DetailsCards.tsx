@@ -8,7 +8,7 @@ import {
   Link,
 } from "@trussworks/react-uswds";
 // types
-import { College, CollegeType } from "../../types";
+import { College, CollegeType, Specialties } from "../../types";
 import {
   maskCurrency,
   maskPercentage,
@@ -210,9 +210,27 @@ const StudentBodyCard = ({ college }: Props) => {
   );
 };
 
-const parseSpecialties = (specialties: any) => {
-  specialties;
-  return <p>specialties here</p>;
+const specialty = (specialty: string) => {
+  return (
+    <div>
+      <p className="card_details_section-data-title">Specializes in</p>
+      <p className="card_details_section-data-highlight">{specialty}</p>
+    </div>
+  );
+};
+
+const parseSpecialties = (specialties: Specialties) => {
+  return (
+    <div className="card_details_section-data">
+      {specialties?.humanities && specialty("Humanities")}
+      {specialties?.interdisciplinary && specialty("Interdisciplinary")}
+      {specialties?.occupational &&
+        specialty("Occupational and technical studies")}
+      {specialties?.stem &&
+        specialty("Science, technology, engineering, and math (STEM)")}
+      {specialties?.socialScience && specialty("Social science")}
+    </div>
+  );
 };
 
 const AcademicsCard = ({ college }: Props) => {
@@ -250,12 +268,12 @@ const AcademicsCard = ({ college }: Props) => {
             {college?.studentFacultyRatio}
           </p>
         </div>
-        <div className="card_details_section">
-          <p className="card_details_section-header">Majors</p>
-          <div className="card_details_section-data">
-            {parseSpecialties(college?.specialties)}
+        {college?.specialties && (
+          <div className="card_details_section">
+            <p className="card_details_section-header">Majors</p>
+            <div>{parseSpecialties(college?.specialties)}</div>
           </div>
-        </div>
+        )}
       </CardBody>
     </Card>
   );
@@ -271,6 +289,17 @@ const getNetPrice = (college: College) => {
 
 const CostsCard = ({ college }: Props) => {
   const netPriceForType = getNetPrice(college);
+  const under30 = maskCurrency(netPriceForType?.averagePriceUnder30k);
+  const between30and40 = maskCurrency(
+    netPriceForType?.averagePriceUnder30To48k,
+  );
+  const between40and70 = maskCurrency(
+    netPriceForType?.averagePriceUnder48To75k,
+  );
+  const between75to110 = maskCurrency(
+    netPriceForType?.averagePriceUnder75To110k,
+  );
+  const over110 = maskCurrency(netPriceForType?.averagePriceUnder110kPlus);
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
       <CardHeader className="card_details_header">
@@ -290,51 +319,66 @@ const CostsCard = ({ college }: Props) => {
           </p>
           <p className="card_details_section-data-title">Average net price</p>
           <p className="card_details_section-data-highlight">
-            {netPriceForType?.averagePrice}
+            {maskCurrency(netPriceForType?.averagePrice)}
           </p>
         </div>
-        <div className="card_details_section">
-          <p className="card_details_section-header">
-            Average net price by household income
-          </p>
-          <p className="card_details_section-text">
-            Families are eligible for different amounts of financial aid from
-            federal and state governments based on their income levels. After
-            this optional financial aid is applied, college might cost
-            significantly less. Remember you have to apply for financial aid to
-            get it.
-          </p>
-          <table>
-            <thead>
-              <tr>
-                <th>Household income</th>
-                <th>Average net price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{"<$30,000"}</td>
-                <td>{netPriceForType?.averagePriceUnder30k}</td>
-              </tr>
-              <tr>
-                <td>{"$30,000–48,000"}</td>
-                <td>{netPriceForType?.averagePriceUnder30To48k}</td>
-              </tr>
-              <tr>
-                <td>{"$48,000–75,000"}</td>
-                <td>{netPriceForType?.averagePriceUnder48To75k}</td>
-              </tr>
-              <tr>
-                <td>{"$75,000–110,000"}</td>
-                <td>{netPriceForType?.averagePriceUnder75To110k}</td>
-              </tr>
-              <tr>
-                <td>{"$110,000+"}</td>
-                <td>{netPriceForType?.averagePriceUnder110kPlus}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {netPriceForType && (
+          <div className="card_details_section">
+            <p className="card_details_section-header">
+              Average net price by household income
+            </p>
+            <p className="card_details_section-text">
+              Families are eligible for different amounts of financial aid from
+              federal and state governments based on their income levels. After
+              this optional financial aid is applied, college might cost
+              significantly less. Remember you have to apply for financial aid
+              to get it.
+            </p>
+            <table className="card_details_section-table">
+              <thead>
+                <tr>
+                  <th>Household income</th>
+                  <th>Average net price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{"<$30,000"}</td>
+                  <td>{under30 !== "--" ? `${under30} per year` : under30}</td>
+                </tr>
+                <tr>
+                  <td>{"$30,000–48,000"}</td>
+                  <td>
+                    {between30and40 !== "--"
+                      ? `${between30and40} per year`
+                      : between30and40}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{"$48,000–75,000"}</td>
+                  <td>
+                    {between40and70 !== "--"
+                      ? `${between40and70} per year`
+                      : between40and70}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{"$75,000–110,000"}</td>
+                  <td>
+                    {between75to110 !== "--"
+                      ? `${between75to110} per year`
+                      : between75to110}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{"$110,000+"}</td>
+                  <td>{over110 !== "--" ? `${over110} per year` : over110}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+
         <div className="card_details_section">
           <p className="card_details_section-header">Tuition and fees</p>
           <p className="card_details_section-text">
