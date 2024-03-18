@@ -3,4 +3,14 @@ variable "environment" {
   description = "Environment label for resources"
 }
 
-variable "application_lambda_function" {}
+variable "application_lambda_function" {
+  default = null
+}
+
+variable "institutions_dynamodb_table" {
+  default = null
+}
+
+variable "applicants_dynamodb_table" {
+  default = null
+}

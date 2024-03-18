@@ -14,3 +14,9 @@ terraform {
 }
 
 data "aws_caller_identity" "current" {}
+
+locals {
+  application_lambda_function = var.application_lambda_function == null ? "${var.environment}-frontend" : var.application_lambda_function
+  institutions_dynamodb_table = var.institutions_dynamodb_table == null ? "institutions-${var.environment}" : var.institutions_dynamodb_table
+  applicants_dynamodb_table   = var.applicants_dynamodb_table == null ? "applicants-${var.environment}" : var.applicants_dynamodb_table
+}
