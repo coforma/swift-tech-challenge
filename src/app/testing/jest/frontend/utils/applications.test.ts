@@ -11,13 +11,14 @@ jest.mock("../../../../utils/libs/dynamodb-lib", () => ({
 const mockSubmission = {
   questions: { questions1: "what is your name?" },
   answers: { answer1: "College Hopeful" },
+  email: "",
 };
 
-describe("test institutions utils", () => {
+describe("test application utils", () => {
   beforeEach(() => {
     jest.restoreAllMocks();
   });
-  test("test getInstitutions", async () => {
+  test("test saveApplication", async () => {
     await saveApplication(mockSubmission);
     expect(dynamodbLib.put).toHaveBeenCalledWith({
       TableName: "applicants",

@@ -14,6 +14,7 @@ import { TextField, TextArea } from "../../components";
 import Link from "next/link";
 // utils
 import { getInstitutionApplication } from "../../utils/institutions";
+import { saveApplication } from "@/src/app/utils/applications";
 
 export const ApplicationForm = ({ institutionId }: Props) => {
   const [application, setApplication] = useState<
@@ -28,10 +29,16 @@ export const ApplicationForm = ({ institutionId }: Props) => {
 
   const { handleSubmit, register } = useForm();
 
-  // eslint-disable-next-line no-console
-  const onSubmit = (data: any) => console.log(data);
-
   const appq = application?.questions;
+
+  const onSubmit = (data: any) => {
+    const submission = {
+      questions: appq,
+      answers: data,
+      email: data.email,
+    };
+    saveApplication(submission);
+  };
 
   //Handle personal questions
   const hasNameQ: boolean = appq?.includes("First and last name");
