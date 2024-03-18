@@ -12,6 +12,7 @@ const mockSubmission = {
   questions: { questions1: "what is your name?" },
   answers: { answer1: "College Hopeful" },
   email: "",
+  institution: "test college",
 };
 
 describe("test application utils", () => {
@@ -24,7 +25,7 @@ describe("test application utils", () => {
       TableName: "applicants",
       Item: {
         email: "",
-        recordType: "application",
+        recordType: "application - test college",
         questions: mockSubmission.questions,
         answers: mockSubmission.answers,
       },
