@@ -31,7 +31,7 @@ data "aws_iam_policy_document" "backend" {
       "s3:ListBucket"
     ]
     resources = [
-      var.images_bucket_arn
+      var.images_bucket.arn
     ]
   }
   statement {
@@ -41,7 +41,7 @@ data "aws_iam_policy_document" "backend" {
       "s3:GetObject"
     ]
     resources = [
-      "${var.images_bucket_arn}/*"
+      "${var.images_bucket.arn}/*"
     ]
   }
 }
@@ -73,6 +73,8 @@ resource "aws_lambda_function" "frontend" {
       CDN_HOST                           = aws_cloudfront_distribution.distribution.domain_name
       NEXT_PUBLIC_MIXPANEL_PROJECT_TOKEN = data.aws_secretsmanager_secret_version.mixpanel.secret_string
       API_GATEWAY                        = local.api_gw_origin_id
+      IMAGES_BUCKET                      = var.images_bucket.name
+      INSTITUTIONS_DYNAMODB_TABLE        = var.institutions_dynamodb_table
     }
   }
   layers = [

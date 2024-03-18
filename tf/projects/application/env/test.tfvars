@@ -9,7 +9,10 @@ bootstrap_remote_state_config = {
   region = "us-east-1"
   key    = "bootstrap-global.tfstate"
 }
-#TODO switch to test images bucket when available
+images_bucket = {
+  arn  = "arn:aws:s3:::swift-instituion-images-c20cd252"
+  name = "swift-instituion-images-c20cd252"
+}
 provisioned_concurrency = 1
 static_bucket           = "public-static-3a96b108"
 static_next_path        = ""

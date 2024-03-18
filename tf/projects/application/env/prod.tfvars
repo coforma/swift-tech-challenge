@@ -9,7 +9,10 @@ bootstrap_remote_state_config = {
   region = "us-east-1"
   key    = "bootstrap-global.tfstate"
 }
-#TODO switch to prod images bucket when available
+images_bucket = {
+  name = "swift-instituion-images-c20cd252"
+  arn  = "arn:aws:s3:::swift-instituion-images-c20cd252"
+}
 provisioned_concurrency = 4
 static_bucket           = "public-static-f0671608"
 static_next_path        = ""

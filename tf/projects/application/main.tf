@@ -24,6 +24,7 @@ module "frontend" {
   artifact_bucket = var.artifact_bucket
   artifact_path   = var.frontend_artifact_path
   zip_file_name   = var.frontend_zip_filename
+  images_bucket   = var.images_bucket
   github = {
     repo                    = var.github_repo
     app_deploy_restrictions = var.app_deploy_restrictions
