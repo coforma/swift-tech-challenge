@@ -10,8 +10,8 @@ import NotFound from "@/src/app/not-found";
 // types
 import { College } from "../types";
 
-const filterCollege = (institutionData: College[], id: number) => {
-  return institutionData.filter((college) => college.id == id)[0];
+const filterCollege = (institutionsArray: College[], id: number) => {
+  return institutionsArray.filter((college) => college.id == id)[0];
 };
 
 export default function InstitutionDetails({
@@ -19,15 +19,15 @@ export default function InstitutionDetails({
 }: {
   params: { id: number };
 }) {
-  const { institutionData } = useContext(InstitutionContext);
+  const { institutionsArray } = useContext(InstitutionContext);
   const [loading, setLoading] = useState(true);
   const [selectedCollege, setSelectedCollege] = useState<College>();
   useEffect(() => {
-    if (institutionData) {
-      setSelectedCollege(filterCollege(institutionData!, params.id));
+    if (institutionsArray) {
+      setSelectedCollege(filterCollege(institutionsArray!, params.id));
       setLoading(false);
     }
-  }, [institutionData, params.id]);
+  }, [institutionsArray, params.id]);
 
   const view = () => {
     return !selectedCollege ? (

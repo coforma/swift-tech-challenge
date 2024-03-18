@@ -9,7 +9,9 @@ const testParams = {
   id: 0,
 };
 
-const testContext: InstitutionContextShape = { institutionData: [mockCollege] };
+const testContext: InstitutionContextShape = {
+  institutionsArray: [mockCollege],
+};
 
 const testDetailsPageComponent = () => (
   <InstitutionContext.Provider value={testContext}>

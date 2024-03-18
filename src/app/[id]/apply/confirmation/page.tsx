@@ -10,20 +10,20 @@ import ErrorPage from "@/src/app/error/page";
 // types
 import { College } from "@/src/app/types";
 
-const filterCollege = (institutionData: College[], id: number) => {
-  return institutionData.filter((college) => college.id == id)[0];
+const filterCollege = (institutionsArray: College[], id: number) => {
+  return institutionsArray.filter((college) => college.id == id)[0];
 };
 
 export default function ConfirmationPage({ params }: Props) {
-  const { institutionData } = useContext(InstitutionContext);
+  const { institutionsArray } = useContext(InstitutionContext);
   const [loading, setLoading] = useState(true);
   const [selectedCollege, setSelectedCollege] = useState<College>();
   useEffect(() => {
-    if (institutionData) {
-      setSelectedCollege(filterCollege(institutionData!, params.id));
+    if (institutionsArray) {
+      setSelectedCollege(filterCollege(institutionsArray!, params.id));
       setLoading(false);
     }
-  }, [institutionData, params.id]);
+  }, [institutionsArray, params.id]);
 
   const view = () => {
     return !selectedCollege ? (

@@ -5,22 +5,23 @@ import { getInstitutions } from "@/src/app/utils/institutions";
 import { College } from "../../types";
 
 export interface InstitutionContextShape {
-  institutionData: College[] | undefined;
+  institutionsArray: College[] | undefined;
 }
 
 export const InstitutionContext = createContext<InstitutionContextShape>({
-  institutionData: undefined as College[] | undefined,
+  institutionsArray: undefined as College[] | undefined,
 });
 
 export const InstitutionProvider = ({ children }: Props) => {
-  const [institutionData, setInstitutionData] = useState<
+  const [institutionsArray, setInstitutionsArray] = useState<
     College[] | undefined
   >();
 
   const fetchInstitutions = async () => {
     try {
       const result = await getInstitutions();
-      setInstitutionData(result);
+      setInstitutionsArray(result);
+      // TODO: setInstitutionsObj();
     } catch (e: any) {
       throw new Error("Institution data could not be loaded.");
     }
@@ -32,9 +33,9 @@ export const InstitutionProvider = ({ children }: Props) => {
 
   const providerValue = useMemo(
     () => ({
-      institutionData,
+      institutionsArray,
     }),
-    [institutionData],
+    [institutionsArray],
   );
 
   return (
