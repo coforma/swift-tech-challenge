@@ -46,7 +46,7 @@ describe("Test CollegeCard", () => {
   test("CollegeCard should have apply link", () => {
     expect(screen.getByRole("link", { name: /apply/i })).toBeVisible();
     expect(screen.getByRole("link", { name: /apply/i })).toHaveTextContent(
-      "Apply to this school",
+      "Apply",
     );
   });
 

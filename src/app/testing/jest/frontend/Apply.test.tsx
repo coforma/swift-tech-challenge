@@ -1,5 +1,5 @@
-import Page from "@/src/app/apply/[id]/page";
-import { render, screen } from "@testing-library/react";
+import Page from "@/src/app/[id]/apply/page";
+import { act, render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
 
 const Apply = Page({ params: { id: "123" } });
@@ -17,24 +17,40 @@ jest.mock("../../../utils/institutions", () => ({
         "Where Do You Stand on Unconcealed Handguns?",
       ],
       institutionName: "California State University-Northridge",
-      institutionId: 110608,
+      institutionId: 123,
       recordType: "application",
     }),
 }));
 
-describe("Test Homepage", () => {
+describe("Test Application Page", () => {
   it("should render the application page", async () => {
-    render(await Apply);
+    await act(async () => {
+      await render(Apply);
+    });
     expect(
       screen.getByText("California State University-Northridge"),
     ).toBeVisible();
+  });
+
+  it("should not show SAT questions if not provided", async () => {
+    await act(async () => {
+      await render(Apply);
+    });
+    expect(screen.getByText("First name *")).toBeVisible();
+    expect(screen.getByText("Last name *")).toBeVisible();
+    expect(screen.getByText("Phone number *")).toBeVisible();
+    expect(screen.getByText("Email *")).toBeVisible();
+    expect(screen.getByText("Writing")).not.toBeVisible();
+    expect(screen.getByText("Essay Question 1")).toBeVisible();
   });
 });
 
 describe("Test Homepage accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
-    const { container } = await render(Apply);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await act(async () => {
+      const { container } = render(Apply);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
   });
 });
