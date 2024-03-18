@@ -9,6 +9,18 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  region = "us-east-1"
+  alias  = "ingestion-aws"
+  default_tags {
+    tags = {
+      Environment = title(var.environment)
+      Project     = "DataIngestion"
+      ManagedBy   = "Terraform"
+    }
+  }
+}
+
 terraform {
   backend "s3" {}
 }
@@ -60,4 +72,7 @@ module "data_ingestion" {
     account = data.aws_caller_identity.current.account_id
   }
   environment = var.environment
+  providers = {
+    aws = aws.ingestion-aws
+  }
 }

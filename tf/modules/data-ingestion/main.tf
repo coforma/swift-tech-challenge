@@ -3,6 +3,15 @@ locals {
   images_queue       = "${var.environment}-images"
 }
 
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 2.7.0"
+    }
+  }
+}
+
 data "aws_caller_identity" "current" {}
 
 resource "aws_sqs_queue" "descriptions" {
