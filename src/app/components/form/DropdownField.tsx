@@ -1,17 +1,18 @@
 import { FieldValues, UseFormRegister } from "react-hook-form";
-import { FieldHint } from "../../types";
+import { FieldHint, DropdownOptions } from "../../types";
 
-export const TextField = ({
+export const DropdownField = ({
   id,
   label,
   required,
   name,
   registerField,
+  options,
   hint,
 }: Props) => {
   const fieldLabel = required ? `${label} *` : `${label}`;
   return (
-    <div>
+    <>
       <label className="usa-label" htmlFor={id}>
         {fieldLabel}
       </label>
@@ -20,13 +21,20 @@ export const TextField = ({
           {hint.text}
         </div>
       )}
-      <input
-        className="usa-input usa-input--lg"
+      <select
+        className="usa-select"
         id={id}
-        aria-describedby={hint?.id}
         {...registerField(`${name}`, { required: required })}
-      />
-    </div>
+        aria-describedby={hint?.id}
+      >
+        <option>- Select -</option>
+        {options.map((option: DropdownOptions) => (
+          <option key={option.id} value={option.id}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </>
   );
 };
 
@@ -36,5 +44,6 @@ type Props = {
   required: boolean;
   name: string;
   registerField: UseFormRegister<FieldValues>;
+  options: DropdownOptions[];
   hint?: FieldHint;
 };
