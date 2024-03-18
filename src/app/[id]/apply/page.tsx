@@ -1,6 +1,6 @@
 import { ApplicationForm } from "../../components/form/ApplicationForm";
 
-export default function Page({ params }: Props) {
+export default function ApplyPage({ params }: Props) {
   return <ApplicationForm institutionId={params.id} />;
 }
 
