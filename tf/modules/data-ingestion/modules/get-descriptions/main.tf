@@ -1,8 +1,3 @@
-
-locals {
-  content_path = var.source_code.relative ? "${path.module}/${var.source_code.path}" : var.source_code.path
-}
-
 data "archive_file" "lambda_zip" {
   type        = "zip"
   output_path = "${path.module}/tmp/lambda.zip"
@@ -66,7 +61,7 @@ data "aws_iam_policy_document" "policy_doc" {
     sid       = "ListBuckets"
     actions   = ["s3:ListBucket"]
     effect    = "Allow"
-    resources = [var.source_bucket.name]
+    resources = ["arn:aws:s3:::${var.source_bucket.name}"]
   }
   statement {
     sid = "S3ReadWrite"
@@ -80,15 +75,15 @@ data "aws_iam_policy_document" "policy_doc" {
     resources = ["arn:aws:s3:::${var.source_bucket.name}/*"]
   }
   statement {
-    sid    = "WriteQueue"
+    sid    = "ReadQueue"
     effect = "Allow"
     actions = [
       "sqs:DeleteMessage",
-      "sqs:RecieveMessage",
+      "sqs:ReceiveMessage",
       "sqs:GetQueueAttributes",
     ]
     resources = [
-      "arn:aws:sqs:*:${var.queue.account}:${var.queue.name}",
+      var.queue.arn,
     ]
   }
 }
@@ -123,8 +118,7 @@ resource "aws_lambda_function" "function" {
 
   environment {
     variables = {
-      AWS_LAMBDA_EXEC_WRAPPER = "/opt/bootstrap"
-      PORT                    = "8080"
+      DYNAMODB_TABLE = var.institutions_dynamodb_table
     }
   }
   logging_config {
@@ -141,4 +135,13 @@ resource "aws_lambda_permission" "sqs_lambda" {
   principal      = "sqs.amazonaws.com"
   source_account = var.source_bucket.account
   source_arn     = "arn:aws:sqs:::${var.queue.name}"
+}
+
+resource "aws_lambda_event_source_mapping" "trigger" {
+  event_source_arn = var.queue.arn
+  function_name    = aws_lambda_function.function.arn
+  batch_size       = 1
+  scaling_config {
+    maximum_concurrency = 60
+  }
 }

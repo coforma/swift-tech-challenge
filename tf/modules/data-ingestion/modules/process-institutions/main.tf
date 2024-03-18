@@ -1,13 +1,31 @@
 
-locals {
-  lambda_s3_key = var.artifact.path != "" ? "${var.artifact.path}/${source_file}" : var.source_file
-}
+data "archive_file" "lambda_zip" {
+  type        = "zip"
+  output_path = "${path.module}/tmp/lambda.zip"
 
+  source {
+    content  = file("${path.module}/../../../../../utilities/data-ingestion/ingest-institutions.py")
+    filename = "lambda_function.py"
+  }
+}
 
 data "aws_caller_identity" "current" {}
 
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
 resource "aws_iam_role" "process" {
-  name               = format("%ProcessApplicationsRole", title(var.environment))
+  name               = format("%sProcessInstitutionsRole", title(var.environment))
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -46,7 +64,7 @@ data "aws_iam_policy_document" "process" {
     sid       = "ListBuckets"
     actions   = ["s3:ListBucket"]
     effect    = "Allow"
-    resources = [var.source_bucket.name]
+    resources = ["arn:aws:s3:::${var.source_bucket.name}"]
   }
   statement {
     sid = "S3ReadOnly"
@@ -64,8 +82,8 @@ data "aws_iam_policy_document" "process" {
       "sqs:SendMessage"
     ]
     resources = [
-      "arn:aws:sqs:*:${data.aws_caller_identity.current.account_id}:${var.descriptions_queue}",
-      "arn:aws:sqs:*:${data.aws_caller_identity.current.account_id}:${var.images_queue}",
+      "arn:aws:sqs:*:${data.aws_caller_identity.current.account_id}:${var.descriptions_queue.name}",
+      "arn:aws:sqs:*:${data.aws_caller_identity.current.account_id}:${var.images_queue.name}",
     ]
   }
 
@@ -86,25 +104,25 @@ resource "aws_iam_role_policy_attachment" "process" {
   policy_arn = aws_iam_policy.process.arn
 }
 
-
 resource "aws_lambda_function" "process" {
-  s3_bucket     = var.artifact.bucket
-  s3_key        = local.lambda_s3_key
-  function_name = "${var.environment}-process-applications"
-  role          = aws_iam_role.process.arn
-  handler       = var.handler
+  filename         = "${path.module}/tmp/lambda.zip"
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  function_name    = "${var.environment}-process-institutions"
+  role             = aws_iam_role.process.arn
+  handler          = "lambda_function.lambda_handler"
 
   runtime = "python3.12"
 
   environment {
     variables = {
-      AWS_LAMBDA_EXEC_WRAPPER = "/opt/bootstrap"
-      PORT                    = "8080"
+      DYNAMODB_TABLE         = var.institutions_dynamodb_table
+      IMAGES_QUEUE_URL       = var.images_queue.url
+      DESCRIPTIONS_QUEUE_URL = var.descriptions_queue.url
     }
   }
   logging_config {
     application_log_level = "INFO"
-    log_format            = "json"
+    log_format            = "JSON"
     system_log_level      = "INFO"
   }
 }
@@ -116,13 +134,4 @@ resource "aws_lambda_permission" "s3_lambda" {
   principal      = "s3.amazonaws.com"
   source_account = var.source_bucket.account
   source_arn     = "arn:aws:s3:::${var.source_bucket.name}"
-}
-
-resource "aws_sqs_queue" "descriptions" {
-  name                       = var.descriptions_queue
-  delay_seconds              = 0
-  max_message_size           = 262144
-  message_retention_seconds  = 345600
-  receive_wait_time_seconds  = 20
-  visibility_timeout_seconds = 30
 }

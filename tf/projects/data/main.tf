@@ -21,6 +21,7 @@ resource "aws_dynamodb_table" "institutions" {
   hash_key                    = "institutionId"
   range_key                   = "recordType"
   stream_enabled              = false
+  billing_mode                = "PAY_PER_REQUEST"
 
   table_class = "STANDARD"
 
@@ -37,8 +38,6 @@ resource "aws_dynamodb_table" "institutions" {
   point_in_time_recovery {
     enabled = false
   }
-  read_capacity  = 1
-  write_capacity = 1
 }
 
 resource "aws_s3_bucket" "source" {

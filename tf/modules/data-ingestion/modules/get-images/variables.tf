@@ -1,17 +1,10 @@
 variable "environment" {
   type = string
 }
-variable "images" {
+variable "images_bucket" {
   type = object({
-    bucket  = string
+    name    = string
     account = string
-  })
-}
-
-variable "artifact" {
-  type = object({
-    bucket = string
-    path   = string
   })
 }
 
@@ -19,15 +12,11 @@ variable "queue" {
   type = object({
     name    = string
     account = string
+    arn     = string
   })
 }
 
-variable "handler" {
+variable "institutions_dynamodb_table" {
   type    = string
-  default = "lambda_function.lambda_handler"
-}
-
-variable "source_file" {
-  type    = string
-  default = "get-images.py"
+  default = "institutions"
 }

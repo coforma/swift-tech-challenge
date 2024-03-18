@@ -3,11 +3,19 @@ import json
 from decimal import Decimal
 from datetime import datetime
 import logging
-
+import os
 
 s3_client = boto3.client("s3")
 dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("institutions")
+table = dynamodb.Table(os.getenv("DYNAMODB_TABLE") or "institutions")
+DESCRIPTIONS_QUEUE_URL = (
+    os.getenv("DESCRIPTIONS_QUEUE_URL")
+    or "https://sqs.us-east-1.amazonaws.com/905418154281/get-institution-descriptions"
+)
+IMAGES_QUEUE_URL = (
+    os.getenv("IMAGES_QUEUE_URL")
+    or "https://sqs.us-east-1.amazonaws.com/905418154281/get-institution-images"
+)
 sqs = boto3.client("sqs")
 logger = logging.getLogger()
 
@@ -205,12 +213,12 @@ def lambda_handler(event, context):
             for item in institutions_to_save:
                 # description queue
                 sqs.send_message(
-                    QueueUrl="https://sqs.us-east-1.amazonaws.com/905418154281/get-institution-descriptions",
+                    QueueUrl=DESCRIPTIONS_QUEUE_URL,
                     MessageBody=json.dumps(item),
                 )
                 # images queue
                 sqs.send_message(
-                    QueueUrl="https://sqs.us-east-1.amazonaws.com/905418154281/get-institution-images",
+                    QueueUrl=IMAGES_QUEUE_URL,
                     MessageBody=json.dumps(item),
                 )
         except Exception as e:

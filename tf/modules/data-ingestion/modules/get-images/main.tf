@@ -1,10 +1,28 @@
+data "archive_file" "lambda_zip" {
+  type        = "zip"
+  output_path = "${path.module}/tmp/lambda.zip"
 
-locals {
-  lambda_s3_key = var.artifact.path != "" ? "${var.artifact.path}/${source_file}" : var.source_file
+  source {
+    content  = file("${path.module}/../../../../../utilities/data-ingestion/get-institution-image-from-bedrock.py")
+    filename = "lambda_function.py"
+  }
+}
+
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
 }
 
 resource "aws_iam_role" "role" {
-  name               = format("%GetImagesRole", title(var.environment))
+  name               = format("%sGetImagesRole", title(var.environment))
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -14,7 +32,7 @@ data "aws_iam_policy_document" "policy_doc" {
     sid       = "ListBuckets"
     actions   = ["s3:ListBucket"]
     effect    = "Allow"
-    resources = [var.source.bucket]
+    resources = ["arn:aws:s3:::${var.images_bucket.name}"]
   }
   statement {
     sid = "S3ReadWrite"
@@ -25,18 +43,18 @@ data "aws_iam_policy_document" "policy_doc" {
       "s3:List*"
     ]
     effect    = "Allow"
-    resources = ["arn:aws:s3:::${var.images.bucket}/*"]
+    resources = ["arn:aws:s3:::${var.images_bucket.name}/*"]
   }
   statement {
     sid    = "ReadQueue"
     effect = "Allow"
     actions = [
       "sqs:DeleteMessage",
-      "sqs:RecieveMessage",
+      "sqs:ReceiveMessage",
       "sqs:GetQueueAttributes",
     ]
     resources = [
-      "arn:aws:sqs:*:${var.queue.account}:${var.queue.name}",
+      var.queue.arn,
     ]
   }
 }
@@ -62,23 +80,24 @@ resource "aws_iam_role_policy_attachment" "bedrock" {
 }
 
 resource "aws_lambda_function" "function" {
-  s3_bucket     = var.artifact.bucket
-  s3_key        = local.lambda_s3_key
-  function_name = "${var.environment}-get-images"
-  role          = aws_iam_role.role.arn
-  handler       = "${var.artifact.handler_file}.lambda_handler"
+  filename         = "${path.module}/tmp/lambda.zip"
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  function_name    = "${var.environment}-get-images"
+  role             = aws_iam_role.role.arn
+  handler          = "lambda_function.lambda_handler"
 
-  runtime = "python3.12"
-
+  runtime     = "python3.12"
+  timeout     = 20
+  memory_size = 512
   environment {
     variables = {
-      AWS_LAMBDA_EXEC_WRAPPER = "/opt/bootstrap"
-      PORT                    = "8080"
+      DYNAMODB_TABLE = var.institutions_dynamodb_table
+      IMAGES_BUCKET  = var.images_bucket.name
     }
   }
   logging_config {
     application_log_level = "INFO"
-    log_format            = "json"
+    log_format            = "JSON"
     system_log_level      = "INFO"
   }
 }
@@ -89,5 +108,14 @@ resource "aws_lambda_permission" "sqs_lambda" {
   function_name  = aws_lambda_function.function.function_name
   principal      = "sqs.amazonaws.com"
   source_account = var.queue.account
-  source_arn     = "arn:aws:sqs:::${var.queue.name}"
+  source_arn     = var.queue.arn
+}
+
+resource "aws_lambda_event_source_mapping" "trigger" {
+  event_source_arn = var.queue.arn
+  function_name    = aws_lambda_function.function.arn
+  batch_size       = 1
+  scaling_config {
+    maximum_concurrency = 7
+  }
 }

@@ -12,21 +12,3 @@ variable "source_bucket" {
     account = string
   })
 }
-
-variable "artifact" {
-  type = object({
-    bucket       = string
-    path         = string
-    handler_file = string
-  })
-}
-
-variable "handler" {
-  type    = string
-  default = "lambda_function.lambda_handler"
-}
-
-variable "source_file" {
-  type    = string
-  default = "ingest-applications.py"
-}
