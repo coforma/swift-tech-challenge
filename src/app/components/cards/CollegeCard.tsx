@@ -1,15 +1,16 @@
 "use client";
 import mixpanel from "mixpanel-browser";
+import { useRouter } from "next/navigation";
 // components
 import Image from "next/image";
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   CardMedia,
 } from "@trussworks/react-uswds";
+import Link from "next/link";
 import { CardIcon } from "./CardIcon";
 // utils
 import {
@@ -21,8 +22,14 @@ import {
 import { College } from "../../types";
 
 export const CollegeCard = ({ college }: Props) => {
+  const router = useRouter();
   return (
-    <Card layout="flagDefault" headerFirst={true} className="card">
+    <Card
+      layout="flagDefault"
+      headerFirst={true}
+      className="card"
+      onClick={() => router.push(`/${college.id}`)}
+    >
       <CardHeader className="card_header">
         <h2 className="card_header-title">{college.name}</h2>
         <p className="card_header-subtitle">{`${college.city}, ${college.state}`}</p>
@@ -61,14 +68,13 @@ export const CollegeCard = ({ college }: Props) => {
         </div>
       </CardBody>
       <CardFooter className="card_footer">
-        <Button
-          name="apply"
-          type={"button"}
-          className="card_footer-apply-button"
+        <Link
+          className="usa-button card_footer-apply-button"
+          href={`${college.id}/apply`}
           onClick={() => mixpanel.track("click_launch-application")}
         >
-          Apply to this school
-        </Button>
+          Apply
+        </Link>
       </CardFooter>
     </Card>
   );

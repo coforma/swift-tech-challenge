@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import mixpanel from "mixpanel-browser";
 import { CollegeCard } from "@/src/app/components";
-import { mockCollege } from "../../../setupJest";
+import { mockCollege, mockRouterPush } from "../../../setupJest";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { axe } from "jest-axe";
@@ -43,21 +43,22 @@ describe("Test CollegeCard", () => {
     expect(screen.getByText(maskCurrency(mockCollege.avgCost))).toBeVisible();
   });
 
-  test("CollegeCard should have apply button", () => {
-    expect(screen.getByRole("button", { name: /apply/i })).toBeVisible();
-    expect(screen.getByRole("button", { name: /apply/i })).toHaveTextContent(
+  test("CollegeCard should have apply link", () => {
+    expect(screen.getByRole("link", { name: /apply/i })).toBeVisible();
+    expect(screen.getByRole("link", { name: /apply/i })).toHaveTextContent(
       "Apply",
     );
   });
 
-  test("On click, apply button fires tracking event", async () => {
+  test("On click, apply link fires tracking event", async () => {
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
-    const applyButton = screen.getByRole("button", { name: /apply/i });
+    const applyButton = screen.getByRole("link", { name: /apply/i });
     expect(applyButton).toBeVisible();
     await act(async () => {
       await userEvent.click(applyButton);
     });
     expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
+    expect(mockRouterPush).toHaveBeenCalledTimes(1);
   });
 });
 
