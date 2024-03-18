@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 // components
 import {
-  CollegeCard,
+  BannerCard,
   DetailsCards,
   InstitutionContext,
 } from "@/src/app/components";
@@ -31,7 +31,7 @@ export default function InstitutionDetails({
         <div>please wait...</div>
       ) : (
         <ul className="usa-card-group">
-          <CollegeCard key={params.id} college={selectedCollege} />
+          <BannerCard key={params.id} college={selectedCollege} />
           <DetailsCards key={`${params.id}-dets`} college={selectedCollege} />
         </ul>
       )}

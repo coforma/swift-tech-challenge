@@ -1,4 +1,5 @@
 // cards elements
+export { BannerCard } from "./cards/BannerCard";
 export { CardIcon } from "./cards/CardIcon";
 export { CollegeCard } from "./cards/CollegeCard";
 export { DetailsCards } from "./cards/DetailsCards";
