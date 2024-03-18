@@ -106,3 +106,12 @@ const convertIntToObject: any = (obj: { [key: string]: any }) => {
     );
   } else return undefined;
 };
+
+export async function getInstitutionApplication(institutionId: Number) {
+  const params = {
+    TableName: INSTITUTIONS_TABLE_NAME,
+    Key: { institutionId: institutionId, recordType: "application" },
+  };
+  const result = await dynamoClient.get(params);
+  return result?.Item;
+}
