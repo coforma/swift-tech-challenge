@@ -1,28 +1,48 @@
 @use "uswds-core" as *;
 
 .card_icon {
-  
   display: flex;
   grid-template-columns: 1fr 1fr;
   column-gap: 1rem;
   align-items: center;
 
-  &-image {
+  &-holder {
+    display: flex;
     width: 2.75rem;
     height: 2.75rem;
     border-radius: 100%;
-    @include u-bg($theme-color-primary-lighter)
+    @include u-bg($theme-color-primary-lighter);
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-image {
+    filter: invert(20%) sepia(95%) saturate(2216%) hue-rotate(189deg)
+      brightness(91%) contrast(101%);
   }
 
   &-desc {
-
     &-title {
+      @include typeset("ui", 5, 1);
       @include u-text("base-dark", "normal");
     }
 
     &-highlight {
-      @include typeset("ui", "lg", 1);
-      @include u-text("base-dark", "bold");
+      @include u-margin-top(1);
+      @include typeset("ui", 5, 1);
+      @include at-media("mobile-lg") {
+        @include u-font-size("heading", 6);
+      }
+      @include at-media("tablet") {
+        @include u-font-size("heading", 8);
+      }
+      @include at-media("tablet-lg") {
+        @include u-font-size("heading", 7);
+      }
+      @include at-media("desktop") {
+        @include u-font-size("heading", 9);
+      }
+      @include u-text("base-darker", "bold");
     }
   }
 }

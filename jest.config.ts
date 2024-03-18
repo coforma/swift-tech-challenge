@@ -21,6 +21,7 @@ const config: Config = {
     "src/app/testing/jest/**/*.{ts,tsx}",
     "!src/app/testing/jest/setupJest.ts",
     "!src/app/layout.tsx",
+    "!src/app/utils/analytics.tsx", // not testing internal implementation details of 3rd-party library
   ],
   coverageProvider: "v8",
   coverageReporters: [

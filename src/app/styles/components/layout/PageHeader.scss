@@ -8,15 +8,41 @@
   @include u-padding-y(3);
 
   &-title {
-    @include u-text("base-lightest", "bold");
-    @include typeset("heading", "xl", 1);
+    @include u-text("base-lightest", "normal");
+    @include u-text('ls-1');
     @include u-margin-bottom(2);
-    @include u-text('ls-1')
+
+    @include typeset("heading", 10, 1);
+    @include at-media("mobile-lg") {
+      @include typeset("heading", 11, 1);
+    }
+    @include at-media("tablet") {
+      @include typeset("heading", 12, 1);
+    }
+    @include at-media("tablet-lg") {
+      @include typeset("heading", 14, 1);
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 15)
+    }
   }
 
   &-subtitle {
-    @include u-text("base-lightest", "bold");
-    @include typeset("heading", "xs", 1);
-    @include u-text('ls-1')
+    @include u-text("base-lightest", "normal");
+    @include u-text('ls-1');
+
+    @include typeset("heading", 5, 1);
+    @include at-media("mobile-lg") {
+      @include u-font-size("heading", 6)
+    }
+    @include at-media("tablet") {
+      @include u-font-size("heading", 7)
+    }
+    @include at-media("tablet-lg") {
+      @include u-font-size("heading", 9)
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 10)
+    }
   }
 }

@@ -32,3 +32,28 @@ variable "github" {
   })
   description = "Github settings for deployment. Requires 'repo', 'app_deploy_restrictions', and 'oidc_arn'"
 }
+
+variable "institutions_dynamodb_table" {
+  type    = string
+  default = "institutions"
+}
+
+variable "images_bucket_arn" {
+  type        = string
+  description = "Arn of existing bucket containing images for application"
+}
+
+variable "provisioned_concurrency" {
+  type        = number
+  description = "Provisioned Concurrency for Lambda function"
+  default     = 1
+}
+
+variable "static_bucket" {
+  type = string
+}
+
+variable "static_next_path" {
+  type    = string
+  default = "next/"
+}

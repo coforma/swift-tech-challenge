@@ -1,13 +1,29 @@
 @use "uswds-core" as *;
 
 .browse_header {
-
-  @include u-margin-top(4);
-  @include u-margin-bottom(4);
+  @include u-margin-y(3);
+  @include at-media("mobile-lg") {
+    @include u-margin-y(4);
+  }
+  @include at-media("tablet-lg") {
+    @include u-margin-y(6);
+  }
 
   &-title {
     text-align: left;
-
+    @include typeset("ui", 10, 1);
+    @include at-media("mobile-lg") {
+      @include u-font-size("heading", 11);
+    }
+    @include at-media("tablet") {
+      @include u-font-size("heading", 12);
+    }
+    @include at-media("tablet-lg") {
+      @include u-font-size("heading", 14);
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 15);
+    }
     @include u-text("primary-darker", "bold");
     @include u-margin-y(2);
   }
@@ -15,6 +31,35 @@
   &-subtitle {
     text-align: left;
     @include u-padding-bottom(2);
-    font-size: 20px;
+    @include typeset("ui", 5, 1);
+    @include at-media("mobile-lg") {
+      @include u-font-size("heading", 6);
+    }
+    @include at-media("tablet-lg") {
+      @include u-font-size("heading", 7);
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 8);
+    }
+  }
+}
+
+.browse_back-to-top-button {
+  position: sticky;
+  bottom: 24px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 36px;
+  @include u-bg("primary-vivid");
+  @include u-padding-x(2.5);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  font-weight: 700;
+  transition: all 0.3s ease;
+
+  &-icon {
+    @include u-margin(0.5);
+    @include u-margin-right(1);
   }
 }
