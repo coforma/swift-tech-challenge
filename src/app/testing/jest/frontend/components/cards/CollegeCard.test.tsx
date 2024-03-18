@@ -6,8 +6,9 @@ import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { axe } from "jest-axe";
 import {
-  convertPercentage,
-  convertToThousandsSeparatedString,
+  maskCurrency,
+  maskPercentage,
+  maskThousands,
 } from "@/src/app/utils/masking";
 
 jest.mock("mixpanel-browser", () => ({
@@ -33,15 +34,13 @@ describe("Test CollegeCard", () => {
       screen.getByText(`${mockCollege.city}, ${mockCollege.state}`),
     ).toBeVisible();
     expect(screen.getByText(mockCollege.type)).toBeVisible();
-    expect(screen.getByText(mockCollege.population!)).toBeVisible();
     expect(
-      screen.getByText(`${convertPercentage(mockCollege.completionRate!)} %`),
+      screen.getByText(maskThousands(mockCollege.population)),
     ).toBeVisible();
     expect(
-      screen.getByText(
-        `$${convertToThousandsSeparatedString(mockCollege.avgCost!)}`,
-      ),
+      screen.getByText(`${maskPercentage(mockCollege.completionRate!)}`),
     ).toBeVisible();
+    expect(screen.getByText(maskCurrency(mockCollege.avgCost))).toBeVisible();
   });
 
   test("CollegeCard should have apply button", () => {
