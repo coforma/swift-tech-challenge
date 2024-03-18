@@ -26,6 +26,16 @@ data "aws_iam_policy_document" "backend" {
     ]
   }
   statement {
+    sid    = "WriteApplicantsDynamoDB"
+    effect = "Allow"
+    actions = [
+      "dynamodb:*"
+    ]
+    resources = [
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${var.applicants_dynamodb_table}"
+    ]
+  }
+  statement {
     sid = "ListImagesBucket"
     actions = [
       "s3:ListBucket"
@@ -75,6 +85,7 @@ resource "aws_lambda_function" "frontend" {
       API_GATEWAY                        = local.api_gw_origin_id
       IMAGES_BUCKET                      = var.images_bucket.name
       INSTITUTIONS_DYNAMODB_TABLE        = var.institutions_dynamodb_table
+      APPLICANTS_DYNAMODB_TABLE          = var.applicants_dynamodb_table
     }
   }
   layers = [

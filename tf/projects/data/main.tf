@@ -59,7 +59,7 @@ resource "aws_dynamodb_table" "applicants" {
   table_class = "STANDARD"
 
   attribute {
-    name = "institutionId"
+    name = "email"
     type = "S"
   }
   attribute {
