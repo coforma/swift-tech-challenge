@@ -1,12 +1,19 @@
 @use "uswds-core" as *;
 
 .card_details {
+  @include u-margin-x(auto);
+  width:100%;
+  max-width: 100rem;
 
   &>.usa-card__container {
-    border-radius: 0;
+    border-radius: .75rem;
+    @include u-margin-x(4);
   }
 
   &_header-title {
+    @include u-padding-x(3);
+    @include u-padding-top(3);
+    @include u-padding-bottom(1);
     @include typeset("ui", 10, 1);
     @include at-media("mobile-lg") {
       @include u-font-size("ui", 11);

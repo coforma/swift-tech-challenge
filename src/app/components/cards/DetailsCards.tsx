@@ -1,12 +1,6 @@
 "use client";
 // components
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  GridContainer,
-  Link,
-} from "@trussworks/react-uswds";
+import { Card, CardBody, Link } from "@trussworks/react-uswds";
 // types
 import { College, CollegeType, Specialties } from "../../types";
 import {
@@ -17,22 +11,20 @@ import {
 
 export const DetailsCards = ({ college }: Props) => {
   return (
-    <GridContainer>
+    <>
       <OutcomesCard college={college} />
       <AdmissionsCard college={college} />
       <StudentBodyCard college={college} />
       <AcademicsCard college={college} />
       <CostsCard college={college} />
-    </GridContainer>
+    </>
   );
 };
 
 const OutcomesCard = ({ college }: Props) => {
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
-      <CardHeader className="card_details_header">
-        <h2 className="card_details_header-title">Outcomes</h2>
-      </CardHeader>
+      <p className="card_details_header-title">Outcomes</p>
       <CardBody>
         <div>
           <p className="card_details_section-header">Graduation rate</p>
@@ -87,9 +79,7 @@ const OutcomesCard = ({ college }: Props) => {
 const AdmissionsCard = ({ college }: Props) => {
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
-      <CardHeader className="card_details_header">
-        <h2 className="card_details_header-title">Admissions</h2>
-      </CardHeader>
+      <p className="card_details_header-title">Admissions</p>
       <CardBody>
         <div>
           <p className="card_details_section-header">Admissions rate</p>
@@ -118,9 +108,7 @@ const AdmissionsCard = ({ college }: Props) => {
 const StudentBodyCard = ({ college }: Props) => {
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
-      <CardHeader className="card_details_header">
-        <h2 className="card_details_header-title">Student body</h2>
-      </CardHeader>
+      <p className="card_details_header-title">Student body</p>
       <CardBody>
         <div className="card_details_section">
           <p className="card_details_section-header">Population</p>
@@ -236,9 +224,7 @@ const parseSpecialties = (specialties: Specialties) => {
 const AcademicsCard = ({ college }: Props) => {
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
-      <CardHeader className="card_details_header">
-        <h2 className="card_details_header-title">Academics</h2>
-      </CardHeader>
+      <p className="card_details_header-title">Academics</p>
       <CardBody>
         <div>
           <p className="card_details_section-header">Degrees</p>
@@ -302,9 +288,7 @@ const CostsCard = ({ college }: Props) => {
   const over110 = maskCurrency(netPriceForType?.averagePriceUnder110kPlus);
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
-      <CardHeader className="card_details_header">
-        <h2 className="card_details_header-title">Costs</h2>
-      </CardHeader>
+      <p className="card_details_header-title">Costs</p>
       <CardBody>
         <div>
           <p className="card_details_section-header">Net price</p>
