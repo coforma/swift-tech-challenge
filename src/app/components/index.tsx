@@ -1,6 +1,7 @@
 // cards elements
 export { CardIcon } from "./cards/CardIcon";
 export { CollegeCard } from "./cards/CollegeCard";
+export { DetailsCards } from "./cards/DetailsCards";
 // form elements
 export { TextArea } from "./form/TextArea";
 export { TextField } from "./form/TextField";

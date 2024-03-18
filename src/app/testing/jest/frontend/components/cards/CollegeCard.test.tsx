@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import mixpanel from "mixpanel-browser";
 import { CollegeCard } from "@/src/app/components";
-import { mockCollege } from "../../../setupJest";
+import { mockCollege, mockRouterPush } from "../../../setupJest";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { axe } from "jest-axe";
@@ -58,6 +58,7 @@ describe("Test CollegeCard", () => {
       await userEvent.click(applyButton);
     });
     expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
+    expect(mockRouterPush).toHaveBeenCalledTimes(1);
   });
 });
 
