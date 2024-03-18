@@ -1,8 +1,4 @@
 const nextConfig = {
-  env: {
-    CDN_HOST: '',
-    API_GATEWAY: ''
-  },
   images: {
     remotePatterns: [
       {
@@ -23,7 +19,7 @@ const nextConfig = {
       allowedForwardedHosts: ["luf1zbs5oa.execute-api.us-east-1.amazonaws.com","rm93rrjzid.execute-api.us-east-1.amazonaws.com"],
       allowedOrigins: ["d1b4twxh1cihpk.cloudfront.net","d2z6xcoh14f3wb.cloudfront.net"],
     }
-  },
+  }
 };
 
 export default nextConfig;
