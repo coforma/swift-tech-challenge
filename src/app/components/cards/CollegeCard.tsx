@@ -1,6 +1,5 @@
 "use client";
 import mixpanel from "mixpanel-browser";
-import { usePathname } from "next/navigation";
 // components
 import Image from "next/image";
 import {
@@ -22,7 +21,6 @@ import {
 import { College } from "../../types";
 
 export const CollegeCard = ({ college }: Props) => {
-  const pathname = usePathname();
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
       <CardHeader className="card_header">
@@ -70,15 +68,13 @@ export const CollegeCard = ({ college }: Props) => {
         >
           Apply
         </Link>
-        {pathname === "/" && (
-          <Link
-            className="usa-button usa-button--outline card_footer-view-more-button"
-            href={`/${college.id}`}
-            onClick={() => mixpanel.track("click_view-details")}
-          >
-            View more
-          </Link>
-        )}
+        <Link
+          className="usa-button usa-button--outline card_footer-view-more-button"
+          href={`/${college.id}`}
+          onClick={() => mixpanel.track("click_view-details")}
+        >
+          View more
+        </Link>
       </CardFooter>
     </Card>
   );

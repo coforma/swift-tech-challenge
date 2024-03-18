@@ -3,16 +3,11 @@ import "jest-axe/extend-expect";
 
 import { College, CollegeType } from "@/src/app/types";
 
-export const mockUsePathname = jest.fn();
-
 jest.mock("next/navigation", () => ({
   useRouter() {
     return {
       push: jest.fn(),
     };
-  },
-  usePathname() {
-    return mockUsePathname();
   },
 }));
 
