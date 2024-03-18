@@ -12,7 +12,7 @@ import arrow_upward from "../../assets/icons/arrow_upward.svg";
 export const Browse = () => {
   const { institutionData } = useContext(InstitutionContext);
   const [scrollPosition, setScrollPosition] = useState<boolean>(false);
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(true);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const onScroll = (e: any) => {
