@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import mixpanel from "mixpanel-browser";
 import { CollegeCard } from "@/src/app/components";
-import { mockCollege, mockRouterPush } from "../../../setupJest";
+import { mockCollege, mockUsePathname } from "../../../setupJest";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { axe } from "jest-axe";
@@ -24,6 +24,8 @@ const component = (
 
 describe("Test CollegeCard", () => {
   beforeEach(() => {
+    jest.clearAllMocks();
+    mockUsePathname.mockImplementation(() => "/");
     render(component);
   });
 
@@ -49,8 +51,15 @@ describe("Test CollegeCard", () => {
       "Apply",
     );
   });
+});
 
-  test("On click, apply link fires tracking event", async () => {
+describe("Test CollegeCard buttons", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+  test("On click, apply link fires tracking event and navigation push", async () => {
+    mockUsePathname.mockImplementation(() => "/");
+    render(component);
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
     const applyButton = screen.getByRole("link", { name: /apply/i });
     expect(applyButton).toBeVisible();
@@ -58,7 +67,26 @@ describe("Test CollegeCard", () => {
       await userEvent.click(applyButton);
     });
     expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
-    expect(mockRouterPush).toHaveBeenCalledTimes(1);
+  });
+
+  test("On click, view more link fires tracking event", async () => {
+    mockUsePathname.mockImplementation(() => "/");
+    render(component);
+    const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
+    const viewMoreButton = screen.getByRole("link", { name: /View more/i });
+    expect(viewMoreButton).toBeVisible();
+    await act(async () => {
+      await userEvent.click(viewMoreButton);
+    });
+    expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
+  });
+
+  test("View more doesn't appear on details page", async () => {
+    mockUsePathname.mockImplementation(() => "/123456");
+    render(component);
+    expect(
+      screen.queryByRole("link", { name: /View more/i }),
+    ).not.toBeInTheDocument();
   });
 });
 
