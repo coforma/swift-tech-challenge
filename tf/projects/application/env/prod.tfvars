@@ -16,4 +16,4 @@ images_bucket = {
 provisioned_concurrency     = 4
 static_bucket               = "public-static-f0671608"
 static_next_path            = ""
-institutions_dynamodb_table = "institutions-prod"
+institutions_dynamodb_table = "institutions"
