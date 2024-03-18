@@ -12,7 +12,7 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    minimumCacheTTL: 3600
+    minimumCacheTTL: 86400
   },
   sassOptions: {
     includePaths: ["./node_modules/@uswds/uswds/packages"],
