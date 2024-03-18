@@ -1,4 +1,4 @@
 environment                 = "stage"
 institutions_dynamodb_table = "institutions-prod"
-source_bucket               = "swift-c5292867"
-institution_images_bucket   = "swift-instituion-images-c20cd252"
+source_bucket               = "swift-816b48c9"
+institution_images_bucket   = "swift-institution-images-9bbaef25"
