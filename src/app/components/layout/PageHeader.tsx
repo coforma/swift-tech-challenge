@@ -1,5 +1,6 @@
 // components
 import { GovBanner, GridContainer, Header } from "@trussworks/react-uswds";
+import Link from "next/link";
 
 export const PageHeader = () => {
   return (
@@ -12,14 +13,14 @@ export const PageHeader = () => {
           role="navigation"
         >
           <GridContainer>
-            <div className="header_logo">
+            <Link href="/" className="header_logo">
               <div className="header_logo-title">
                 <p>U.S. College Finder</p>
               </div>
               <div className="header_logo-subtitle">
                 <p>From the Department of Higher Education</p>
               </div>
-            </div>
+            </Link>
           </GridContainer>
         </div>
       </Header>

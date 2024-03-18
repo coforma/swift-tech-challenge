@@ -1,0 +1,48 @@
+@use "uswds-core" as *;
+
+.card_banner {
+  &>.usa-card__container {
+    border-radius: 0;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+  }
+
+  &-container {
+    max-width: 1000px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    @include at-media("tablet-lg") {
+      grid-template-columns: 20rem 1fr;
+    }
+    align-items: center;
+    justify-content: center;
+
+    &>.usa-card__media {
+      position: relative;
+      width: 20rem;
+      max-height: 20rem;
+      margin: 0 auto;
+    }
+
+    &>.usa-card__body {
+      position: relative;
+      margin: 0;
+      &>header {
+        margin: 0;
+        @include u-padding-top(2);
+      }
+      &>.card_desc {
+        padding-left: 1.5rem;
+      }
+      &>.card_grid {
+        padding-left: 1.5rem;
+      }
+      &>.usa-card__footer {
+        margin: 0;
+      }
+    }
+  }
+}

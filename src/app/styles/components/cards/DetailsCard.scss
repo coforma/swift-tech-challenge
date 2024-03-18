@@ -1,0 +1,106 @@
+@use "uswds-core" as *;
+
+.card_details {
+  @include u-margin-x(auto);
+  width:100%;
+  max-width: 100rem;
+
+  &>.usa-card__container {
+    border-radius: .75rem;
+    @include u-margin-x(4);
+  }
+
+  &_header-title {
+    @include u-padding-x(3);
+    @include u-padding-top(3);
+    @include u-padding-bottom(1);
+    @include typeset("ui", 10, 1);
+    @include at-media("mobile-lg") {
+      @include u-font-size("ui", 11);
+    }
+    @include at-media("desktop") {
+      @include u-font-size("ui", 12);
+    }
+    @include u-text("primary", "bold");
+  }
+
+  &_section{
+    @include u-padding-top(3);
+
+    &-header {
+      @include typeset("ui", 9, 1);
+      @include u-text("base-darker", "bold");
+      @include u-padding-bottom(3);
+    }
+
+    &-text {
+      @include typeset("ui", 5, 1);
+      @include u-text("base-dark", "normal");
+      @include u-line-height('body', 3);
+      @include at-media("mobile-lg") {
+        @include u-font-size("ui", 6);
+      }
+      @include at-media("desktop") {
+        @include u-font-size("ui", 7);
+      }
+      @include u-padding-bottom(3);
+    }
+
+    &-data {
+      display: grid;
+      grid-template-columns: 1fr;
+      @include at-media("mobile-lg") {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 1rem;
+        column-gap: 1rem;
+      }
+      @include at-media("tablet-lg") {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      &-title {
+        @include typeset("ui", 5, 1);
+        @include u-text("base-dark", "normal");
+        @include at-media("desktop") {
+          @include u-font-size("ui", 6);
+        }
+        @include u-padding-bottom(2);
+      }
+
+      &-highlight {
+        @include typeset("ui", 9, 1);
+        @include u-text("primary", "bold");
+        @include u-padding-bottom(2);
+        @include u-line-height('body', 3);
+      }
+    }
+
+    &-table {
+      border-collapse: collapse;
+      @include typeset("ui", 5, 1);
+
+      width: 100%;
+
+      th {
+        @include u-text("base-darkest", "bold");
+        @include u-border-y('1px');
+        @include u-border-x(0);
+        @include u-border('base-lighter');
+      }
+
+      thead tr {
+        text-align: left;
+      }
+
+      th, td {
+        padding: .75rem 1rem;
+      }
+
+      tbody tr {
+        @include u-border-y('1px');
+        @include u-border-x(0);
+        @include u-border('base-lighter');
+      }
+    }
+  }
+}
