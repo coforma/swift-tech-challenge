@@ -17,11 +17,10 @@ const nextConfig = {
     includePaths: ["./node_modules/@uswds/uswds/packages"],
   },
   output: 'standalone',
-  assetPrefix: process.env.CDN_HOST ? `https://${process.env.CDN_HOST}` : '',
   experimental: {
     serverActions: {
-      allowedForwardedHosts: process.env.API_GATEWAY ? [process.env.API_GATEWAY] : [],
-      allowedOrigins: process.env.CDN_HOST ? [`https://${process.env.CDN_HOST}`,`${process.env.CDN_HOST}`,`http:/${process.env.CDN_HOST}` ] : [],
+      allowedForwardedHosts: ["luf1zbs5oa.execute-api.us-east-1.amazonaws.com","rm93rrjzid.execute-api.us-east-1.amazonaws.com"],
+      allowedOrigins: ["d1b4twxh1cihpk.cloudfront.net","d2z6xcoh14f3wb.cloudfront.net"],
     }
   }
 };
