@@ -24,7 +24,7 @@ const nextConfig = {
     }
   },
   images: {
-    minimumCacheTTL: 3600
+    minimumCacheTTL: 30
   }
 };
 
