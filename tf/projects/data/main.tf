@@ -48,6 +48,30 @@ resource "aws_s3_bucket" "institution_images" {
   bucket = var.institution_images_bucket
 }
 
+resource "aws_dynamodb_table" "applicants" {
+  name                        = var.applicants_dynamodb_table
+  deletion_protection_enabled = false
+  hash_key                    = "email"
+  range_key                   = "recordType"
+  stream_enabled              = false
+  billing_mode                = "PAY_PER_REQUEST"
+
+  table_class = "STANDARD"
+
+  attribute {
+    name = "institutionId"
+    type = "S"
+  }
+  attribute {
+    name = "recordType"
+    type = "S"
+  }
+
+  point_in_time_recovery {
+    enabled = false
+  }
+}
+
 module "data_ingestion" {
   source                      = "../../modules/data-ingestion"
   institutions_dynamodb_table = aws_dynamodb_table.institutions.name
