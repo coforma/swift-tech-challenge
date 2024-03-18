@@ -36,11 +36,6 @@ variable "bootstrap_remote_state_config" {
   description = "Values for terraform_remote_state configuration for bootstrap s3 backend"
 }
 
-variable "images_bucket_arn" {
-  type        = string
-  description = "Arn of existing bucket containing images for application"
-}
-
 variable "provisioned_concurrency" {
   type        = number
   description = "Provisioned Concurrency for Lambda function"

@@ -38,11 +38,6 @@ variable "institutions_dynamodb_table" {
   default = "institutions"
 }
 
-variable "images_bucket_arn" {
-  type        = string
-  description = "Arn of existing bucket containing images for application"
-}
-
 variable "provisioned_concurrency" {
   type        = number
   description = "Provisioned Concurrency for Lambda function"
