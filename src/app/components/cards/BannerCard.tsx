@@ -1,8 +1,16 @@
 "use client";
 
+import mixpanel from "mixpanel-browser";
 // components
 import Image from "next/image";
-import { Card, CardBody, CardHeader, CardMedia } from "@trussworks/react-uswds";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  CardMedia,
+} from "@trussworks/react-uswds";
+import Link from "next/link";
 import { CardIcon } from "./CardIcon";
 // utils
 import {
@@ -53,6 +61,15 @@ export const BannerCard = ({ college }: Props) => {
               icon="local_offer"
             />
           </div>
+          <CardFooter>
+            <Link
+              className="usa-button card_banner-apply-button"
+              href={`${college.id}/apply`}
+              onClick={() => mixpanel.track("click_launch-application")}
+            >
+              Apply
+            </Link>
+          </CardFooter>
         </CardBody>
       </div>
     </Card>

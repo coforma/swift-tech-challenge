@@ -45,4 +45,11 @@
       }
     }
   }
+
+  &-apply-button {
+    width: 100%;
+    @include at-media("tablet-lg") {
+      max-width: fit-content;
+    }
+  }
 }
