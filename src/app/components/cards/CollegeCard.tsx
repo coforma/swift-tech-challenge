@@ -63,7 +63,7 @@ export const CollegeCard = ({ college }: Props) => {
       <CardFooter className="card_footer">
         <Link
           className="usa-button card_footer-apply-button"
-          href={`apply/${college.id}`}
+          href={`${college.id}/apply`}
           onClick={() => mixpanel.track("click_launch-application")}
         >
           Apply
