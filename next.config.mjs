@@ -12,6 +12,7 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    minimumCacheTTL: 3600
   },
   sassOptions: {
     includePaths: ["./node_modules/@uswds/uswds/packages"],
@@ -23,9 +24,6 @@ const nextConfig = {
       allowedOrigins: ["d1b4twxh1cihpk.cloudfront.net","d2z6xcoh14f3wb.cloudfront.net"],
     }
   },
-  images: {
-    minimumCacheTTL: 30
-  }
 };
 
 export default nextConfig;
