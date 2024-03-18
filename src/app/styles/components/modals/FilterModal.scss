@@ -1,0 +1,42 @@
+@use "uswds-core" as *;
+
+.usa-modal--lg {
+  @include u-padding(3);
+  position: absolute;
+  top: 10vh;
+  width: 400px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.usa-modal__heading {
+  @include u-margin-top(4);
+  @include u-margin-bottom(1.5);
+  color: var(--Base-ink, #1b1b1b);
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.filter_section {
+  @include u-margin-y(3);
+  &-heading {
+    @include u-margin-bottom(2);
+    color: var(--Base-base-darker, #3d4551);
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+  }
+}
+
+.filter_close {
+  position: absolute;
+  top: 42px;
+  right: 13px;
+}
+
+.filter-modal_icon-image {
+  color: black;
+}

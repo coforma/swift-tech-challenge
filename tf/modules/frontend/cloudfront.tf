@@ -10,6 +10,26 @@ data "aws_cloudfront_cache_policy" "optimized" {
   name = "Managed-CachingOptimized"
 }
 
+resource "aws_cloudfront_cache_policy" "images" {
+  name        = format("%sNextImageCache", var.environment)
+  comment     = "Caching Policy for Next.js images"
+  default_ttl = 86400
+  min_ttl     = 1
+  max_ttl     = 31536000
+  parameters_in_cache_key_and_forwarded_to_origin {
+    cookies_config {
+      cookie_behavior = "none"
+    }
+    headers_config {
+      header_behavior = "none"
+    }
+    query_strings_config {
+      query_string_behavior = "all"
+    }
+  }
+
+}
+
 
 resource "aws_cloudfront_distribution" "distribution" {
   origin {
@@ -41,20 +61,15 @@ resource "aws_cloudfront_distribution" "distribution" {
       "HEAD",
       "OPTIONS",
     ]
-    cache_policy_id = data.aws_cloudfront_cache_policy.optimized.id
+    cache_policy_id = aws_cloudfront_cache_policy.images.id
     cached_methods = [
       "GET",
       "HEAD",
     ]
     compress               = true
-    default_ttl            = 0
-    max_ttl                = 0
-    min_ttl                = 0
-    path_pattern           = "/institution-images/*"
+    path_pattern           = "/_next/image"
     smooth_streaming       = false
-    target_origin_id       = "next-static-origin"
-    trusted_key_groups     = []
-    trusted_signers        = []
+    target_origin_id       = local.api_gw_origin_id
     viewer_protocol_policy = "redirect-to-https"
   }
   ordered_cache_behavior {
@@ -69,14 +84,9 @@ resource "aws_cloudfront_distribution" "distribution" {
       "HEAD",
     ]
     compress               = true
-    default_ttl            = 0
-    max_ttl                = 0
-    min_ttl                = 0
     path_pattern           = "/_next/static/*"
     smooth_streaming       = false
     target_origin_id       = "next-static-origin"
-    trusted_key_groups     = []
-    trusted_signers        = []
     viewer_protocol_policy = "redirect-to-https"
   }
 
@@ -89,7 +99,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods  = ["GET", "HEAD"]
 
-    viewer_protocol_policy   = "allow-all"
+    viewer_protocol_policy   = "redirect-to-https"
     min_ttl                  = 0
     cache_policy_id          = data.aws_cloudfront_cache_policy.disabled.id
     origin_request_policy_id = data.aws_cloudfront_origin_request_policy.all.id
@@ -137,29 +147,9 @@ data "aws_iam_policy_document" "static" {
       values   = [aws_cloudfront_distribution.distribution.arn]
     }
   }
-  statement {
-    actions = ["s3:GetObject", "s3:ListBucket"]
-    resources = [
-      "${aws_s3_bucket.static.arn}/*",
-      "${aws_s3_bucket.static.arn}"
-    ]
-    principals {
-      type        = "*"
-      identifiers = ["*"]
-    }
-  }
 }
 
 resource "aws_s3_bucket_policy" "static" {
   bucket = aws_s3_bucket.static.id
   policy = data.aws_iam_policy_document.static.json
-}
-
-resource "aws_s3_bucket_public_access_block" "static" {
-  bucket = aws_s3_bucket.static.id
-
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
 }

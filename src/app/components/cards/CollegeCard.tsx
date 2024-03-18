@@ -3,13 +3,13 @@ import mixpanel from "mixpanel-browser";
 // components
 import Image from "next/image";
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   CardMedia,
 } from "@trussworks/react-uswds";
+import Link from "next/link";
 import { CardIcon } from "./CardIcon";
 // utils
 import {
@@ -61,14 +61,20 @@ export const CollegeCard = ({ college }: Props) => {
         </div>
       </CardBody>
       <CardFooter className="card_footer">
-        <Button
-          name="apply"
-          type={"button"}
-          className="card_footer-apply-button"
+        <Link
+          className="usa-button card_footer-apply-button"
+          href={`/${college.id}/apply`}
           onClick={() => mixpanel.track("click_launch-application")}
         >
-          Apply to this school
-        </Button>
+          Apply
+        </Link>
+        <Link
+          className="usa-button usa-button--outline card_footer-view-more-button"
+          href={`/${college.id}`}
+          onClick={() => mixpanel.track("click_view-details")}
+        >
+          View more
+        </Link>
       </CardFooter>
     </Card>
   );

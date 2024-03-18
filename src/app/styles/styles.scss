@@ -6,11 +6,16 @@
 
 // page styles
 @forward "not-found.scss";
+@forward "apply.scss";
 @forward "browse.scss";
 
 // component styles
 @forward "./components/cards/CardIcon.scss";
+@forward "./components/cards/BannerCard.scss";
 @forward "./components/cards/CollegeCard.scss";
+@forward "./components/cards/DetailsCard.scss";
+@forward "./components/form/TextArea.scss";
 @forward "./components/layout/HeroImage.scss";
 @forward "./components/layout/PageHeader.scss";
 @forward "./components/layout/PageFooter.scss";
+@forward "./components/modals/FilterModal.scss";

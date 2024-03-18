@@ -2604,7 +2604,7 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
-"@trussworks/react-uswds@^7.0.0":
+"@trussworks/react-uswds@7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@trussworks/react-uswds/-/react-uswds-7.0.0.tgz#03d05f1aec64fbdc4df5621eade9616c7d03a008"
   integrity sha512-N3O0BRuhyLoZKjYM0Mq+XIXJ3ShvCEh6uhqwRstIde6E9m0Au6JLy1YEv9A8eapBxDvyqZW3jiVTGzW/JqS+eA==
@@ -6669,6 +6669,11 @@ react-dom@^18:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-hook-form@^7.51.0:
+  version "7.51.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.51.0.tgz#757ae71b37c26e00590bd3788508287dcc5ecdaf"
+  integrity sha512-BggOy5j58RdhdMzzRUHGOYhSz1oeylFAv6jUSG86OvCIvlAvS7KvnRY7yoAf2pfEiPN7BesnR0xx73nEk3qIiw==
 
 react-is@^16.13.1:
   version "16.13.1"

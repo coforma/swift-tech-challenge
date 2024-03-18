@@ -5,6 +5,11 @@
 }
 
 .header_logo {
+  display: inline-block;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline #fff;
+  }
   @include u-padding-y(3);
 
   &-title {
