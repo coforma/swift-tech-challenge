@@ -10,8 +10,8 @@ bootstrap_remote_state_config = {
   key    = "bootstrap-global.tfstate"
 }
 images_bucket = {
-  arn  = "arn:aws:s3:::swift-instituion-images-9a86eb74"
-  name = "swift-instituion-images-9a86eb74"
+  arn  = "arn:aws:s3:::swift-institution-images-9a86eb74"
+  name = "swift-institution-images-9a86eb74"
 }
 provisioned_concurrency = 1
 static_bucket           = "public-static-ada5ffab"
