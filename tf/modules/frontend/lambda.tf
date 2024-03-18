@@ -69,6 +69,7 @@ resource "aws_lambda_function" "frontend" {
       PORT                               = "8080"
       CDN_HOST                           = aws_cloudfront_distribution.distribution.domain_name
       NEXT_PUBLIC_MIXPANEL_PROJECT_TOKEN = data.aws_secretsmanager_secret_version.mixpanel.secret_string
+      API_GATEWAY                        = local.api_gw_origin_id
     }
   }
   layers = [
