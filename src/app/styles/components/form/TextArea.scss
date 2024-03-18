@@ -1,0 +1,26 @@
+@use "uswds-core" as *;
+
+.input_textarea {
+  &-label {
+    max-width: 100%;
+    @include typeset("ui", 5, 1);
+    @include at-media("mobile-lg") {
+      @include u-font-size("ui", 6)
+    }
+    @include at-media("tablet-lg") {
+      @include u-font-size("ui", 8)
+    }
+    @include at-media("desktop") {
+      @include u-font-size("ui", 9)
+    }
+    @include u-text("base-darkest", "normal");
+    @include u-line-height('body', 3);
+    @include u-margin-y(3);
+
+  }
+
+  &-input {
+    max-width: 100%;
+    @include u-margin-y(2);
+  }
+}

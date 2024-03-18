@@ -3,21 +3,22 @@ import mixpanel from "mixpanel-browser";
 // components
 import Image from "next/image";
 import {
-  Button,
-  ButtonGroup,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   CardMedia,
 } from "@trussworks/react-uswds";
+import Link from "next/link";
 import { CardIcon } from "./CardIcon";
+// utils
+import {
+  maskCurrency,
+  maskThousands,
+  maskPercentage,
+} from "../../utils/masking";
 //types
 import { College } from "../../types";
-import {
-  convertToThousandsSeparatedString,
-  convertPercentage,
-} from "../../utils/masking";
 
 export const CollegeCard = ({ college }: Props) => {
   return (
@@ -37,31 +38,36 @@ export const CollegeCard = ({ college }: Props) => {
       <CardBody>
         <p className="card_desc">{college.description}</p>
         <div className="card_grid">
-          <CardIcon subtitle={"Type"} highlight={college.type} />
+          <CardIcon
+            subtitle={"Type"}
+            highlight={college.type}
+            icon="account_balance"
+          />
           <CardIcon
             subtitle={"Undergraduate population"}
-            highlight={convertToThousandsSeparatedString(college.population!)}
+            highlight={maskThousands(college.population)}
+            icon="people"
           />
           <CardIcon
             subtitle={"Graduation rate"}
-            highlight={`${convertPercentage(college.completionRate!)} %`}
+            highlight={maskPercentage(college.completionRate)}
+            icon="school"
           />
           <CardIcon
             subtitle={"Average cost per year"}
-            highlight={`$${convertToThousandsSeparatedString(college.avgCost!)}`}
+            highlight={maskCurrency(college.avgCost)}
+            icon="local_offer"
           />
         </div>
       </CardBody>
       <CardFooter className="card_footer">
-        <ButtonGroup>
-          <Button
-            name="apply"
-            type={"button"}
-            onClick={() => mixpanel.track("click_launch-application")}
-          >
-            Apply to this school
-          </Button>
-        </ButtonGroup>
+        <Link
+          className="usa-button card_footer-apply-button"
+          href={`${college.id}/apply`}
+          onClick={() => mixpanel.track("click_launch-application")}
+        >
+          Apply
+        </Link>
       </CardFooter>
     </Card>
   );
