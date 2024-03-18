@@ -6,6 +6,7 @@ export { TextArea } from "./form/TextArea";
 export { TextField } from "./form/TextField";
 // layout elements
 export { HeroImage } from "./layout/HeroImage";
+export { FilterModal } from "./layout/FilterModal";
 export { PageHeader } from "./layout/PageHeader";
 export { PageFooter } from "./layout/PageFooter";
 // context provider
