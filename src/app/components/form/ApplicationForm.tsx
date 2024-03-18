@@ -12,11 +12,13 @@ import {
 } from "@trussworks/react-uswds";
 import { TextField, TextArea } from "../../components";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 // utils
 import { getInstitutionApplication } from "../../utils/institutions";
 import { saveApplication } from "@/src/app/utils/applications";
 
 export const ApplicationForm = ({ institutionId }: Props) => {
+  const router = useRouter();
   const [application, setApplication] = useState<
     Record<string, any> | undefined
   >();
@@ -31,14 +33,19 @@ export const ApplicationForm = ({ institutionId }: Props) => {
 
   const appq = application?.questions;
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     const submission = {
       questions: appq,
       answers: data,
       email: data.email,
       institutionId: institutionId,
     };
-    saveApplication(submission);
+    try {
+      await saveApplication(submission);
+      router.push(`/${institutionId}/apply/confirmation`);
+    } catch {
+      router.push(`/error`);
+    }
   };
 
   //Handle personal questions
