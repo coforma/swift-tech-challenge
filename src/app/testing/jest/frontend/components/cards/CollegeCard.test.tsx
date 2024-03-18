@@ -24,6 +24,7 @@ const component = (
 
 describe("Test CollegeCard", () => {
   beforeEach(() => {
+    jest.resetAllMocks();
     render(component);
   });
 
