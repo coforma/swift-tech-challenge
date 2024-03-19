@@ -71,6 +71,12 @@ resource "aws_iam_role_policy_attachment" "insights_policy" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
 }
 
+resource "aws_iam_role_policy_attachment" "vpc" {
+  count      = var.vpc_config != null ? 1 : 0
+  role       = aws_iam_role.iam_for_lambda.id
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
+
 resource "aws_lambda_function" "frontend" {
   s3_bucket     = var.artifact_bucket
   s3_key        = "${var.artifact_path}${var.zip_file_name}"
@@ -102,6 +108,13 @@ resource "aws_lambda_function" "frontend" {
     log_format = "JSON"
   }
   publish = true
+  dynamic "vpc_config" {
+    for_each = var.vpc_config != null ? ["one"] : []
+    content {
+      security_group_ids = var.vpc_config.security_group_ids
+      subnet_ids         = var.vpc_config.subnet_ids
+    }
+  }
 }
 
 resource "aws_lambda_alias" "alias" {

@@ -64,3 +64,11 @@ variable "static_next_path" {
 variable "applicants_dynamodb_table" {
   type = string
 }
+
+variable "vpc_config" {
+  default = null
+  type = object({
+    subnet_ids         = list(string)
+    security_group_ids = list(string)
+  })
+}

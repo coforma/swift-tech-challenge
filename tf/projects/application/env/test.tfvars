@@ -18,3 +18,11 @@ provisioned_concurrency     = 0
 static_bucket               = "public-static-3a96b108"
 static_next_path            = ""
 institutions_dynamodb_table = "institutions"
+vpc_config = {
+  security_group_ids = ["sg-061424e040e256d2b"]
+  subnet_ids = [
+    "subnet-0f8e7ed39482a94bb",
+    "subnet-07d8c7bfc70542d67",
+    "subnet-03af32f1fbdc85a82",
+  ]
+}

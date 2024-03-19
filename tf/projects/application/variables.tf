@@ -67,3 +67,11 @@ variable "institutions_dynamodb_table" {
   type    = string
   default = "institutions"
 }
+
+variable "vpc_config" {
+  default = null
+  type = object({
+    subnet_ids         = list(string)
+    security_group_ids = list(string)
+  })
+}

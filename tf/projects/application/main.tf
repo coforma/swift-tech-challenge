@@ -35,4 +35,5 @@ module "frontend" {
   static_next_path            = var.static_next_path
   applicants_dynamodb_table   = var.applicants_dynamodb_table
   institutions_dynamodb_table = var.institutions_dynamodb_table
+  vpc_config                  = var.vpc_config
 }
