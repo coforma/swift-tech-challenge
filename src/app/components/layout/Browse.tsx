@@ -8,14 +8,17 @@ import {
   FilterModal,
   InstitutionContext,
   Spinner,
+  USWDSForm,
 } from "../../components";
 // utils
+import { filterInstitutions } from "../../utils/filtering";
 import { College } from "../../types";
 // icons
 import arrow_upward from "../../assets/icons/arrow_upward.svg";
 
 export const Browse = () => {
-  const { filteredInstitutions } = useContext(InstitutionContext);
+  const { filteredInstitutions, institutionsArray, setFilteredInstitutions } =
+    useContext(InstitutionContext);
   const [scrollPosition, setScrollPosition] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -29,6 +32,19 @@ export const Browse = () => {
 
   const launchModal = () => {
     setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const applyFilters = async (filters: any) => {
+    const filteredInstitutions = filterInstitutions(
+      institutionsArray!,
+      filters,
+    );
+    setFilteredInstitutions(filteredInstitutions);
+    closeModal();
   };
 
   if (!filteredInstitutions) return <Spinner />;
@@ -45,9 +61,9 @@ export const Browse = () => {
           </Button>
         </div>
       )}
-      {isModalVisible && (
-        <FilterModal closeHandler={() => setIsModalVisible(false)} />
-      )}
+      <USWDSForm initialValues={{}} submit={applyFilters}>
+        {isModalVisible && <FilterModal closeHandler={closeModal} />}
+      </USWDSForm>
       {filteredInstitutions?.length > 0 ? (
         <ul className="usa-card-group">
           {filteredInstitutions.map((school: College) => (
