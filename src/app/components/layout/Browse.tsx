@@ -36,7 +36,7 @@ export const Browse = () => {
       {!institutionsArray && <Spinner />}
       {institutionsArray && (
         <div className="browse_header">
-          <h1 className="browse_header-title"> Browse colleges </h1>
+          <h2 className="browse_header-title">Browse colleges</h2>
           <p className="site_text-intro browse_header-subtitle">
             Find the college thats right for you
           </p>
