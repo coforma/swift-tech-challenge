@@ -1,5 +1,5 @@
 import { TextArea } from "@/src/app/components";
-import { USWDSForm } from "@/src/app/components/form/Form";
+import { USWDSForm } from "@/src/app/components/form/USWDSForm";
 import { act, render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
 import * as yup from "yup";

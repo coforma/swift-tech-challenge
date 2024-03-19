@@ -2,8 +2,9 @@
 
 import * as yup from "yup";
 import { useEffect, useState } from "react";
-import { getInstitutionApplication } from "../../utils/institutions";
-import { USWDSForm } from "./Form";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+// components
 import {
   Button,
   ButtonGroup,
@@ -11,14 +12,14 @@ import {
   CardBody,
   GridContainer,
 } from "@trussworks/react-uswds";
-import { Spinner } from "../utilities/Spinner";
+import { Spinner, TextArea, TextField, USWDSForm } from "../index";
+// pages
 import NotFound from "../../not-found";
-import { TextField } from "./TextField";
-import Link from "next/link";
+// utils
+import { getInstitutionApplication } from "../../utils/institutions";
 import { saveApplication } from "../../utils/applications";
-import { useRouter } from "next/navigation";
+// schemas
 import { email, number, numberOptional, text } from "../../schemas/schemas";
-import { TextArea } from "./TextArea";
 
 export const AppForm = ({ institutionId }: Props) => {
   const router = useRouter();
