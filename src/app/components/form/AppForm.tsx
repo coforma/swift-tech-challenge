@@ -16,27 +16,12 @@ import NotFound from "../../not-found";
 import { TextField } from "./TextField";
 import Link from "next/link";
 import { saveApplication } from "../../utils/applications";
-import router from "next/router";
-
-const SignupSchema = yup.object().shape({
-  "first-name": yup
-    .string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  "last-name": yup
-    .string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  email: yup.string().email().required("Required"),
-  phone: yup.string().required("Required"),
-  "math-score": yup.number(),
-  "crit-reading-score": yup.number(),
-  "writing-score": yup.number(),
-});
+import { useRouter } from "next/navigation";
+import { email, number, numberOptional, text } from "../../schemas/schemas";
+import { TextArea } from "./TextArea";
 
 export const AppForm = ({ institutionId }: Props) => {
+  const router = useRouter();
   const [application, setApplication] = useState<
     Record<string, any> | undefined
   >();
@@ -58,7 +43,6 @@ export const AppForm = ({ institutionId }: Props) => {
       email: data.email,
       institutionId: institutionId,
     };
-    alert(submission);
     try {
       await saveApplication(submission);
       router.push(`/${institutionId}/apply/confirmation`);
@@ -69,12 +53,25 @@ export const AppForm = ({ institutionId }: Props) => {
 
   //Handle SAT score questions
   const hasSATQ: boolean = appq?.includes("What is your SAT score?");
-  /*
-   * Handle EssayQuestions
-   *  const essayQ1: string | undefined = appq?.[4];
-   *  const essayQ2: string | undefined = appq?.[5];
-   *  const essayQ3: string | undefined = appq?.[6];
-   */
+  const satSchema = hasSATQ ? number() : numberOptional();
+
+  const validationSchema = yup.object().shape({
+    "first-name": text(),
+    "last-name": text(),
+    email: email(),
+    phone: text(),
+    "math-score": satSchema,
+    "reading-score": satSchema,
+    "writing-score": satSchema,
+    "question-1": text(),
+    "question-2": text(),
+    "question-3": text(),
+  });
+  // Handle EssayQuestions
+  const essayQ1: string | undefined = appq?.[4];
+  const essayQ2: string | undefined = appq?.[5];
+  const essayQ3: string | undefined = appq?.[6];
+
   const ApplicationView = !application ? (
     <NotFound />
   ) : (
@@ -86,10 +83,13 @@ export const AppForm = ({ institutionId }: Props) => {
           email: "",
           phone: "",
           "math-score": "",
-          "crit-reading-score": "",
+          "reading-score": "",
           "writing-score": "",
+          "question-1": "",
+          "question-2": "",
+          "question-3": "",
         }}
-        validationSchema={SignupSchema}
+        validationSchema={validationSchema}
         submit={onSubmit}
       >
         <div className="application_header">
@@ -155,7 +155,7 @@ export const AppForm = ({ institutionId }: Props) => {
               </CardBody>
             </Card>
 
-            {/* <Card className="application_card">
+            <Card className="application_card">
               <CardBody className="application_card">
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
@@ -221,7 +221,7 @@ export const AppForm = ({ institutionId }: Props) => {
                   />
                 </fieldset>
               </CardBody>
-            </Card> */}
+            </Card>
           </ul>
         </GridContainer>
         <div className="application_footer">

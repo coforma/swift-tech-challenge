@@ -31,8 +31,10 @@ const requiredTextField = (
 );
 
 describe("Test TextField", () => {
-  test("TextField is visible", () => {
-    render(notRequiredTextField);
+  test("TextField is visible", async () => {
+    await act(async () => {
+      await render(await notRequiredTextField);
+    });
     expect(screen.getByText("field-label")).toBeVisible();
   });
 

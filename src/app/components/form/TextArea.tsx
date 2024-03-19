@@ -1,23 +1,21 @@
-import { FieldHint } from "../../types";
+"use client";
 
-export const TextArea = ({ id, label, name, required, hint }: Props) => {
+import { ErrorMessage, Field } from "formik";
+
+export const TextArea = ({ id, label, name, required }: Props) => {
   const fieldLabel = required ? `${label} *` : `${label}`;
   return (
     <div>
       <label className="usa-labe input_textarea-label" htmlFor={id}>
         {fieldLabel}
       </label>
-      {hint && (
-        <div className="usa-hint" id={hint.id}>
-          {hint.text}
-        </div>
-      )}
-      <textarea
-        id={id}
-        aria-describedby={hint?.id}
-        className="usa-textarea input_textarea-input"
+      <Field
+        id={name}
         name={name}
+        className="usa-textarea input_textarea-input"
+        as="textarea"
       />
+      <ErrorMessage name={name} component="div" className="formError" />
     </div>
   );
 };
@@ -27,5 +25,4 @@ type Props = {
   label?: string;
   name: string;
   required: boolean;
-  hint?: FieldHint;
 };
