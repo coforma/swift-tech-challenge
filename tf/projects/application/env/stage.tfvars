@@ -9,8 +9,12 @@ bootstrap_remote_state_config = {
   region = "us-east-1"
   key    = "bootstrap-global.tfstate"
 }
-#TODO switch to stage images bucket when available
-images_bucket_arn       = "arn:aws:s3:::swift-institution-images"
-provisioned_concurrency = 1
-static_bucket           = "public-static-ada5ffab"
-static_next_path        = ""
+images_bucket = {
+  arn  = "arn:aws:s3:::swift-institution-images-9a86eb74"
+  name = "swift-institution-images-9a86eb74"
+}
+applicants_dynamodb_table   = "applicants"
+provisioned_concurrency     = 1
+static_bucket               = "public-static-ada5ffab"
+static_next_path            = ""
+institutions_dynamodb_table = "institutions"

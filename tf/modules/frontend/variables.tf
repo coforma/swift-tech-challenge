@@ -38,8 +38,11 @@ variable "institutions_dynamodb_table" {
   default = "institutions"
 }
 
-variable "images_bucket_arn" {
-  type        = string
+variable "images_bucket" {
+  type = object({
+    name = string
+    arn  = string
+  })
   description = "Arn of existing bucket containing images for application"
 }
 
@@ -56,4 +59,8 @@ variable "static_bucket" {
 variable "static_next_path" {
   type    = string
   default = "next/"
+}
+
+variable "applicants_dynamodb_table" {
+  type = string
 }

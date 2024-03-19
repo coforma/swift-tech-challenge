@@ -10,11 +10,12 @@ import {
   CardBody,
   GridContainer,
 } from "@trussworks/react-uswds";
-import { TextField, TextArea } from "../../components";
+import { TextField, TextArea, Spinner } from "@/src/app/components";
+import NotFound from "@/src/app/not-found";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 // utils
-import { getInstitutionApplication } from "../../utils/institutions";
+import { getInstitutionApplication } from "@/src/app/utils/institutions";
 import { saveApplication } from "@/src/app/utils/applications";
 
 export const ApplicationForm = ({ institutionId }: Props) => {
@@ -22,10 +23,12 @@ export const ApplicationForm = ({ institutionId }: Props) => {
   const [application, setApplication] = useState<
     Record<string, any> | undefined
   >();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getInstitutionApplication(Number(institutionId)).then((application) => {
       setApplication(application);
+      setLoading(false);
     });
   }, [institutionId]);
 
@@ -54,8 +57,9 @@ export const ApplicationForm = ({ institutionId }: Props) => {
   const essayQ1: string | undefined = appq?.[4];
   const essayQ2: string | undefined = appq?.[5];
   const essayQ3: string | undefined = appq?.[6];
-
-  return (
+  const ApplicationView = !application ? (
+    <NotFound />
+  ) : (
     <main className="application">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="application_header">
@@ -226,6 +230,8 @@ export const ApplicationForm = ({ institutionId }: Props) => {
       </form>
     </main>
   );
+
+  return <main>{loading ? <Spinner /> : ApplicationView}</main>;
 };
 
 type Props = {

@@ -36,8 +36,11 @@ variable "bootstrap_remote_state_config" {
   description = "Values for terraform_remote_state configuration for bootstrap s3 backend"
 }
 
-variable "images_bucket_arn" {
-  type        = string
+variable "images_bucket" {
+  type = object({
+    name = string
+    arn  = string
+  })
   description = "Arn of existing bucket containing images for application"
 }
 
@@ -54,4 +57,13 @@ variable "static_bucket" {
 variable "static_next_path" {
   type    = string
   default = "next/"
+}
+
+variable "applicants_dynamodb_table" {
+  type = string
+}
+
+variable "institutions_dynamodb_table" {
+  type    = string
+  default = "institutions"
 }
