@@ -79,8 +79,8 @@ resource "aws_lambda_function" "frontend" {
   handler       = "run.sh"
 
   runtime     = "nodejs20.x"
-  timeout     = 10
-  memory_size = 256
+  timeout     = 30
+  memory_size = 512
 
   environment {
     variables = {
