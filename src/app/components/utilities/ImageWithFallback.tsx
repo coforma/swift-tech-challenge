@@ -9,17 +9,13 @@ export const ImageWithFallback = ({
   width,
   ...props
 }: Props) => {
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    setError(null);
-  }, [src]);
+  const [error, setError] = useState(false);
 
   return (
     <Image
       height={height}
       width={width}
-      onError={setError}
+      onError={() => setError(true)}
       src={error ? fallbackImage : src}
       alt={error ? "Placeholder image" : alt}
       {...props}
