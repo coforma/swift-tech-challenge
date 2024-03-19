@@ -5,14 +5,12 @@ export const filterInstitutions = (
   filters: FilterShape,
 ) => {
   let filteredArr = instArr;
-
   // filter by state
-  if (filters["filter-state"] !== "- Select -") {
+  if (filters["filter-state"]) {
     filteredArr = filteredArr.filter(
       (el: College) => el.state === filters["filter-state"],
     );
   }
-
   // filter by institution type
   if (filters["filter-type"]) {
     filteredArr = filteredArr.filter((el: College) =>
@@ -95,23 +93,23 @@ const populationMap: { [key: string]: FilterRangeShape } = {
 };
 
 const costMap: { [key: string]: FilterRangeShape } = {
-  "<10": {
+  "<10$": {
     lower: 0,
     upper: 10000,
   },
-  "10-20": {
+  "10-20$": {
     lower: 10000,
     upper: 20000,
   },
-  "20-40": {
+  "20-40$": {
     lower: 20000,
     upper: 40000,
   },
-  "40-60": {
+  "40-60$": {
     lower: 40000,
     upper: 60000,
   },
-  ">60": {
+  ">60$": {
     lower: 60000,
     upper: 100000,
   },

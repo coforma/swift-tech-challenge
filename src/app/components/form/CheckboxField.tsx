@@ -1,17 +1,20 @@
-import { FieldValues, UseFormRegister } from "react-hook-form";
+"use client";
+
+import { Field } from "formik";
+//types
 import { CheckboxOptions } from "../../types";
 
-export const CheckboxField = ({ name, registerField, options }: Props) => (
+export const CheckboxField = ({ name, options }: Props) => (
   <fieldset className="usa-fieldset">
     <div>
       {options.map((option: CheckboxOptions) => (
         <div className="usa-checkbox" key={option.id}>
-          <input
+          <Field
             className="usa-checkbox__input"
             id={option.id}
             type="checkbox"
             value={option.id}
-            {...registerField(`${name}`)}
+            name={name}
           />
           <label className="usa-checkbox__label" htmlFor={option.id}>
             {option.label}
@@ -25,6 +28,5 @@ export const CheckboxField = ({ name, registerField, options }: Props) => (
 type Props = {
   id: string;
   name: string;
-  registerField: UseFormRegister<FieldValues>;
   options: CheckboxOptions[];
 };
