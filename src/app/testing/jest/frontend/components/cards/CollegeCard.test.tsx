@@ -50,13 +50,12 @@ describe("Test CollegeCard", () => {
       "Apply",
     );
   });
+
   test("On click, apply link fires tracking event", async () => {
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
     const applyButton = screen.getByRole("link", { name: /apply/i });
     expect(applyButton).toBeVisible();
-    await act(async () => {
-      await userEvent.click(applyButton);
-    });
+    await userEvent.click(applyButton);
     expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -64,9 +63,7 @@ describe("Test CollegeCard", () => {
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
     const viewMoreButton = screen.getByRole("link", { name: /View more/i });
     expect(viewMoreButton).toBeVisible();
-    await act(async () => {
-      await userEvent.click(viewMoreButton);
-    });
+    await userEvent.click(viewMoreButton);
     expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
   });
 });
