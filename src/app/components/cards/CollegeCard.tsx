@@ -1,7 +1,6 @@
 "use client";
 import mixpanel from "mixpanel-browser";
 // components
-import Image from "next/image";
 import {
   Card,
   CardBody,
@@ -11,6 +10,7 @@ import {
 } from "@trussworks/react-uswds";
 import Link from "next/link";
 import { CardIcon } from "./CardIcon";
+import { ImageWithFallback } from "../utilities/ImageWithFallback";
 // utils
 import {
   maskCurrency,
@@ -24,7 +24,7 @@ export const CollegeCard = ({ college }: Props) => {
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
       <CardMedia className="card_media">
-        <Image
+        <ImageWithFallback
           src={`https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`}
           alt={`AI generated image of ${college.name}`}
           width={400}
