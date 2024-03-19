@@ -5,6 +5,7 @@ import {
   BannerCard,
   DetailsCards,
   InstitutionContext,
+  Spinner,
 } from "@/src/app/components";
 import NotFound from "@/src/app/not-found";
 // types
@@ -29,16 +30,14 @@ export default function InstitutionDetails({
     }
   }, [institutionData, params.id]);
 
-  const view = () => {
-    return !selectedCollege ? (
-      <NotFound />
-    ) : (
-      <ul className="usa-card-group">
-        <BannerCard key={params.id} college={selectedCollege} />
-        <DetailsCards key={`${params.id}-dets`} college={selectedCollege} />
-      </ul>
-    );
-  };
+  const View = !selectedCollege ? (
+    <NotFound />
+  ) : (
+    <ul className="usa-card-group">
+      <BannerCard key={params.id} college={selectedCollege} />
+      <DetailsCards key={`${params.id}-dets`} college={selectedCollege} />
+    </ul>
+  );
 
-  return <main>{loading ? <div>please wait...</div> : view()}</main>;
+  return <main>{loading ? <Spinner /> : View}</main>;
 }

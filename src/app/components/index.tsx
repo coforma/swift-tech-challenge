@@ -14,6 +14,8 @@ export { PageHeader } from "./layout/PageHeader";
 export { PageFooter } from "./layout/PageFooter";
 // modal elements
 export { FilterModal } from "./modals/FilterModal";
+// utilities
+export { Spinner } from "./utilities/Spinner";
 // context provider
 export {
   InstitutionContext,
