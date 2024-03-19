@@ -16,7 +16,7 @@ describe("test institutions utils", () => {
     const result = await getInstitutions();
     expect(result.length).toBe(1);
     expect(result[0].id).toBe(123456);
-    expect(result[0].name).toBe("Test College");
+    expect(result[0].name).toBe(mockCollegeDbItem.institutionName);
     expect(result[0].type).toBe(CollegeType.PUBLIC);
   });
 

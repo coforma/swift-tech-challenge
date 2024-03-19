@@ -49,9 +49,9 @@ export const Browse = () => {
     closeModal();
   };
 
+  if (!filteredInstitutions) return <Spinner />;
   return (
     <>
-      {!filteredInstitutions && <Spinner />}
       {filteredInstitutions && (
         <div className="browse_header">
           <h2 className="browse_header-title">Browse colleges</h2>
@@ -69,12 +69,18 @@ export const Browse = () => {
           submitHandler={form.handleSubmit(applyFilters)}
         />
       )}
-      <ul className="usa-card-group">
-        {filteredInstitutions?.map((school: College) => (
-          <CollegeCard key={school.id} college={school} />
-        ))}
-      </ul>
-      {filteredInstitutions && scrollPosition && (
+      {filteredInstitutions?.length > 0 ? (
+        <ul className="usa-card-group">
+          {filteredInstitutions.map((school: College) => (
+            <CollegeCard key={school.id} college={school} />
+          ))}
+        </ul>
+      ) : (
+        <p className="site_text-intro browse_header-subtitle">
+          No matches found for filters.
+        </p>
+      )}
+      {filteredInstitutions.length > 0 && scrollPosition && (
         <Button
           type="button"
           className="browse_back-to-top-button"
