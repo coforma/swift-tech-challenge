@@ -110,8 +110,8 @@ resource "aws_lambda_function" "process" {
   function_name    = "${var.environment}-process-institutions"
   role             = aws_iam_role.process.arn
   handler          = "lambda_function.lambda_handler"
-
-  runtime = "python3.12"
+  timeout          = 600
+  runtime          = "python3.12"
 
   environment {
     variables = {
