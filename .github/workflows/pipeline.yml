@@ -103,8 +103,8 @@ jobs:
       UPLOAD_ROLE: ${{ secrets.UPLOAD_ROLE }}
     ## If running on a protected branch, upload artifact with role in stage environment
     with:
-      upload: ${{ github.ref_protected }}
-      environment: ${{ github.ref_protected == true && 'stage' || '' }}
+      upload: true ##Remove before merging
+      environment: test ##Remove before merging
     permissions:
       id-token: write
       contents: read
@@ -146,12 +146,12 @@ jobs:
       always() &&
       !cancelled() &&
       !contains(needs.*.result, 'failure') &&
-      github.ref == 'refs/heads/main' &&
+      github.ref == 'refs/heads/issue/159-performance-2' &&
       github.event_name == 'push'
     concurrency:
-      group: stage-deployment
+      group: test-deployment ##Remove before merging
     with:
-      target: stage
+      target: test ##Remove before merging
     secrets:
       DEPLOY_ROLE: ${{ secrets.DEPLOY_ROLE }}
     permissions:

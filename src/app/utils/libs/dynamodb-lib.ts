@@ -38,7 +38,8 @@ const dynamoClient = {
   scanAll: async function (params: ScanCommandInput) {
     let items: any[] = [];
     let ExclusiveStartKey: any;
-
+    // eslint-disable-next-line no-console
+    console.log("Called scan all!!");
     do {
       const command = new ScanCommand({ ...params, ExclusiveStartKey });
       const result = await client.send(command);
