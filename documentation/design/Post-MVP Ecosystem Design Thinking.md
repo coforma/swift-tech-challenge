@@ -1,6 +1,6 @@
 # Post-MVP Ecosystem Design Thinking
 
-To iterate on our MVP goals and designs, we focused on items in our prioritization matrix that held high user value. We did not have sufficient capacity in our initial sprint to build these concepts, hence we drafted the following guiding thoughts and wireframes.
+To iterate on our MVP goals and designs, we focused on items in our [**prioritization matrix**](https://github.com/coforma/swift-tech-challenge/blob/main/documentation/design/prioritization%20matrix.pdf) that held high user value. We did not have sufficient capacity in our initial sprint to build these concepts, hence we drafted the following guiding thoughts and wireframes.
 
 ## Enable users to shortlist colleges and track applications 
 
@@ -34,4 +34,4 @@ Students first in their family to go to college face additional obstacles in att
 ![Screenshots of early design thinking around a college cost estimator](https://github.com/coforma/swift-tech-challenge/assets/122126772/332d235e-9e4c-41ac-8fdf-95f69e0f32bc)
 
 
-3. **Providing educational content on applying and financing**: Students who do not have an accurate mental model of how college and financial aid works may need extra content to help them build that mental model, and thus be better equipped to successfully enroll and graduate from an affordable college. We explored the creation of [static content UPDATE LINK!!](link) about applying to and paying for college using chat GPT, and verified the information with an internal subject matter expert. It would be interesting to explore the best way to surface and present this information in user research.
+3. **Providing educational content on applying and financing**: Students who do not have an accurate mental model of how college and financial aid works may need extra content to help them build that mental model, and thus be better equipped to successfully enroll and graduate from an affordable college. We explored the creation of [**static content**](https://github.com/coforma/swift-tech-challenge/blob/main/documentation/design/static_content.md) about applying to and paying for college using chat GPT, and verified the information with an internal subject matter expert. It would be interesting to explore the best way to surface and present this information in user research.
