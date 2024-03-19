@@ -6,8 +6,9 @@
   max-width: 100rem;
 
   &>.usa-card__container {
-    border-radius: .75rem;
+    border-radius: 1rem;
     @include u-margin-x(4);
+    padding: .5rem 1.5rem 0 1.5rem;
   }
 
   &_header-title {

@@ -9,11 +9,16 @@ export const TextField = ({
   registerField,
   hint,
 }: Props) => {
-  const fieldLabel = required ? `${label} *` : `${label}`;
   return (
     <div>
       <label className="usa-label" htmlFor={id}>
-        {fieldLabel}
+        {required ? (
+          <>
+            {label} <span className="required">*</span>
+          </>
+        ) : (
+          label
+        )}
       </label>
       {hint && (
         <div className="usa-hint" id={hint.id}>

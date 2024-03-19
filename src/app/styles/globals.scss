@@ -47,6 +47,10 @@ body > footer {
   max-width: 100rem;
 }
 
+.required {
+  @include u-color($theme-color-secondary);
+}
+
 h1 {
   @include typeset("ui", "2xl", 1);
   @include u-text("bold");
