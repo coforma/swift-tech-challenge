@@ -12,3 +12,7 @@ variable "source_bucket" {
 variable "institution_images_bucket" {
   type = string
 }
+
+variable "applicants_dynamodb_table" {
+  type = string
+}
