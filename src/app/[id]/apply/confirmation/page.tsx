@@ -5,11 +5,11 @@ import mail from "@/src/app/assets/mail.svg";
 // components
 import Image from "next/image";
 import Link from "next/link";
+import { ButtonGroup } from "@trussworks/react-uswds";
 import { InstitutionContext, Spinner } from "@/src/app/components";
 import ErrorPage from "@/src/app/error/page";
 // types
 import { College } from "@/src/app/types";
-import { ButtonGroup } from "@trussworks/react-uswds";
 
 const filterCollege = (institutionsArray: College[], id: number) => {
   return institutionsArray.filter((college) => college.id == id)[0];
