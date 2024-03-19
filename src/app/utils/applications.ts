@@ -9,7 +9,7 @@ export interface Application {
   institutionId: string | number;
 }
 
-const APPLICANTS_TABLE_NAME = "applicants";
+const APPLICANTS_TABLE_NAME = process.env.APPLICANTS_DYNAMODB_TABLE;
 
 export async function saveApplication(submission: Application) {
   const params = {
