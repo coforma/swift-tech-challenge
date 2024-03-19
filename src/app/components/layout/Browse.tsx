@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 // components
 import { Button } from "@trussworks/react-uswds";
 import Image from "next/image";
-import { CollegeCard, InstitutionContext } from "../../components";
+import { CollegeCard, FilterModal, InstitutionContext } from "../../components";
 // utils
 import { College } from "../../types";
 import { Spinner } from "../utilities/Spinner";
@@ -13,6 +13,7 @@ import arrow_upward from "../../assets/icons/arrow_upward.svg";
 export const Browse = () => {
   const { institutionData } = useContext(InstitutionContext);
   const [scrollPosition, setScrollPosition] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const onScroll = (e: any) => {
@@ -22,20 +23,27 @@ export const Browse = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, [scrollPosition]);
 
+  const launchModal = () => {
+    setIsModalVisible(true);
+  };
+
   return (
     <>
+      {!institutionData && <Spinner />}
       {institutionData && (
         <div className="browse_header">
           <h1 className="browse_header-title"> Browse colleges </h1>
           <p className="site_text-intro browse_header-subtitle">
             Find the college thats right for you
           </p>
-          <Button type="button" outline={true}>
+          <Button type="button" outline={true} onClick={launchModal}>
             Add filters
           </Button>
         </div>
       )}
-      {!institutionData && <Spinner />}
+      {isModalVisible && (
+        <FilterModal closeHandler={() => setIsModalVisible(false)} />
+      )}
       <ul className="usa-card-group">
         {institutionData?.map((school: College) => (
           <CollegeCard key={school.id} college={school} />
