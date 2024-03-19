@@ -66,6 +66,11 @@ resource "aws_iam_role_policy_attachment" "backend" {
   policy_arn = aws_iam_policy.backend.arn
 }
 
+resource "aws_iam_role_policy_attachment" "insights_policy" {
+  role       = aws_iam_role.iam_for_lambda.id
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy"
+}
+
 resource "aws_lambda_function" "frontend" {
   s3_bucket     = var.artifact_bucket
   s3_key        = "${var.artifact_path}${var.zip_file_name}"
@@ -73,8 +78,9 @@ resource "aws_lambda_function" "frontend" {
   role          = aws_iam_role.iam_for_lambda.arn
   handler       = "run.sh"
 
-  runtime = "nodejs20.x"
-  timeout = 10
+  runtime     = "nodejs20.x"
+  timeout     = 10
+  memory_size = 256
 
   environment {
     variables = {
@@ -89,7 +95,8 @@ resource "aws_lambda_function" "frontend" {
     }
   }
   layers = [
-    "arn:aws:lambda:${data.aws_region.current.name}:753240598075:layer:LambdaAdapterLayerX86:20"
+    "arn:aws:lambda:${data.aws_region.current.name}:753240598075:layer:LambdaAdapterLayerX86:20",
+    "arn:aws:lambda:${data.aws_region.current.name}:580247275435:layer:LambdaInsightsExtension:49"
   ]
   logging_config {
     log_format = "JSON"
