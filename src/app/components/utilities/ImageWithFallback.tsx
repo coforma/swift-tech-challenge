@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import fallbackImage from "../../assets/default-institution-image.png";
 import Image from "next/image";
 
