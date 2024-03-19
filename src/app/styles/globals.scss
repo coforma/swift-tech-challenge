@@ -72,3 +72,7 @@ h1 {
   @include typeset("ui", "md", 1);
   @include u-line-height('body', 3);
 }
+
+.formError {
+  @include u-color($theme-color-error);
+}

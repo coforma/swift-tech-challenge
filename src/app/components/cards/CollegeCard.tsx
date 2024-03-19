@@ -33,7 +33,7 @@ export const CollegeCard = ({ college }: Props) => {
         />
       </CardMedia>
       <CardHeader className="card_header">
-        <h2 className="card_header-title">{college.name}</h2>
+        <p className="card_header-title">{college.name}</p>
         <p className="card_header-subtitle">{`${college.city}, ${college.state}`}</p>
       </CardHeader>
       <CardBody className="card_body">
@@ -66,6 +66,7 @@ export const CollegeCard = ({ college }: Props) => {
           className="usa-button card_footer-apply-button"
           href={`/${college.id}/apply`}
           onClick={() => mixpanel.track("click_launch-application")}
+          aria-label={`Apply to ${college.name}`}
         >
           Apply
         </Link>
@@ -73,6 +74,7 @@ export const CollegeCard = ({ college }: Props) => {
           className="usa-button usa-button--outline card_footer-view-more-button"
           href={`/${college.id}`}
           onClick={() => mixpanel.track("click_view-details")}
+          aria-label={`View more info about ${college.name}`}
         >
           View more
         </Link>

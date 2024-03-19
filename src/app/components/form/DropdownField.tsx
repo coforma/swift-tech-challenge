@@ -1,12 +1,13 @@
-import { FieldValues, UseFormRegister } from "react-hook-form";
+"use client";
+
 import { FieldHint, DropdownOptions } from "../../types";
+import { Field } from "formik";
 
 export const DropdownField = ({
   id,
   label,
   required,
   name,
-  registerField,
   options,
   hint,
 }: Props) => {
@@ -21,19 +22,20 @@ export const DropdownField = ({
           {hint.text}
         </div>
       )}
-      <select
+      <Field
         className="usa-select"
         id={id}
-        {...registerField(`${name}`, { required: required })}
+        name={name}
         aria-describedby={hint?.id}
+        as="select"
       >
-        <option>- Select -</option>
+        <option value={undefined}>- Select -</option>
         {options.map((option: DropdownOptions) => (
           <option key={option.id} value={option.id}>
             {option.label}
           </option>
         ))}
-      </select>
+      </Field>
     </>
   );
 };
@@ -43,7 +45,6 @@ type Props = {
   label: string;
   required: boolean;
   name: string;
-  registerField: UseFormRegister<FieldValues>;
   options: DropdownOptions[];
   hint?: FieldHint;
 };

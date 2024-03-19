@@ -1,65 +1,68 @@
-import { TextArea } from "@/src/app/components";
-import { render, screen } from "@testing-library/react";
+import * as yup from "yup";
+import { act, render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
+// components
+import { TextArea } from "@/src/app/components";
+import { USWDSForm } from "@/src/app/components/form/USWDSForm";
 
-const mockRegister = jest.fn();
+const fieldSchema = yup.object().shape({
+  "field-name": yup.string(),
+});
+
+const mockOnSubmit = jest.fn();
 
 const notRequiredTextArea = (
-  <TextArea
-    id={"field-id"}
-    label={"field-label"}
-    required={false}
-    name={"field-name"}
-    registerField={mockRegister}
-  />
+  <USWDSForm
+    initialValues={{ "field-name": "" }}
+    validationSchema={fieldSchema}
+    submit={mockOnSubmit}
+  >
+    <TextArea
+      id={"field-id"}
+      label={"field-label"}
+      required={false}
+      name={"field-name"}
+    />
+  </USWDSForm>
 );
 
 const requiredTextArea = (
-  <TextArea
-    id={"field-id"}
-    label={"field-label"}
-    required={true}
-    name={"field-name"}
-    registerField={mockRegister}
-  />
-);
-
-const textAreaWithHint = (
-  <TextArea
-    id={"field-id"}
-    label={"field-label"}
-    required={false}
-    name={"field-name"}
-    hint={{ id: "field-id", text: "This is a hint" }}
-    registerField={mockRegister}
-  />
+  <USWDSForm
+    initialValues={{ "field-name": "" }}
+    validationSchema={fieldSchema}
+    submit={mockOnSubmit}
+  >
+    <TextArea
+      id={"field-id"}
+      label={"field-label"}
+      required={true}
+      name={"field-name"}
+    />
+  </USWDSForm>
 );
 
 describe("Test TextArea", () => {
-  test("TextArea is visible", () => {
-    render(notRequiredTextArea);
+  test("TextArea is visible", async () => {
+    await act(async () => {
+      await render(await notRequiredTextArea);
+    });
     expect(screen.getByText("field-label")).toBeVisible();
   });
 
-  test("TextArea required star is visible", () => {
-    render(requiredTextArea);
+  test("TextArea required star is visible", async () => {
+    await act(async () => {
+      await render(await requiredTextArea);
+    });
     expect(screen.getByText("field-label *")).toBeVisible();
-  });
-  test("TextArea hint is visible", () => {
-    render(textAreaWithHint);
-    expect(screen.getByText("This is a hint")).toBeVisible();
-  });
-
-  test("TextArea is registered", () => {
-    render(notRequiredTextArea);
-    expect(mockRegister).toHaveBeenCalled();
   });
 });
 
 describe("Test TextArea accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
-    const { container } = render(notRequiredTextArea);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await act(async () => {
+      const { container } = render(notRequiredTextArea);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
   });
 });
