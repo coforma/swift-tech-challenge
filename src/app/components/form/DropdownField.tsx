@@ -24,10 +24,10 @@ export const DropdownField = ({
       <select
         className="usa-select"
         id={id}
-        {...registerField(`${name}`, { required: required })}
+        {...registerField(`${name}`)}
         aria-describedby={hint?.id}
       >
-        <option>- Select -</option>
+        <option value={undefined}>- Select -</option>
         {options.map((option: DropdownOptions) => (
           <option key={option.id} value={option.id}>
             {option.label}
