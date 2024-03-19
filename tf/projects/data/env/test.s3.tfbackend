@@ -1,0 +1,5 @@
+encrypt = true
+bucket = "tf-4e24be90"
+region = "us-east-1"
+dynamodb_table = "terraform"
+key = "data-test.tfstate"
