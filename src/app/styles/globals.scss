@@ -43,8 +43,12 @@ body > footer {
   @include u-margin-y(2)
 }
 
+.usa-banner__inner {
+  max-width: 75rem;
+}
+
 .grid-container {
-  max-width: 100rem;
+  max-width: 75rem;
 }
 
 .required {

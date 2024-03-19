@@ -33,7 +33,7 @@ export default function InstitutionDetails({
     return !selectedCollege ? (
       <NotFound />
     ) : (
-      <ul className="usa-card-group">
+      <ul className="usa-card-group details_page">
         <BannerCard key={params.id} college={selectedCollege} />
         <DetailsCards key={`${params.id}-dets`} college={selectedCollege} />
       </ul>
