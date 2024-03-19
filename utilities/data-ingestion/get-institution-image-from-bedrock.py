@@ -1,238 +1,91 @@
-import boto3
 import json
-from decimal import Decimal
-from datetime import datetime
+import boto3
+import random
 import logging
+import base64
+from io import BytesIO
+import os
 
-
-s3_client = boto3.client("s3")
-dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("institutions")
-sqs = boto3.client("sqs")
 logger = logging.getLogger()
+bedrock_runtime = boto3.client("bedrock-runtime", "us-east-1")
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table(os.getenv("DYNAMODB_TABLE") or "institutions")
+s3_client = boto3.client("s3")
+images_bucket = os.getenv("IMAGES_BUCKET") or "swift-institution-images-public"
 
-# Helper function to convert to Decimal, has to have an
-# option to return original string
-def convertToNumeric(inputString, isInteger=False):
-    if len(inputString) == 0:
-        return None
+
+def check_s3_file_exists(bucket, key):
+    logger.info("Checking for bucket: " + bucket + " and key: " + key)
     try:
-        if isInteger:
-            return Decimal(int(inputString))
-        return Decimal(inputString)
-    finally:
-        return inputString
-
-
-# Helper function to map id to value
-def mapControl(control_id):
-    match control_id:
-        case "1":
-            return "Public"
-        case "2":
-            return "Private nonprofit"
-        case _:
-            return "Private for-profit"
+        # checks that file exists
+        s3_client.head_object(Bucket=bucket, Key=key)
+        logger.info("image file exists in S3")
+        return True
+    except s3_client.exceptions.ClientError as e:
+        if e.response["Error"]["Code"] == "404":
+            logger.info("image file does not exist in S3")
+            return False
+        else:
+            # Handle Any other type of error
+            raise
 
 
 def lambda_handler(event, context):
+    # load the json to a string
+    resp = json.loads(json.loads(json.dumps(event))["Records"][0]["body"])
+
+    # variable for use throughout function
+    institution_name = resp["institutionName"]
+    institution_id = resp["institutionId"]
+
+    # Create image
+    file_name = str(institution_id) + ".png"
+    bucket_name = images_bucket
+    image_path = bucket_name + "/" + file_name
+
+    # since this is randomly generated and a temp solution to meet a design need
+    # if an image already exists we will use it vs creating another image
+    if not check_s3_file_exists(bucket_name, image_path):
+        logger.info("Creating image for " + institution_name)
+        image_prompts = [
+            f"Can you generate me a night time full color image of {institution_name}",
+            f"Can you generate me a full color image of  {institution_name}",
+            f"Can you generate me a winter full color image of  {institution_name}",
+            f"Can you generate me an post-modern fall image of {institution_name}",
+            f"Can you generate me a sharp photo of a large, busy campus that looks like {institution_name}",
+            f"Can you generate me a sharp photo of a small, busy campus that looks like {institution_name}",
+        ]
+        image_prompt = random.choice(image_prompts)
+        bedrock_image_args = {
+            "modelId": "amazon.titan-image-generator-v1",
+            "contentType": "application/json",
+            "accept": "application/json",
+            "body": '{"textToImageParams":{"text":"'
+            + image_prompt
+            + '"},"taskType":"TEXT_IMAGE","imageGenerationConfig":{"cfgScale":8,"seed":10,"quality":"standard","width":512,"height":512,"numberOfImages":1}}',
+        }
+
+        generated_image_response = bedrock_runtime.invoke_model(**bedrock_image_args)
+        image_body = json.loads(generated_image_response.get("body").read())
+
+        # convert to png
+        decoded_data = base64.b64decode(image_body["images"][0])
+        img_data = BytesIO(decoded_data)
+
+        # write image to S3
+        s3_client.put_object(Body=img_data, Bucket=bucket_name, Key=file_name)
+    else:
+        logger.info("Image already exists for " + institution_name)
+
     try:
-        # Grab file from S3
-        s3_Bucket_Name = event["Records"][0]["s3"]["bucket"]["name"]
-        s3_File_Name = event["Records"][0]["s3"]["object"]["key"]
-        object = s3_client.get_object(Bucket=s3_Bucket_Name, Key=s3_File_Name)
-
-        # massage data
-        data = object["Body"].read().decode("utf-8")
-        institutions = data.split("\n")
-        institutions.pop(0)  # removes header row
-        institutions_to_save = []
-
-        # transform data into Item and add to queue
-        for institution in institutions:
-            institution_data = institution.split(",")
-            try:
-                Item = {
-                    "institutionId": int(institution_data[0]),
-                    "recordType": "data",
-                    "updatedAt": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f"),
-                    "description": "",
-                    "imageLocation": "",
-                    "institutionName": institution_data[1],
-                    "studentPopulation": institution_data[2],
-                    "city": institution_data[3],
-                    "state": institution_data[4],
-                    "zip": institution_data[5],
-                    "latitude": convertToNumeric(institution_data[11]),
-                    "longitude": convertToNumeric(institution_data[12]),
-                    "url": institution_data[7],
-                    "institutionType": mapControl(institution_data[6]),
-                    "predominantUndergradDegree": institution_data[9],
-                    "highestDegreeAwarded": institution_data[10],
-                    "specialties": {
-                        "humanities": institution_data[61],
-                        "stem": institution_data[62],
-                        "socialScience": institution_data[63],
-                        "occupational": institution_data[64],
-                        "interdisciplinary": institution_data[65],
-                    },
-                    "raceDemographics": {
-                        "percentWhite": convertToNumeric(institution_data[14]),
-                        "percentBlack": convertToNumeric(institution_data[15]),
-                        "percentAsian": convertToNumeric(institution_data[17]),
-                        "percentHispanic": convertToNumeric(institution_data[16]),
-                        "percentAian": convertToNumeric(institution_data[18]),
-                        "percentNhpi": convertToNumeric(institution_data[19]),
-                        "percentTwoOrMore": convertToNumeric(institution_data[20]),
-                        "percentNonResidentAlien": convertToNumeric(
-                            institution_data[21]
-                        ),
-                        "percentUnknownRace": convertToNumeric(institution_data[22]),
-                    },
-                    "admissionRate": convertToNumeric(institution_data[13]),
-                    "averageAttendanceCost": convertToNumeric(institution_data[35]),
-                    "tuitionInState": convertToNumeric(institution_data[36]),
-                    "tuitionOutOfState": convertToNumeric(institution_data[37]),
-                    "percentUndergradWithLoan": convertToNumeric(institution_data[43]),
-                    "netPriceCalculatorUrl": institution_data[8],
-                    "satScores": {
-                        "satAverageScore": convertToNumeric(institution_data[60], True),
-                        "satReadingPercentile25": convertToNumeric(
-                            institution_data[51], True
-                        ),
-                        "satReadingPercentile50": convertToNumeric(
-                            institution_data[57], True
-                        ),
-                        "satReadingPercentile75": convertToNumeric(
-                            institution_data[52], True
-                        ),
-                        "satWritingPercentile25": convertToNumeric(
-                            institution_data[55], True
-                        ),
-                        "satWritingPercentile50": convertToNumeric(
-                            institution_data[59], True
-                        ),
-                        "satWritingPercentile75": convertToNumeric(
-                            institution_data[56], True
-                        ),
-                        "satMathPercentile25": convertToNumeric(
-                            institution_data[53], True
-                        ),
-                        "satMathPercentile50": convertToNumeric(
-                            institution_data[58], True
-                        ),
-                        "satMathPercentile75": convertToNumeric(
-                            institution_data[54], True
-                        ),
-                    },
-                    "publicNetPrice": {
-                        "averagePrice": convertToNumeric(institution_data[23], True),
-                        "averagePriceUnder30k": convertToNumeric(
-                            institution_data[25], True
-                        ),
-                        "averagePriceUnder30To48k": convertToNumeric(
-                            institution_data[26], True
-                        ),
-                        "averagePriceUnder48To75k": convertToNumeric(
-                            institution_data[27], True
-                        ),
-                        "averagePriceUnder75To110k": convertToNumeric(
-                            institution_data[28], True
-                        ),
-                        "averagePriceUnder110kPlus": convertToNumeric(
-                            institution_data[29], True
-                        ),
-                    },
-                    "privateNetPrice": {
-                        "averagePrice": convertToNumeric(institution_data[24], True),
-                        "averagePriceUnder30k": convertToNumeric(
-                            institution_data[30], True
-                        ),
-                        "averagePriceUnder30To48k": convertToNumeric(
-                            institution_data[31], True
-                        ),
-                        "averagePriceUnder48To75k": convertToNumeric(
-                            institution_data[32], True
-                        ),
-                        "averagePriceUnder75To110k": convertToNumeric(
-                            institution_data[33], True
-                        ),
-                        "averagePriceUnder110kPlus": convertToNumeric(
-                            institution_data[34], True
-                        ),
-                    },
-                    "facultyAverageSalary": convertToNumeric(institution_data[39]),
-                    "facultyPercentageEmployedFull": convertToNumeric(
-                        institution_data[40]
-                    ),
-                    "studentToFacultyRatio": convertToNumeric(institution_data[47]),
-                    "instructionalExpenditurePerSt": convertToNumeric(
-                        institution_data[38]
-                    ),
-                    "completionRates": {
-                        "fourYearInstitution": convertToNumeric(institution_data[41]),
-                        "underFourYearInstitution": convertToNumeric(
-                            institution_data[42]
-                        ),
-                    },
-                    "percentCompletedInFourYears": convertToNumeric(
-                        institution_data[44]
-                    ),
-                    "percentCompletedInEightYears": convertToNumeric(
-                        institution_data[50]
-                    ),
-                    "earnings": {
-                        "meanGraduateEarnings10Years": convertToNumeric(
-                            institution_data[45], True
-                        ),
-                        "medianGraduateEarnings10Years": convertToNumeric(
-                            institution_data[46], True
-                        ),
-                    },
-                    "retentionRate": {
-                        "fourYearInstitution": convertToNumeric(institution_data[48]),
-                        "underFourYearInstitution": convertToNumeric(
-                            institution_data[49]
-                        ),
-                    },
-                }
-            except Exception as e:
-                print(f"Skipping institution because of {e}")
-            institutions_to_save.append(Item)
-
-        logger.info("Processed: " + str(len(institutions_to_save)))
-        print(type(institutions_to_save))
-
-        # remove dupes
-        unique_dictionary_collection = {}
-        deduped_institutions = []
-
-        for item in institutions_to_save:
-            item_id = item["institutionId"]
-            if item_id not in unique_dictionary_collection:
-                unique_dictionary_collection[item_id] = item
-                deduped_institutions.append(item)
-
-        # write to Dynamo
-        with table.batch_writer() as batch:
-            for item in deduped_institutions:
-                batch.put_item(Item=item)
-
-        # write to get queues for AI content creation
-        try:
-            for item in deduped_institutions:
-                # description queue
-                sqs.send_message(
-                    QueueUrl="https://sqs.us-east-1.amazonaws.com/905418154281/get-institution-descriptions",
-                    MessageBody=json.dumps(item),
-                )
-                # images queue
-                sqs.send_message(
-                    QueueUrl="https://sqs.us-east-1.amazonaws.com/905418154281/get-institution-images",
-                    MessageBody=json.dumps(item),
-                )
-        except Exception as e:
-            print(e)
-
+        table.update_item(
+            Key={
+                "institutionId": int(institution_id),
+                "recordType": resp["recordType"],
+            },
+            UpdateExpression="set imageLocation=:i",
+            ExpressionAttributeValues={":i": image_path},
+            ReturnValues="UPDATED_NEW",
+        )
     except Exception as err:
         print(err)
