@@ -4,6 +4,7 @@ import InstitutionDetails from "@/src/app/[id]/page";
 import { InstitutionContext } from "@/src/app/components";
 import { InstitutionContextShape } from "@/src/app/components/institutions/InstitutionProvider";
 import { mockCollege } from "../setupJest";
+import { act } from "react-dom/test-utils";
 
 const testParams = {
   id: 0,
@@ -11,6 +12,9 @@ const testParams = {
 
 const testContext: InstitutionContextShape = {
   institutionsArray: [mockCollege],
+  filteredInstitutions: [mockCollege],
+  institutionsObject: {},
+  setFilteredInstitutions: () => {},
 };
 
 const testDetailsPageComponent = () => (
@@ -33,8 +37,10 @@ describe("Test InstitutionDetails Page", () => {
 
 describe("Test InstitutionDetails Page accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
-    const { container } = render(testDetailsPageComponent());
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await act(async () => {
+      const { container } = render(testDetailsPageComponent());
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
   });
 });
