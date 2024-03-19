@@ -6,6 +6,7 @@ import Image from "next/image";
 import { CollegeCard, FilterModal, InstitutionContext } from "../../components";
 // utils
 import { College } from "../../types";
+import { Spinner } from "../utilities/Spinner";
 // icons
 import arrow_upward from "../../assets/icons/arrow_upward.svg";
 
@@ -28,15 +29,18 @@ export const Browse = () => {
 
   return (
     <>
-      <div className="browse_header">
-        <h1 className="browse_header-title"> Browse colleges </h1>
-        <p className="site_text-intro browse_header-subtitle">
-          Find the college thats right for you
-        </p>
-        <Button type="button" outline={true} onClick={launchModal}>
-          Add filters
-        </Button>
-      </div>
+      {!institutionData && <Spinner />}
+      {institutionData && (
+        <div className="browse_header">
+          <h1 className="browse_header-title"> Browse colleges </h1>
+          <p className="site_text-intro browse_header-subtitle">
+            Find the college thats right for you
+          </p>
+          <Button type="button" outline={true} onClick={launchModal}>
+            Add filters
+          </Button>
+        </div>
+      )}
       {isModalVisible && (
         <FilterModal closeHandler={() => setIsModalVisible(false)} />
       )}
@@ -45,7 +49,7 @@ export const Browse = () => {
           <CollegeCard key={school.id} college={school} />
         ))}
       </ul>
-      {scrollPosition && (
+      {institutionData && scrollPosition && (
         <Button
           type="button"
           className="browse_back-to-top-button"
