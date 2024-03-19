@@ -34,8 +34,8 @@ const nextConfig = {
   output: 'standalone',
   experimental: {
     serverActions: {
-      allowedForwardedHosts: ["luf1zbs5oa.execute-api.us-east-1.amazonaws.com","rm93rrjzid.execute-api.us-east-1.amazonaws.com"],
-      allowedOrigins: ["d1b4twxh1cihpk.cloudfront.net","d2z6xcoh14f3wb.cloudfront.net"],
+      allowedForwardedHosts: ["luf1zbs5oa.execute-api.us-east-1.amazonaws.com","rm93rrjzid.execute-api.us-east-1.amazonaws.com","wtm2df29w5.execute-api.us-east-1.amazonaws.com"],
+      allowedOrigins: ["d1b4twxh1cihpk.cloudfront.net","d2z6xcoh14f3wb.cloudfront.net","https://d19jzmn7wae8g9.cloudfront.net"],
     }
   }
 };

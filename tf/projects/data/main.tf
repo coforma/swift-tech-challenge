@@ -60,6 +60,41 @@ resource "aws_s3_bucket" "institution_images" {
   bucket = var.institution_images_bucket
 }
 
+resource "aws_s3_bucket_public_access_block" "institution_images" {
+  bucket = aws_s3_bucket.institution_images.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_policy" "public" {
+  bucket = aws_s3_bucket.institution_images.id
+  policy = data.aws_iam_policy_document.public.json
+}
+
+data "aws_iam_policy_document" "public" {
+  statement {
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket",
+    ]
+
+    resources = [
+      aws_s3_bucket.institution_images.arn,
+      "${aws_s3_bucket.institution_images.arn}/*",
+    ]
+  }
+}
+
+
+
 module "data_ingestion" {
   source                      = "../../modules/data-ingestion"
   institutions_dynamodb_table = aws_dynamodb_table.institutions.name
