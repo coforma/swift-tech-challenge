@@ -1,4 +1,4 @@
-import { TextFieldHint } from "../../types";
+import { FieldHint } from "../../types";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
 export const TextArea = ({
@@ -36,5 +36,5 @@ type Props = {
   name: string;
   required: boolean;
   registerField: UseFormRegister<FieldValues>;
-  hint?: TextFieldHint;
+  hint?: FieldHint;
 };

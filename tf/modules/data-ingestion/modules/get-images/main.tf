@@ -29,6 +29,35 @@ resource "aws_iam_role" "role" {
 data "aws_iam_policy_document" "policy_doc" {
   version = "2012-10-17"
   statement {
+    sid    = "ListAndDescribe"
+    effect = "Allow"
+    actions = [
+      "dynamodb:List*",
+      "dynamodb:DescribeReservedCapacity*",
+      "dynamodb:DescribeLimits",
+      "dynamodb:DescribeTimeToLive"
+    ]
+    resources = ["*"]
+  }
+  statement {
+    sid    = "SpecificTable"
+    effect = "Allow"
+    actions = [
+      "dynamodb:BatchGet*",
+      "dynamodb:DescribeStream",
+      "dynamodb:DescribeTable",
+      "dynamodb:Get*",
+      "dynamodb:Query",
+      "dynamodb:Scan",
+      "dynamodb:BatchWrite*",
+      "dynamodb:CreateTable",
+      "dynamodb:Delete*",
+      "dynamodb:Update*",
+      "dynamodb:PutItem"
+    ]
+    resources = ["arn:aws:dynamodb:*:*:table/${var.institutions_dynamodb_table}"]
+  }
+  statement {
     sid       = "ListBuckets"
     actions   = ["s3:ListBucket"]
     effect    = "Allow"

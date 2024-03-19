@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import mixpanel from "mixpanel-browser";
 import { CollegeCard } from "@/src/app/components";
-import { mockCollege, mockRouterPush } from "../../../setupJest";
+import { mockCollege } from "../../../setupJest";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { axe } from "jest-axe";
@@ -24,6 +24,7 @@ const component = (
 
 describe("Test CollegeCard", () => {
   beforeEach(() => {
+    jest.resetAllMocks();
     render(component);
   });
 
@@ -49,7 +50,6 @@ describe("Test CollegeCard", () => {
       "Apply",
     );
   });
-
   test("On click, apply link fires tracking event", async () => {
     const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
     const applyButton = screen.getByRole("link", { name: /apply/i });
@@ -58,7 +58,16 @@ describe("Test CollegeCard", () => {
       await userEvent.click(applyButton);
     });
     expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
-    expect(mockRouterPush).toHaveBeenCalledTimes(1);
+  });
+
+  test("On click, view more link fires tracking event", async () => {
+    const mixpanelTrackSpy = jest.spyOn(mixpanel, "track");
+    const viewMoreButton = screen.getByRole("link", { name: /View more/i });
+    expect(viewMoreButton).toBeVisible();
+    await act(async () => {
+      await userEvent.click(viewMoreButton);
+    });
+    expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -9,6 +9,18 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  region = "us-east-1"
+  alias  = "ingestion-aws"
+  default_tags {
+    tags = {
+      Environment = title(var.environment)
+      Project     = "DataIngestion"
+      ManagedBy   = "Terraform"
+    }
+  }
+}
+
 terraform {
   backend "s3" {}
 }
@@ -72,6 +84,41 @@ resource "aws_dynamodb_table" "applicants" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "institution_images" {
+  bucket = aws_s3_bucket.institution_images.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_policy" "public" {
+  bucket = aws_s3_bucket.institution_images.id
+  policy = data.aws_iam_policy_document.public.json
+}
+
+data "aws_iam_policy_document" "public" {
+  statement {
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket",
+    ]
+
+    resources = [
+      aws_s3_bucket.institution_images.arn,
+      "${aws_s3_bucket.institution_images.arn}/*",
+    ]
+  }
+}
+
+
+
 module "data_ingestion" {
   source                      = "../../modules/data-ingestion"
   institutions_dynamodb_table = aws_dynamodb_table.institutions.name
@@ -84,4 +131,7 @@ module "data_ingestion" {
     account = data.aws_caller_identity.current.account_id
   }
   environment = var.environment
+  providers = {
+    aws = aws.ingestion-aws
+  }
 }
