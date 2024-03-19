@@ -1,7 +1,6 @@
 "use client";
 import mixpanel from "mixpanel-browser";
 // components
-import Image from "next/image";
 import {
   Card,
   CardBody,
