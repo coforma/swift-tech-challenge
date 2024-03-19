@@ -12,6 +12,7 @@
 
   &-title {
     text-align: center;
+    @include u-padding-x(2);
     @include typeset("heading", 9, 1);
     @include at-media("mobile-lg") {
       @include u-font-size("heading", 10)
@@ -28,6 +29,7 @@
   }
   &-subtitle {
     text-align: center;
+    @include u-padding-x(2);
     @include typeset("ui", 5, 1);
     @include u-text("base-dark", "normal");
   }

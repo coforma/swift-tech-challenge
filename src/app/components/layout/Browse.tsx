@@ -3,15 +3,19 @@ import { useContext, useEffect, useState } from "react";
 // components
 import { Button } from "@trussworks/react-uswds";
 import Image from "next/image";
-import { CollegeCard, FilterModal, InstitutionContext } from "../../components";
+import {
+  CollegeCard,
+  FilterModal,
+  InstitutionContext,
+  Spinner,
+} from "../../components";
 // utils
 import { College } from "../../types";
-import { Spinner } from "../utilities/Spinner";
 // icons
 import arrow_upward from "../../assets/icons/arrow_upward.svg";
 
 export const Browse = () => {
-  const { institutionData } = useContext(InstitutionContext);
+  const { institutionsArray } = useContext(InstitutionContext);
   const [scrollPosition, setScrollPosition] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -29,8 +33,8 @@ export const Browse = () => {
 
   return (
     <>
-      {!institutionData && <Spinner />}
-      {institutionData && (
+      {!institutionsArray && <Spinner />}
+      {institutionsArray && (
         <div className="browse_header">
           <h1 className="browse_header-title"> Browse colleges </h1>
           <p className="site_text-intro browse_header-subtitle">
@@ -45,11 +49,11 @@ export const Browse = () => {
         <FilterModal closeHandler={() => setIsModalVisible(false)} />
       )}
       <ul className="usa-card-group">
-        {institutionData?.map((school: College) => (
+        {institutionsArray?.map((school: College) => (
           <CollegeCard key={school.id} college={school} />
         ))}
       </ul>
-      {institutionData && scrollPosition && (
+      {institutionsArray && scrollPosition && (
         <Button
           type="button"
           className="browse_back-to-top-button"

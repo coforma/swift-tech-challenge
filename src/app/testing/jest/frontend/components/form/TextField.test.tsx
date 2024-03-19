@@ -43,7 +43,7 @@ describe("Test TextField", () => {
 
   test("TextField required star is visible", () => {
     render(requiredTextField);
-    expect(screen.getByText("field-label *")).toBeVisible();
+    expect(screen.getByText("*")).toBeVisible();
   });
   test("TextField hint is visible", () => {
     render(textFieldWithHint);

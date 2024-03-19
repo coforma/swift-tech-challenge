@@ -33,5 +33,6 @@ module "frontend" {
   provisioned_concurrency     = var.provisioned_concurrency
   static_bucket               = var.static_bucket
   static_next_path            = var.static_next_path
+  applicants_dynamodb_table   = var.applicants_dynamodb_table
   institutions_dynamodb_table = var.institutions_dynamodb_table
 }

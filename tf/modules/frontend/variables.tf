@@ -60,3 +60,7 @@ variable "static_next_path" {
   type    = string
   default = "next/"
 }
+
+variable "applicants_dynamodb_table" {
+  type = string
+}

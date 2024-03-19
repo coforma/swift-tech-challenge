@@ -25,7 +25,7 @@ export const BannerCard = ({ college }: Props) => {
   return (
     <Card layout="flagDefault" headerFirst={true} className="card card_banner">
       <div className="card_banner-container">
-        <CardMedia>
+        <CardMedia className="card_banner-image">
           <Image
             src={`https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`}
             alt={`AI generated image of ${college.name}`}
