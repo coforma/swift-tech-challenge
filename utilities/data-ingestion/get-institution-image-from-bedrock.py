@@ -45,7 +45,7 @@ def lambda_handler(event, context):
 
     # since this is randomly generated and a temp solution to meet a design need
     # if an image already exists we will use it vs creating another image
-    if not check_s3_file_exists(bucket_name, image_path):
+    if not check_s3_file_exists(bucket_name, file_name):
         logger.info("Creating image for " + institution_name)
         image_prompts = [
             "Can you generate me a night time full color image of",
@@ -76,6 +76,7 @@ def lambda_handler(event, context):
     else:
         logger.info("Image already exists for " + institution_name)
 
+    # intentional update so images can be shared between environments to limit Bedrock load
     try:
         table.update_item(
             Key={

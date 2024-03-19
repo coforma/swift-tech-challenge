@@ -19,8 +19,15 @@ import {
 } from "../../utils/masking";
 //types
 import { College } from "../../types";
+import { useState } from "react";
 
 export const CollegeCard = ({ college }: Props) => {
+  const [imgSrc, setImgSrc] = useState<string>(
+    `https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`,
+  );
+  const handleError = () => {
+    setImgSrc("/src/app/assets/default-institution-image.png");
+  };
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
       <CardHeader className="card_header">
@@ -29,10 +36,11 @@ export const CollegeCard = ({ college }: Props) => {
       </CardHeader>
       <CardMedia className="card_media">
         <Image
-          src={`https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`}
+          src={imgSrc}
           alt={`AI generated image of ${college.name}`}
           width={400}
           height={400}
+          onError={handleError}
         />
       </CardMedia>
       <CardBody>
