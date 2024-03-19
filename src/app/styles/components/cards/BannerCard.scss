@@ -12,8 +12,12 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 0 0 0;
-    @include at-media("tablet-lg") {
+    @include at-media("tablet") {
+      padding: 0 1rem;
+    }
+    @include at-media("desktop") {
       padding: 0 2rem;
+      margin: 2rem auto;
     }
 
     display: grid;
