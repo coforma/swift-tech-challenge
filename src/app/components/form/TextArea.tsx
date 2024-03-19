@@ -1,14 +1,6 @@
 import { FieldHint } from "../../types";
-import { FieldValues, UseFormRegister } from "react-hook-form";
 
-export const TextArea = ({
-  id,
-  label,
-  name,
-  required,
-  registerField,
-  hint,
-}: Props) => {
+export const TextArea = ({ id, label, name, required, hint }: Props) => {
   const fieldLabel = required ? `${label} *` : `${label}`;
   return (
     <div>
@@ -24,7 +16,7 @@ export const TextArea = ({
         id={id}
         aria-describedby={hint?.id}
         className="usa-textarea input_textarea-input"
-        {...registerField(`${name}`, { required: required })}
+        name={name}
       />
     </div>
   );
@@ -35,6 +27,5 @@ type Props = {
   label?: string;
   name: string;
   required: boolean;
-  registerField: UseFormRegister<FieldValues>;
   hint?: FieldHint;
 };

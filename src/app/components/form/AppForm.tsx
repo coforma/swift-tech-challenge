@@ -1,8 +1,9 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import * as yup from "yup";
 import { useEffect, useState } from "react";
-// components
+import { getInstitutionApplication } from "../../utils/institutions";
+import { USWDSForm } from "./Form";
 import {
   Button,
   ButtonGroup,
@@ -10,20 +11,38 @@ import {
   CardBody,
   GridContainer,
 } from "@trussworks/react-uswds";
-import { TextField, TextArea, Spinner } from "@/src/app/components";
-import NotFound from "@/src/app/not-found";
+import { Spinner } from "../utilities/Spinner";
+import NotFound from "../../not-found";
+import { TextField } from "./TextField";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-// utils
-import { getInstitutionApplication } from "@/src/app/utils/institutions";
-import { saveApplication } from "@/src/app/utils/applications";
+import { saveApplication } from "../../utils/applications";
+import router from "next/router";
 
-export const ApplicationForm = ({ institutionId }: Props) => {
-  const router = useRouter();
+const SignupSchema = yup.object().shape({
+  "first-name": yup
+    .string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  "last-name": yup
+    .string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  email: yup.string().email().required("Required"),
+  phone: yup.string().required("Required"),
+  "math-score": yup.number(),
+  "crit-reading-score": yup.number(),
+  "writing-score": yup.number(),
+});
+
+export const AppForm = ({ institutionId }: Props) => {
   const [application, setApplication] = useState<
     Record<string, any> | undefined
   >();
   const [loading, setLoading] = useState(true);
+
+  const appq = application?.questions;
 
   useEffect(() => {
     getInstitutionApplication(Number(institutionId)).then((application) => {
@@ -32,10 +51,6 @@ export const ApplicationForm = ({ institutionId }: Props) => {
     });
   }, [institutionId]);
 
-  const { handleSubmit, register } = useForm();
-
-  const appq = application?.questions;
-
   const onSubmit = async (data: any) => {
     const submission = {
       questions: appq,
@@ -43,6 +58,7 @@ export const ApplicationForm = ({ institutionId }: Props) => {
       email: data.email,
       institutionId: institutionId,
     };
+    alert(submission);
     try {
       await saveApplication(submission);
       router.push(`/${institutionId}/apply/confirmation`);
@@ -53,15 +69,29 @@ export const ApplicationForm = ({ institutionId }: Props) => {
 
   //Handle SAT score questions
   const hasSATQ: boolean = appq?.includes("What is your SAT score?");
-  //Handle EssayQuestions
-  const essayQ1: string | undefined = appq?.[4];
-  const essayQ2: string | undefined = appq?.[5];
-  const essayQ3: string | undefined = appq?.[6];
+  /*
+   * Handle EssayQuestions
+   *  const essayQ1: string | undefined = appq?.[4];
+   *  const essayQ2: string | undefined = appq?.[5];
+   *  const essayQ3: string | undefined = appq?.[6];
+   */
   const ApplicationView = !application ? (
     <NotFound />
   ) : (
     <main className="application">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <USWDSForm
+        initialValues={{
+          "first-name": "",
+          "last-name": "",
+          email: "",
+          phone: "",
+          "math-score": "",
+          "crit-reading-score": "",
+          "writing-score": "",
+        }}
+        validationSchema={SignupSchema}
+        submit={onSubmit}
+      >
         <div className="application_header">
           <p className="application_header-subtitle">
             NEW APPLICATION (2024-2025)
@@ -80,33 +110,17 @@ export const ApplicationForm = ({ institutionId }: Props) => {
                   </legend>
                   <div className="application_questions-grid">
                     <TextField
-                      id={"given-name"}
                       label={"First name"}
                       name={"first-name"}
                       required
-                      registerField={register}
                     />
                     <TextField
-                      id={"family-name"}
                       label={"Last name"}
                       name={"last-name"}
                       required
-                      registerField={register}
                     />
-                    <TextField
-                      id={"email-address"}
-                      label={"Email"}
-                      name={"email"}
-                      required
-                      registerField={register}
-                    />
-                    <TextField
-                      id={"phone-number"}
-                      label={"Phone number"}
-                      name={"phone"}
-                      required
-                      registerField={register}
-                    />
+                    <TextField label={"Email"} name={"email"} required />
+                    <TextField label={"Phone number"} name={"phone"} required />
                   </div>
                 </fieldset>
               </CardBody>
@@ -120,34 +134,28 @@ export const ApplicationForm = ({ institutionId }: Props) => {
                   </legend>
                   <div className="application_questions-grid">
                     <TextField
-                      id={"math-sat"}
                       label={"Math"}
                       name={"math-score"}
                       required={hasSATQ}
-                      registerField={register}
                     />
 
                     <TextField
-                      id={"crit-reading-sat"}
                       label={"Critical reading"}
                       name={"reading-score"}
                       required={hasSATQ}
-                      registerField={register}
                     />
 
                     <TextField
-                      id={"writing-sat"}
                       label={"Writing"}
                       name={"writing-score"}
                       required={hasSATQ}
-                      registerField={register}
                     />
                   </div>
                 </fieldset>
               </CardBody>
             </Card>
 
-            <Card className="application_card">
+            {/* <Card className="application_card">
               <CardBody className="application_card">
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
@@ -165,7 +173,6 @@ export const ApplicationForm = ({ institutionId }: Props) => {
                     label={essayQ1}
                     name={"question-1"}
                     required={false}
-                    registerField={register}
                   />
                 </fieldset>
               </CardBody>
@@ -188,7 +195,6 @@ export const ApplicationForm = ({ institutionId }: Props) => {
                     label={essayQ2}
                     name={"question-2"}
                     required={false}
-                    registerField={register}
                   />
                 </fieldset>
               </CardBody>
@@ -212,11 +218,10 @@ export const ApplicationForm = ({ institutionId }: Props) => {
                     label={essayQ3}
                     name={"question-3"}
                     required={false}
-                    registerField={register}
                   />
                 </fieldset>
               </CardBody>
-            </Card>
+            </Card> */}
           </ul>
         </GridContainer>
         <div className="application_footer">
@@ -227,7 +232,7 @@ export const ApplicationForm = ({ institutionId }: Props) => {
             <Button type={"submit"}>Submit application</Button>
           </ButtonGroup>
         </div>
-      </form>
+      </USWDSForm>
     </main>
   );
 

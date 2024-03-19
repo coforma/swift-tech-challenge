@@ -1,38 +1,33 @@
 import { TextField } from "@/src/app/components";
-import { render, screen } from "@testing-library/react";
+import { USWDSForm } from "@/src/app/components/form/Form";
+import { act, render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
+import * as yup from "yup";
 
-const mockRegister = jest.fn();
+const fieldSchema = yup.object().shape({
+  "field-name": yup.string(),
+});
+
+const mockOnSubmit = jest.fn();
 
 const notRequiredTextField = (
-  <TextField
-    id={"field-id"}
-    label={"field-label"}
-    required={false}
-    name={"field-name"}
-    registerField={mockRegister}
-  />
+  <USWDSForm
+    initialValues={{ "field-name": "" }}
+    validationSchema={fieldSchema}
+    submit={mockOnSubmit}
+  >
+    <TextField label={"field-label"} required={false} name={"field-name"} />
+  </USWDSForm>
 );
 
 const requiredTextField = (
-  <TextField
-    id={"field-id"}
-    label={"field-label"}
-    required={true}
-    name={"field-name"}
-    registerField={mockRegister}
-  />
-);
-
-const textFieldWithHint = (
-  <TextField
-    id={"field-id"}
-    label={"field-label"}
-    required={false}
-    name={"field-name"}
-    hint={{ id: "field-id", text: "This is a hint" }}
-    registerField={mockRegister}
-  />
+  <USWDSForm
+    initialValues={{ "field-name": "" }}
+    validationSchema={fieldSchema}
+    submit={mockOnSubmit}
+  >
+    <TextField label={"field-label"} required={true} name={"field-name"} />
+  </USWDSForm>
 );
 
 describe("Test TextField", () => {
@@ -41,25 +36,20 @@ describe("Test TextField", () => {
     expect(screen.getByText("field-label")).toBeVisible();
   });
 
-  test("TextField required star is visible", () => {
-    render(requiredTextField);
+  test("TextField required star is visible", async () => {
+    await act(async () => {
+      await render(await requiredTextField);
+    });
     expect(screen.getByText("*")).toBeVisible();
-  });
-  test("TextField hint is visible", () => {
-    render(textFieldWithHint);
-    expect(screen.getByText("This is a hint")).toBeVisible();
-  });
-
-  test("TextField is registered", () => {
-    render(notRequiredTextField);
-    expect(mockRegister).toHaveBeenCalled();
   });
 });
 
 describe("Test TextField accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
-    const { container } = render(notRequiredTextField);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    await act(async () => {
+      const { container } = render(requiredTextField);
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
   });
 });
