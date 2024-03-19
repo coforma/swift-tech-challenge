@@ -19,18 +19,19 @@ data "terraform_remote_state" "bootstrap" {
 }
 
 module "frontend" {
-  source            = "../../modules/frontend"
-  environment       = var.environment
-  artifact_bucket   = var.artifact_bucket
-  artifact_path     = var.frontend_artifact_path
-  zip_file_name     = var.frontend_zip_filename
-  images_bucket_arn = var.images_bucket_arn
+  source          = "../../modules/frontend"
+  environment     = var.environment
+  artifact_bucket = var.artifact_bucket
+  artifact_path   = var.frontend_artifact_path
+  zip_file_name   = var.frontend_zip_filename
+  images_bucket   = var.images_bucket
   github = {
     repo                    = var.github_repo
     app_deploy_restrictions = var.app_deploy_restrictions
     oidc_arn                = data.terraform_remote_state.bootstrap.outputs.github_oidc_arn
   }
-  provisioned_concurrency = var.provisioned_concurrency
-  static_bucket           = var.static_bucket
-  static_next_path        = var.static_next_path
+  provisioned_concurrency     = var.provisioned_concurrency
+  static_bucket               = var.static_bucket
+  static_next_path            = var.static_next_path
+  institutions_dynamodb_table = var.institutions_dynamodb_table
 }
