@@ -48,20 +48,21 @@ def lambda_handler(event, context):
     if not check_s3_file_exists(bucket_name, image_path):
         logger.info("Creating image for " + institution_name)
         image_prompts = [
-            "Can you generate me a night time full color image of",
-            "Can you generate me a full color image of",
-            "Can you generate me a winter full color image of",
-            "Can you generate me an impressionist image of",
-            "Can you generate me an post-modern fall image of",
+            f"Can you generate me a night time full color image of {institution_name}",
+            f"Can you generate me a full color image of  {institution_name}",
+            f"Can you generate me a winter full color image of  {institution_name}",
+            f"Can you generate me an post-modern fall image of {institution_name}",
+            f"Can you generate me a sharp photo of a large, busy campus that looks like {institution_name}",
+            f"Can you generate me a sharp photo of a small, busy campus that looks like {institution_name}",
         ]
-        image_prompt = random.choice(image_prompts) + " " + institution_name
+        image_prompt = random.choice(image_prompts)
         bedrock_image_args = {
             "modelId": "amazon.titan-image-generator-v1",
             "contentType": "application/json",
             "accept": "application/json",
             "body": '{"textToImageParams":{"text":"'
             + image_prompt
-            + '"},"taskType":"TEXT_IMAGE","imageGenerationConfig":{"cfgScale":8,"seed":0,"quality":"standard","width":512,"height":512,"numberOfImages":1}}',
+            + '"},"taskType":"TEXT_IMAGE","imageGenerationConfig":{"cfgScale":8,"seed":10,"quality":"standard","width":512,"height":512,"numberOfImages":1}}',
         }
 
         generated_image_response = bedrock_runtime.invoke_model(**bedrock_image_args)

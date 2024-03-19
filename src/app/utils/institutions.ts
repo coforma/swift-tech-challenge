@@ -75,7 +75,9 @@ export async function getInstitutions() {
    * Sort colleges by name in alpha order, could optimize but inserting
    * in sorted order if performance becomes an issue
    */
-  colleges.sort((a, b) => (a.name > b.name ? 1 : -1));
+  colleges.sort((a, b) =>
+    a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1,
+  );
   return colleges;
 }
 
