@@ -24,10 +24,10 @@ export const DetailsCards = ({ college }: Props) => {
 const OutcomesCard = ({ college }: Props) => {
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
-      <p className="card_details_header-title">Outcomes</p>
+      <h2 className="card_details_header-title">Outcomes</h2>
       <CardBody>
         <div>
-          <p className="card_details_section-header">Graduation rate</p>
+          <h3 className="card_details_section-header">Graduation rate</h3>
           <p className="card_details_section-text">
             The percent of students who finished their degree at this school
             within [4 or 8, conditionally] years. This is calculated for full
@@ -39,7 +39,7 @@ const OutcomesCard = ({ college }: Props) => {
           </p>
         </div>
         <div className="card_details_section">
-          <p className="card_details_section-header">Retention rate</p>
+          <h3 className="card_details_section-header">Retention rate</h3>
           <p className="card_details_section-text">
             Retention is the percent of first-time students who return to the
             same school the following year. This is calculated for full-time
@@ -51,7 +51,7 @@ const OutcomesCard = ({ college }: Props) => {
           </p>
         </div>
         <div className="card_details_section">
-          <p className="card_details_section-header">Earning potential</p>
+          <h3 className="card_details_section-header">Earning potential</h3>
           <div className="card_details_section-data">
             <div>
               <p className="card_details_section-data-title">
@@ -79,10 +79,10 @@ const OutcomesCard = ({ college }: Props) => {
 const AdmissionsCard = ({ college }: Props) => {
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
-      <p className="card_details_header-title">Admissions</p>
+      <h2 className="card_details_header-title">Admissions</h2>
       <CardBody>
         <div>
-          <p className="card_details_section-header">Admissions rate</p>
+          <h3 className="card_details_section-header">Admissions rate</h3>
           <p className="card_details_section-text">
             The percentage of applicants who are accepted for admission.
           </p>
@@ -92,7 +92,7 @@ const AdmissionsCard = ({ college }: Props) => {
           </p>
         </div>
         <div className="card_details_section">
-          <p className="card_details_section-header">SAT scores</p>
+          <h3 className="card_details_section-header">SAT scores</h3>
           <p className="card_details_section-data-title">
             Average combined score
           </p>
@@ -108,19 +108,19 @@ const AdmissionsCard = ({ college }: Props) => {
 const StudentBodyCard = ({ college }: Props) => {
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
-      <p className="card_details_header-title">Student body</p>
+      <h2 className="card_details_header-title">Student body</h2>
       <CardBody>
         <div className="card_details_section">
-          <p className="card_details_section-header">Population</p>
+          <h3 className="card_details_section-header">Population</h3>
           <p className="card_details_section-data-title">Enrolled students</p>
           <p className="card_details_section-data-highlight">
             {maskThousands(college.population)}
           </p>
         </div>
         <div className="card_details_section">
-          <p className="card_details_section-header">
+          <h3 className="card_details_section-header">
             Racial and ethnic diversity
-          </p>
+          </h3>
           <div className="card_details_section-data">
             <div>
               <p className="card_details_section-data-title">
@@ -224,10 +224,10 @@ const parseSpecialties = (specialties: Specialties) => {
 const AcademicsCard = ({ college }: Props) => {
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
-      <p className="card_details_header-title">Academics</p>
+      <h2 className="card_details_header-title">Academics</h2>
       <CardBody>
         <div>
-          <p className="card_details_section-header">Degrees</p>
+          <h3 className="card_details_section-header">Degrees</h3>
           <div className="card_details_section-data">
             <div>
               <p className="card_details_section-data-title">
@@ -248,7 +248,7 @@ const AcademicsCard = ({ college }: Props) => {
           </div>
         </div>
         <div className="card_details_section">
-          <p className="card_details_section-header">Student/Faculty ratio</p>
+          <h3 className="card_details_section-header">Student/Faculty ratio</h3>
           <p className="card_details_section-data-title">Ratio</p>
           <p className="card_details_section-data-highlight">
             {college?.studentFacultyRatio}
@@ -256,7 +256,7 @@ const AcademicsCard = ({ college }: Props) => {
         </div>
         {college?.specialties && (
           <div className="card_details_section">
-            <p className="card_details_section-header">Majors</p>
+            <h3 className="card_details_section-header">Majors</h3>
             <div>{parseSpecialties(college?.specialties)}</div>
           </div>
         )}
@@ -288,10 +288,10 @@ const CostsCard = ({ college }: Props) => {
   const over110 = maskCurrency(netPriceForType?.averagePriceUnder110kPlus);
   return (
     <Card layout="standardDefault" headerFirst={true} className="card_details">
-      <p className="card_details_header-title">Costs</p>
+      <h2 className="card_details_header-title">Costs</h2>
       <CardBody>
         <div>
-          <p className="card_details_section-header">Net price</p>
+          <h3 className="card_details_section-header">Net price</h3>
           <p className="card_details_section-text">
             The net price is a school’s tuition and fees minus grants and
             scholarships. The net price you pay for a particular college is
@@ -308,9 +308,9 @@ const CostsCard = ({ college }: Props) => {
         </div>
         {netPriceForType && (
           <div className="card_details_section">
-            <p className="card_details_section-header">
+            <h3 className="card_details_section-header">
               Average net price by household income
-            </p>
+            </h3>
             <p className="card_details_section-text">
               Families are eligible for different amounts of financial aid from
               federal and state governments based on their income levels. After
@@ -364,7 +364,7 @@ const CostsCard = ({ college }: Props) => {
         )}
 
         <div className="card_details_section">
-          <p className="card_details_section-header">Tuition and fees</p>
+          <h3 className="card_details_section-header">Tuition and fees</h3>
           <p className="card_details_section-text">
             Tuition is the price you pay for classes, and is listed here for
             full-time students. You would likely need to pay some fees to attend
@@ -387,7 +387,7 @@ const CostsCard = ({ college }: Props) => {
           </div>
         </div>
         <div className="card_details_section">
-          <p className="card_details_section-header">Loans</p>
+          <h3 className="card_details_section-header">Loans</h3>
           <p className="card_details_section-text">
             A federal loan is a type of financial aid provided by the government
             to help students and their families pay for higher education
@@ -403,7 +403,7 @@ const CostsCard = ({ college }: Props) => {
           </p>
         </div>
         <div className="card_details_section">
-          <p className="card_details_section-header">Net price calculator</p>
+          <h3 className="card_details_section-header">Net price calculator</h3>
           <p className="card_details_section-text">
             Every college has a different formula for financial aid. Net price
             calculators are free to use, and can help you get a sense of what

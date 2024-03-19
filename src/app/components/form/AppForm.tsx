@@ -94,12 +94,12 @@ export const AppForm = ({ institutionId }: Props) => {
         submit={onSubmit}
       >
         <div className="application_header">
-          <p className="application_header-subtitle">
-            NEW APPLICATION (2024-2025)
-          </p>
           <h1 className="application_header-title">
             {application?.institutionName}
           </h1>
+          <p className="application_header-subtitle">
+            NEW APPLICATION (2024-2025)
+          </p>
         </div>
         <GridContainer className="application_questions">
           <ul className="usa-card-group">
@@ -111,17 +111,25 @@ export const AppForm = ({ institutionId }: Props) => {
                   </legend>
                   <div className="application_questions-grid">
                     <TextField
-                      label={"First name"}
+                      label={"First name (required)"}
                       name={"first-name"}
                       required
                     />
                     <TextField
-                      label={"Last name"}
+                      label={"Last name (required)"}
                       name={"last-name"}
                       required
                     />
-                    <TextField label={"Email"} name={"email"} required />
-                    <TextField label={"Phone number"} name={"phone"} required />
+                    <TextField
+                      label={"Email (required)"}
+                      name={"email"}
+                      required
+                    />
+                    <TextField
+                      label={"Phone number (required)"}
+                      name={"phone"}
+                      required
+                    />
                   </div>
                 </fieldset>
               </CardBody>
@@ -135,19 +143,19 @@ export const AppForm = ({ institutionId }: Props) => {
                   </legend>
                   <div className="application_questions-grid">
                     <TextField
-                      label={"Math"}
+                      label={"Math (required)"}
                       name={"math-score"}
                       required={hasSATQ}
                     />
 
                     <TextField
-                      label={"Critical reading"}
+                      label={"Critical reading (required)"}
                       name={"reading-score"}
                       required={hasSATQ}
                     />
 
                     <TextField
-                      label={"Writing"}
+                      label={"Writing (required)"}
                       name={"writing-score"}
                       required={hasSATQ}
                     />
@@ -159,15 +167,22 @@ export const AppForm = ({ institutionId }: Props) => {
             <Card className="application_card">
               <CardBody className="application_card">
                 <fieldset className="usa-fieldset">
-                  <legend className="usa-legend usa-legend--large">
-                    Essay Question 1 <span className="required">*</span>
-                  </legend>
                   <p className="application_questions-essay-guidance">
-                    Answer the following essay question. We encourage you to
-                    write the essays in separate word processing program, check
-                    them for grammar and spelling, and then copy/paste into the
-                    boxes here.
+                    Answer the following essay questions. We encourage you to
+                    write the essays in a separate word processing program,
+                    check them for grammar and spelling, and then copy/paste
+                    into the boxes here.
                   </p>
+                </fieldset>
+              </CardBody>
+            </Card>
+            <Card className="application_card">
+              <CardBody className="application_card">
+                <fieldset className="usa-fieldset">
+                  <legend className="usa-legend usa-legend--large">
+                    Essay Question 1{" "}
+                    <span className="required">(required)*</span>
+                  </legend>
                   <p className="application_questions-essay-q">Question</p>
                   <TextArea
                     id={"essay-question-1"}
@@ -182,14 +197,9 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody>
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay Question 2 <span className="required">*</span>
+                    Essay Question 2{" "}
+                    <span className="required">(required)*</span>
                   </legend>
-                  <p className="application_questions-essay-guidance">
-                    Answer the following essay question. We encourage you to
-                    write the essays in separate word processing program, check
-                    them for grammar and spelling, and then copy/paste into the
-                    boxes here.
-                  </p>
                   <p className="application_questions-essay-q">Question</p>
                   <TextArea
                     id={"essay-question-2"}
@@ -205,14 +215,9 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody>
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay Question 3 <span className="required">*</span>
+                    Essay Question 3{" "}
+                    <span className="required">(required)*</span>
                   </legend>
-                  <p className="application_questions-essay-guidance">
-                    Answer the following essay question. We encourage you to
-                    write the essays in separate word processing program, check
-                    them for grammar and spelling, and then copy/paste into the
-                    boxes here.
-                  </p>
                   <p className="application_questions-essay-q">Question</p>
                   <TextArea
                     id={"essay-question-3"}

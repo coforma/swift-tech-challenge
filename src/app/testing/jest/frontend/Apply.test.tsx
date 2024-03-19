@@ -36,11 +36,11 @@ describe("Test Application Page", () => {
     await act(async () => {
       await render(Apply);
     });
-    expect(screen.getByText("First name")).toBeVisible();
-    expect(screen.getByText("Last name")).toBeVisible();
-    expect(screen.getByText("Phone number")).toBeVisible();
-    expect(screen.getByText("Email")).toBeVisible();
-    expect(screen.getByText("Writing")).toBeVisible();
+    expect(screen.getByText("First name (required)")).toBeVisible();
+    expect(screen.getByText("Last name (required)")).toBeVisible();
+    expect(screen.getByText("Phone number (required)")).toBeVisible();
+    expect(screen.getByText("Email (required)")).toBeVisible();
+    expect(screen.getByText("Writing (required)")).toBeVisible();
     expect(screen.getByText("Essay Question 1")).toBeVisible();
   });
 });

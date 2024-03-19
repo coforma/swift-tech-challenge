@@ -38,7 +38,7 @@ export const Browse = () => {
         <div className="browse_header">
           <h2 className="browse_header-title">Browse colleges</h2>
           <p className="site_text-intro browse_header-subtitle">
-            Find the college thats right for you
+            Find the college that’s right for you
           </p>
           <Button type="button" outline={true} onClick={launchModal}>
             Add filters
