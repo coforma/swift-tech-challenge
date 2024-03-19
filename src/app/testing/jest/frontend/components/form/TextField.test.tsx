@@ -1,8 +1,9 @@
-import { TextField } from "@/src/app/components";
-import { USWDSForm } from "@/src/app/components/form/USWDSForm";
+import * as yup from "yup";
 import { act, render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
-import * as yup from "yup";
+// components
+import { TextField } from "@/src/app/components";
+import { USWDSForm } from "@/src/app/components/form/USWDSForm";
 
 const fieldSchema = yup.object().shape({
   "field-name": yup.string(),
