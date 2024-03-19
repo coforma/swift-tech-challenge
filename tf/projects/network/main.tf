@@ -46,3 +46,13 @@ resource "aws_vpc_endpoint" "dynamodb" {
   service_name    = "com.amazonaws.${data.aws_region.current.name}.dynamodb"
   route_table_ids = tolist(module.vpc.private_route_table_ids)
 }
+
+resource "aws_dax_subnet_group" "public" {
+  name       = "${var.environment}-public"
+  subnet_ids = tolist(module.vpc.private_subnets)
+}
+
+resource "aws_dax_subnet_group" "private" {
+  name       = "${var.environment}-private"
+  subnet_ids = tolist(module.vpc.public_subnets)
+}

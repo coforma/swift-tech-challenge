@@ -75,3 +75,7 @@ variable "vpc_config" {
     security_group_ids = list(string)
   })
 }
+
+variable "dax_endpoint" {
+  default = null
+}

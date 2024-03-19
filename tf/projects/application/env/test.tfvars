@@ -26,3 +26,4 @@ vpc_config = {
     "subnet-03af32f1fbdc85a82",
   ]
 }
+dax_endpoint = "test-dax.4kpcab.dax-clusters.us-east-1.amazonaws.com"

@@ -54,6 +54,12 @@ data "aws_iam_policy_document" "backend" {
       "${var.images_bucket.arn}/*"
     ]
   }
+  statement {
+    sid       = "AccessDax"
+    actions   = ["dax:*"]
+    effect    = "Allow"
+    resources = ["*"]
+  }
 }
 
 resource "aws_iam_policy" "backend" {
@@ -98,6 +104,7 @@ resource "aws_lambda_function" "frontend" {
       IMAGES_BUCKET                      = var.images_bucket.name
       INSTITUTIONS_DYNAMODB_TABLE        = var.institutions_dynamodb_table
       APPLICANTS_DYNAMODB_TABLE          = var.applicants_dynamodb_table
+      DAX_ENDPOINT                       = "test-dax.4kpcab.dax-clusters.us-east-1.amazonaws.com"
     }
   }
   layers = [

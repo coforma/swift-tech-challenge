@@ -1,4 +1,5 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+const AmazonDaxClient = require("amazon-dax-client"); // tslint:disable-line
 import {
   GetCommand,
   GetCommandInput,
@@ -13,7 +14,18 @@ const awsConfig = {
   region: "us-east-1",
 };
 
-const client = DynamoDBDocumentClient.from(new DynamoDBClient(awsConfig));
+const ddbClient = DynamoDBDocumentClient.from(new DynamoDBClient(awsConfig));
+var daxClient = null;
+
+if (process.env.DAX_ENDPOINT) {
+  var dax = new AmazonDaxClient({
+    endpoints: [process.env.DAX_ENDPOINT],
+    region: "us-east-1",
+  });
+  daxClient = DynamoDBDocumentClient.from(dax);
+}
+
+var client = daxClient != null ? daxClient : ddbClient;
 
 const dynamoClient = {
   get: async function (params: GetCommandInput) {

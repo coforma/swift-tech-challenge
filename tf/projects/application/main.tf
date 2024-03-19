@@ -36,4 +36,5 @@ module "frontend" {
   applicants_dynamodb_table   = var.applicants_dynamodb_table
   institutions_dynamodb_table = var.institutions_dynamodb_table
   vpc_config                  = var.vpc_config
+  dax_endpoint                = var.dax_endpoint
 }
