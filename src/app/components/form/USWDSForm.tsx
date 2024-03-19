@@ -26,7 +26,7 @@ export const USWDSForm = ({
 
 type Props = {
   initialValues: { [key: string]: any };
-  validationSchema: yup.ObjectSchema<any>;
+  validationSchema?: yup.ObjectSchema<any>;
   submit: Function;
   children: any;
 };

@@ -1,23 +1,24 @@
 "use client";
+
 import { MouseEventHandler, useContext } from "react";
+import Image from "next/image";
+//components
 import {
   Button,
   ButtonGroup,
   ModalFooter,
   ModalHeading,
 } from "@trussworks/react-uswds";
-import Image from "next/image";
-import close from "../../assets/icons/close.svg";
-import { CollegeType, stateOptions } from "../../types";
-
-import { CheckboxField } from "../form/CheckboxField";
-import { DropdownField } from "../form/DropdownField";
-import { useForm } from "react-hook-form";
+import { CheckboxField, DropdownField, USWDSForm } from "../../components";
+// utils
 import { InstitutionContext } from "../institutions/InstitutionProvider";
 import { filterInstitutions } from "../../utils/filtering";
+//assets
+import close from "../../assets/icons/close.svg";
+//types
+import { CollegeType, stateOptions } from "../../types";
 
 export const FilterModal = ({ closeHandler }: Props) => {
-  const form = useForm();
   const { institutionsArray, setFilteredInstitutions } =
     useContext(InstitutionContext);
   // const [filterState, setFilterState] = useState<Object | undefined>(undefined);
@@ -46,7 +47,7 @@ export const FilterModal = ({ closeHandler }: Props) => {
       aria-describedby="modal-1-description"
     >
       <div data-testid="modalOverlay" className="usa-modal-overlay">
-        <form id="" onSubmit={form.handleSubmit(applyFilters)}>
+        <USWDSForm initialValues={{}} submit={applyFilters}>
           <div className="usa-modal usa-modal--lg" tabIndex={-1}>
             <ModalHeading>Filter schools</ModalHeading>
             <div className="filter_section">
@@ -57,7 +58,6 @@ export const FilterModal = ({ closeHandler }: Props) => {
                 label="State"
                 required={false}
                 options={stateOptions}
-                registerField={form.register}
               />
             </div>
             <div className="filter_section">
@@ -70,7 +70,6 @@ export const FilterModal = ({ closeHandler }: Props) => {
                   { id: CollegeType.PRIVATE_NP, label: CollegeType.PRIVATE_NP },
                   { id: CollegeType.PRIVATE_FP, label: CollegeType.PRIVATE_FP },
                 ]}
-                registerField={form.register}
               />
             </div>
             <div className="filter_section">
@@ -85,7 +84,6 @@ export const FilterModal = ({ closeHandler }: Props) => {
                   { id: "10-20", label: "10,000 - 20,000" },
                   { id: ">20", label: "20,000 +" },
                 ]}
-                registerField={form.register}
               />
             </div>
             <div className="filter_section">
@@ -99,7 +97,6 @@ export const FilterModal = ({ closeHandler }: Props) => {
                   { id: "30-60", label: "30% - 60%" },
                   { id: "<30", label: "Less than 30%" },
                 ]}
-                registerField={form.register}
               />
             </div>
             <div className="filter_section">
@@ -108,13 +105,12 @@ export const FilterModal = ({ closeHandler }: Props) => {
                 id="filter-avg-cost-per-year"
                 name="filter-avg-cost-per-year"
                 options={[
-                  { id: "<10", label: "Less than $10,000" },
-                  { id: "10-20", label: "$10,000 - $20,000" },
-                  { id: "20-40", label: "$20,000 - $40,000" },
-                  { id: "40-60", label: "$40,000 - $60,000" },
-                  { id: ">60", label: "More than $60,000" },
+                  { id: "<10$", label: "Less than $10,000" },
+                  { id: "10-20$", label: "$10,000 - $20,000" },
+                  { id: "20-40$", label: "$20,000 - $40,000" },
+                  { id: "40-60$", label: "$40,000 - $60,000" },
+                  { id: ">60$", label: "More than $60,000" },
                 ]}
-                registerField={form.register}
               />
             </div>
             <ModalFooter>
@@ -146,7 +142,7 @@ export const FilterModal = ({ closeHandler }: Props) => {
               />
             </button>
           </div>
-        </form>
+        </USWDSForm>
       </div>
     </div>
   );
