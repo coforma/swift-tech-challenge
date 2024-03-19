@@ -24,8 +24,7 @@ jest.mock("../../../utils/institutions", () => ({
 describe("Test Homepage", () => {
   test("Check that page renders", async () => {
     render(await Home());
-    expect(screen.queryAllByText("Browse colleges").length).toBe(0);
-    expect(screen.getByTitle("spinner")).toBeVisible();
+    expect(screen.queryAllByText("Browse colleges")[0]).toBeVisible();
   });
 });
 

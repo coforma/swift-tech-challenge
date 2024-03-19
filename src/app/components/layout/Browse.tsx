@@ -31,8 +31,7 @@ export const Browse = () => {
     setIsModalVisible(true);
   };
 
-  if (!filteredInstitutions || filteredInstitutions.length == 0)
-    return <Spinner />;
+  if (!filteredInstitutions) return <Spinner />;
   return (
     <>
       {filteredInstitutions && (
@@ -49,12 +48,18 @@ export const Browse = () => {
       {isModalVisible && (
         <FilterModal closeHandler={() => setIsModalVisible(false)} />
       )}
-      <ul className="usa-card-group">
-        {filteredInstitutions?.map((school: College) => (
-          <CollegeCard key={school.id} college={school} />
-        ))}
-      </ul>
-      {filteredInstitutions && scrollPosition && (
+      {filteredInstitutions?.length > 0 ? (
+        <ul className="usa-card-group">
+          {filteredInstitutions.map((school: College) => (
+            <CollegeCard key={school.id} college={school} />
+          ))}
+        </ul>
+      ) : (
+        <p className="site_text-intro browse_header-subtitle">
+          No matches found for filters.
+        </p>
+      )}
+      {filteredInstitutions.length > 0 && scrollPosition && (
         <Button
           type="button"
           className="browse_back-to-top-button"
