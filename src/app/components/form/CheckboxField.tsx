@@ -11,7 +11,7 @@ export const CheckboxField = ({ name, registerField, options }: Props) => (
             id={option.id}
             type="checkbox"
             value={option.id}
-            {...registerField(`${name}`)}
+            {...registerField(name)}
           />
           <label className="usa-checkbox__label" htmlFor={option.id}>
             {option.label}
