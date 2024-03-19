@@ -30,8 +30,8 @@ describe("Test details page", () => {
   });
 });
 
-describe("Test general app accessibility", () => {
-  it("Should not have any a11y issues on the homepage", () => {
+describe("Test details page accessibility", () => {
+  it("Should not have any a11y issues on the details page", () => {
     cy.visit(SELECTED_INSTITUTION_ROUTE);
     // make sure info loads
     cy.get(".card_header-title").should("be.visible");
