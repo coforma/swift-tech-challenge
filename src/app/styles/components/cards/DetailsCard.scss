@@ -1,13 +1,22 @@
 @use "uswds-core" as *;
 
+.details_page.usa-card-group {
+  display: block;
+}
+
 .card_details {
   @include u-margin-x(auto);
   width:100%;
-  max-width: 100rem;
+  max-width: 1200px;
 
   &>.usa-card__container {
-    border-radius: .75rem;
-    @include u-margin-x(4);
+    border-radius: 1rem;
+    padding: .5rem 0 0 0;
+    @include at-media("tablet-lg") {
+      @include u-padding-x(4);
+    }
+    margin-left: 2rem;
+    margin-right: min(2rem, 100%);
   }
 
   &_header-title {

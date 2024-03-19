@@ -1,5 +1,11 @@
 @use "uswds-core" as *;
 
+$collegeCard-img-width-normal: 0;
+$collegeCard-img-width-tablet: 15rem;
+$collegeCard-img-width-desk: 20rem;
+$collegeCard-img-width-desk-lg: 25rem;
+$collegeCard-img-width-wide: 30rem;
+
 .card {
   width: 100%;
 }
@@ -19,6 +25,22 @@
 
 .card_header {
   @include u-padding-top(5);
+
+  &.usa-card__header {
+    margin-left: $collegeCard-img-width-normal;
+    @include at-media("tablet") {
+      margin-left: $collegeCard-img-width-tablet;
+    }
+    @include at-media("desktop") {
+      margin-left: $collegeCard-img-width-desk;
+    }
+    @include at-media("desktop-lg") {
+      margin-left: $collegeCard-img-width-desk-lg;
+    }
+    @include at-media("widescreen") {
+      margin-left: $collegeCard-img-width-wide;
+    }
+  }
 
   &-title {
     @include typeset("heading", 9, 1);
@@ -50,11 +72,96 @@
   }
 }
 
+.card_media {
+  max-height: 20rem;
+  @include at-media("tablet") {
+    max-height: none;
+  }
+
+  &.usa-card__media {
+    width: auto;
+    @include at-media("tablet") {
+      width: $collegeCard-img-width-tablet;
+    }
+    @include at-media("desktop") {
+      width: $collegeCard-img-width-desk;
+    }
+    @include at-media("desktop-lg") {
+      width: $collegeCard-img-width-desk-lg;
+    }
+    @include at-media("widescreen") {
+      width: $collegeCard-img-width-wide;
+    }
+  }
+
+  &>.usa-card__img {
+    border-top-left-radius: .75rem;
+    border-top-right-radius: .75rem;
+    border-bottom-left-radius: 0;
+    max-height: 20rem;
+    width: auto;
+    @include at-media("mobile-lg") {
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      border-bottom-left-radius: 0;
+    }
+    @include at-media("tablet") {
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 1rem;
+      max-height: none;
+      width: $collegeCard-img-width-tablet;
+    }
+    @include at-media("tablet-lg") {
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 2rem;
+    }
+    @include at-media("desktop") {
+      border-top-left-radius: 3rem;
+      border-bottom-left-radius: 3rem;
+      width: $collegeCard-img-width-desk;
+    }
+    @include at-media("desktop-lg") {
+      width: $collegeCard-img-width-desk-lg;
+    }
+    @include at-media("widescreen") {
+      width: $collegeCard-img-width-wide;
+    }
+  }
+}
+
+.card_body {
+ &.usa-card__body {
+    margin-left: 0;
+    margin-top: 0;
+    padding-top: 0;
+    @include at-media("tablet") {
+      margin-left: $collegeCard-img-width-tablet;
+    }
+    @include at-media("desktop") {
+      margin-left: $collegeCard-img-width-desk;
+    }
+    @include at-media("desktop-lg") {
+      margin-left: $collegeCard-img-width-desk-lg;
+    }
+    @include at-media("widescreen") {
+      margin-left: $collegeCard-img-width-wide;
+    }
+  }
+}
+
 .card_desc {
   @include u-margin-bottom(2);
   @include typeset("ui", 5, 4);
   @include at-media("mobile-lg") {
     @include u-font-size("ui", 6);
+  }
+  @include at-media("tablet") {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
   @include at-media("tablet-lg") {
     @include u-font-size("ui", 8);
@@ -83,6 +190,21 @@
 .usa-card__footer {
   @include u-margin-top(2);
   @include u-padding-bottom(5);
+  &.usa-card__footer {
+    margin-left: 0;
+    @include at-media("tablet") {
+      margin-left: $collegeCard-img-width-tablet;
+    }
+    @include at-media("desktop") {
+      margin-left: $collegeCard-img-width-desk;
+    }
+    @include at-media("desktop-lg") {
+      margin-left: $collegeCard-img-width-desk-lg;
+    }
+    @include at-media("widescreen") {
+      margin-left: $collegeCard-img-width-wide;
+    }
+  }
 }
 
 .card_footer-apply-button {
