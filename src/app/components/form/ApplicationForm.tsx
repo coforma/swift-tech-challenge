@@ -228,7 +228,7 @@ export const ApplicationForm = ({ institutionId }: Props) => {
     </div>
   );
 
-  return <>{loading ? <Spinner /> : ApplicationView}</>;
+  return <main>{loading ? <Spinner /> : ApplicationView}</main>;
 };
 
 type Props = {

@@ -1,6 +1,6 @@
+// 445027: id for American InterContinental University
 const SELECTED_INSTITUTION_ROUTE = "/445027";
 
-// 445027: id for American InterContinental University
 describe("Test details page", () => {
   it("should show expected sections", () => {
     cy.visit(SELECTED_INSTITUTION_ROUTE);

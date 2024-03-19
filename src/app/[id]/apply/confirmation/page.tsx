@@ -71,7 +71,7 @@ export default function ConfirmationPage({ params }: Props) {
     </>
   );
 
-  return <>{loading ? <Spinner /> : View}</>;
+  return <main>{loading ? <Spinner /> : View}</main>;
 }
 
 type Props = {
