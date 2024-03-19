@@ -14,9 +14,13 @@
 
   &-title {
     @include u-text("base-lightest", "normal");
-    margin-bottom:.75rem;
+    margin-top: 0;
     @include at-media("tablet") {
       @include typeset("heading", 12, 1);
+    }
+
+    &>h1 {
+      margin-top: 0;
     }
   }
 

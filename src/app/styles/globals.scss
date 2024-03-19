@@ -57,22 +57,8 @@ body > footer {
 
 h1 {
   @include u-text("base-lightest", "normal");
-  @include u-text('ls-1');
   @include u-margin-bottom(2);
-
-  @include typeset("heading", 10, 1);
-  @include at-media("mobile-lg") {
-    @include typeset("heading", 11, 1);
-  }
-  @include at-media("tablet") {
-    @include typeset("heading", 12, 1);
-  }
-  @include at-media("tablet-lg") {
-    @include typeset("heading", 14, 1);
-  }
-  @include at-media("desktop") {
-    @include u-font-size("heading", 15)
-  }
+  @include typeset("heading", 12, 1);
 }
 
 .site_text-intro {
