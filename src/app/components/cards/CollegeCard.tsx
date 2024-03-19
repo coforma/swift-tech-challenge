@@ -20,6 +20,10 @@ import {
 //types
 import { College } from "../../types";
 
+const imageLoader = ({ src }: { src: string }) => {
+  return `https://${process.env.NEXT_PUBLIC_IMAGES_BUCKET}.s3.amazonaws.com/${src}`;
+};
+
 export const CollegeCard = ({ college }: Props) => {
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
@@ -29,7 +33,8 @@ export const CollegeCard = ({ college }: Props) => {
       </CardHeader>
       <CardMedia className="card_media">
         <Image
-          src={`https://${process.env.NEXT_PUBLIC_IMAGES_BUCKET}.s3.amazonaws.com/${college.id}.png`}
+          loader={imageLoader}
+          src={`${college.id}.png`}
           alt={`AI generated image of ${college.name}`}
           width={400}
           height={400}
