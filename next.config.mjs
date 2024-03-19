@@ -7,6 +7,24 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'swift-institution-images-9a86eb74.s3.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'swift-institution-images-9bbaef25.s3.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'swift-institution-images-c20cd252.s3.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
     minimumCacheTTL: 86400
   },
