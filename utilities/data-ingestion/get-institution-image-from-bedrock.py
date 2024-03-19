@@ -4,12 +4,14 @@ import random
 import logging
 import base64
 from io import BytesIO
+import os
 
 logger = logging.getLogger()
 bedrock_runtime = boto3.client("bedrock-runtime", "us-east-1")
 dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("institutions")
+table = dynamodb.Table(os.getenv("DYNAMODB_TABLE") or "institutions")
 s3_client = boto3.client("s3")
+images_bucket = os.getenv("IMAGES_BUCKET") or "swift-institution-images-public"
 
 
 def check_s3_file_exists(bucket, key):
@@ -38,7 +40,7 @@ def lambda_handler(event, context):
 
     # Create image
     file_name = str(institution_id) + ".png"
-    bucket_name = "swift-institution-images-public"
+    bucket_name = images_bucket
     image_path = bucket_name + "/" + file_name
 
     # since this is randomly generated and a temp solution to meet a design need
