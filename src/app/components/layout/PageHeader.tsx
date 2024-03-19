@@ -15,7 +15,7 @@ export const PageHeader = () => {
           <GridContainer>
             <Link href="/" className="header_logo">
               <div className="header_logo-title">
-                <p>U.S. College Finder</p>
+                <h1>U.S. College Finder</h1>
               </div>
               <div className="header_logo-subtitle">
                 <p>From the Department of Higher Education</p>

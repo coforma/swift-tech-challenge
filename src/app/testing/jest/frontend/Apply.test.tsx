@@ -32,20 +32,20 @@ describe("Test Application Page", () => {
     ).toBeVisible();
   });
 
-  it("should not show SAT questions if not provided", async () => {
+  it("should show all questions", async () => {
     await act(async () => {
       await render(Apply);
     });
-    expect(screen.getByText("First name *")).toBeVisible();
-    expect(screen.getByText("Last name *")).toBeVisible();
-    expect(screen.getByText("Phone number *")).toBeVisible();
-    expect(screen.getByText("Email *")).toBeVisible();
-    expect(screen.queryByText("Writing")).not.toBeTruthy();
+    expect(screen.getByText("First name")).toBeVisible();
+    expect(screen.getByText("Last name")).toBeVisible();
+    expect(screen.getByText("Phone number")).toBeVisible();
+    expect(screen.getByText("Email")).toBeVisible();
+    expect(screen.getByText("Writing")).toBeVisible();
     expect(screen.getByText("Essay Question 1")).toBeVisible();
   });
 });
 
-describe("Test Homepage accessibility", () => {
+describe("Test Application page accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
     await act(async () => {
       const { container } = render(Apply);

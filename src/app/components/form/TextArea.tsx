@@ -32,7 +32,7 @@ export const TextArea = ({
 
 type Props = {
   id: string;
-  label: string;
+  label?: string;
   name: string;
   required: boolean;
   registerField: UseFormRegister<FieldValues>;
