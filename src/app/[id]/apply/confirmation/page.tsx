@@ -31,10 +31,10 @@ export default function ConfirmationPage({ params }: Props) {
   ) : (
     <>
       <div className="application_header">
+        <h1 className="application_header-title">{selectedCollege.name}</h1>
         <p className="application_header-subtitle">
           NEW APPLICATION (2024-2025)
         </p>
-        <h1 className="application_header-title">{selectedCollege.name}</h1>
       </div>
       <div className="application_confirmation">
         <div className="application_confirmation-container">
@@ -71,7 +71,7 @@ export default function ConfirmationPage({ params }: Props) {
     </>
   );
 
-  return <main>{loading ? <Spinner /> : View}</main>;
+  return <>{loading ? <Spinner /> : View}</>;
 }
 
 type Props = {

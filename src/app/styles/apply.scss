@@ -6,13 +6,12 @@
 }
 
 .application_header {
-  @include u-padding-y(4);
+  @include u-padding-y(3);
   background-color: #fff;
   border-bottom: 2px solid #f0f0f0;
+  text-align: center;
 
   &-title {
-    text-align: center;
-    @include u-padding-x(2);
     @include typeset("heading", 9, 1);
     @include at-media("mobile-lg") {
       @include u-font-size("heading", 10)
@@ -25,13 +24,11 @@
     }
     @include u-text("primary-darker", "bold");
 
-    @include u-margin-bottom(0);
   }
   &-subtitle {
-    text-align: center;
-    @include u-padding-x(2);
     @include typeset("ui", 5, 1);
     @include u-text("base-dark", "normal");
+    @include u-margin-bottom(0);
   }
 }
 

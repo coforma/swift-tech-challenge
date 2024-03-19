@@ -39,5 +39,5 @@ export default function InstitutionDetails({
     </ul>
   );
 
-  return <main>{loading ? <Spinner /> : View}</main>;
+  return <>{loading ? <Spinner /> : View}</>;
 }
