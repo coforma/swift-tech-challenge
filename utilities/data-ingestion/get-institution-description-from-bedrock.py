@@ -1,11 +1,12 @@
 import json
 import boto3
 import logging
+import os
 
 logger = logging.getLogger()
 bedrock_runtime = boto3.client("bedrock-runtime", "us-east-1")
 dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("institutions")
+table = dynamodb.Table(os.getenv("DYNAMODB_TABLE") or "institutions")
 
 
 def lambda_handler(event, context):

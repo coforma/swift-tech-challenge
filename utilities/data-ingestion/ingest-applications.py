@@ -1,11 +1,12 @@
 import boto3
 import csv
 import logging
+import os
 
 
 s3_client = boto3.client("s3")
 dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("institutions")
+table = dynamodb.Table(os.getenv("DYNAMODB_TABLE") or "institutions")
 logger = logging.getLogger()
 
 
