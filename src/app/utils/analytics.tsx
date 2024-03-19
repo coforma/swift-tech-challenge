@@ -6,7 +6,7 @@ export const InitAnalytics = () => {
   useEffect(() => {
     const isProd = process.env.NODE_ENV === "production";
     mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_PROJECT_TOKEN || "", {
-      debug: !isProd,
+      debug: true,
       ignore_dnt: !isProd,
       track_pageview: "full-url",
       persistence: "localStorage",

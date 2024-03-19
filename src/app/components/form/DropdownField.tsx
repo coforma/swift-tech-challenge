@@ -3,25 +3,12 @@
 import { FieldHint, DropdownOptions } from "../../types";
 import { Field } from "formik";
 
-export const DropdownField = ({
-  id,
-  label,
-  required,
-  name,
-  options,
-  hint,
-}: Props) => {
-  const fieldLabel = required ? `${label} *` : `${label}`;
+export const DropdownField = ({ id, label, name, options, hint }: Props) => {
   return (
     <>
       <label className="usa-label" htmlFor={id}>
-        {fieldLabel}
+        {label}
       </label>
-      {hint && (
-        <div className="usa-hint" id={hint.id}>
-          {hint.text}
-        </div>
-      )}
       <Field
         className="usa-select"
         id={id}
@@ -43,7 +30,6 @@ export const DropdownField = ({
 type Props = {
   id: string;
   label: string;
-  required: boolean;
   name: string;
   options: DropdownOptions[];
   hint?: FieldHint;
