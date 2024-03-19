@@ -1,17 +1,11 @@
-import { FieldValues, UseFormRegister } from "react-hook-form";
-import { FieldHint } from "../../types";
+"use client";
 
-export const TextField = ({
-  id,
-  label,
-  required,
-  name,
-  registerField,
-  hint,
-}: Props) => {
+import { ErrorMessage, Field } from "formik";
+
+export const TextField = ({ name, label, required }: Props) => {
   return (
     <div>
-      <label className="usa-label" htmlFor={id}>
+      <label className="usa-label" htmlFor={name}>
         {required ? (
           <>
             {label} <span className="required">*</span>
@@ -20,26 +14,14 @@ export const TextField = ({
           label
         )}
       </label>
-      {hint && (
-        <div className="usa-hint" id={hint.id}>
-          {hint.text}
-        </div>
-      )}
-      <input
-        className="usa-input usa-input--lg"
-        id={id}
-        aria-describedby={hint?.id}
-        {...registerField(`${name}`, { required: required })}
-      />
+      <Field id={name} name={name} className="usa-input usa-input--lg" />
+      <ErrorMessage name={name} component="div" className="formError" />
     </div>
   );
 };
 
 type Props = {
-  id: string;
+  name: string;
   label: string;
   required: boolean;
-  name: string;
-  registerField: UseFormRegister<FieldValues>;
-  hint?: FieldHint;
 };

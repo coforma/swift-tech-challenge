@@ -6,16 +6,23 @@ import { College } from "../../types";
 
 export interface InstitutionContextShape {
   institutionsArray: College[] | undefined;
+  filteredInstitutions: College[] | [] | undefined;
+  setFilteredInstitutions: Function;
   institutionsObject: { [key: string]: College } | undefined;
 }
 
 export const InstitutionContext = createContext<InstitutionContextShape>({
   institutionsArray: undefined as College[] | undefined,
+  filteredInstitutions: [] as College[] | [] | undefined,
+  setFilteredInstitutions: Function,
   institutionsObject: undefined as { [key: string]: College } | undefined,
 });
 
 export const InstitutionProvider = ({ children }: Props) => {
   const [institutionsArray, setInstitutionsArray] = useState<
+    College[] | undefined
+  >();
+  const [filteredInstitutions, setFilteredInstitutions] = useState<
     College[] | undefined
   >();
   const [institutionsObject, setInstitutionsObject] = useState<
@@ -26,6 +33,7 @@ export const InstitutionProvider = ({ children }: Props) => {
     try {
       const result = await getInstitutions();
       setInstitutionsArray(result);
+      setFilteredInstitutions(result);
       // create object from array, indexed by institution id
       const objectForm: { [key: string]: College } = result.reduce(
         (acc, val) => ({ ...acc, [val.id]: val }),
@@ -44,9 +52,11 @@ export const InstitutionProvider = ({ children }: Props) => {
   const providerValue = useMemo(
     () => ({
       institutionsArray,
+      filteredInstitutions,
+      setFilteredInstitutions,
       institutionsObject,
     }),
-    [institutionsArray, institutionsObject],
+    [institutionsArray, filteredInstitutions, institutionsObject],
   );
 
   return (

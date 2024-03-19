@@ -8,6 +8,7 @@ export { CheckboxField } from "./form/CheckboxField";
 export { DropdownField } from "./form/DropdownField";
 export { TextArea } from "./form/TextArea";
 export { TextField } from "./form/TextField";
+export { USWDSForm } from "./form/USWDSForm";
 // layout elements
 export { HeroImage } from "./layout/HeroImage";
 export { PageHeader } from "./layout/PageHeader";

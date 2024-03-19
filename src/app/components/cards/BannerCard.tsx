@@ -66,6 +66,7 @@ export const BannerCard = ({ college }: Props) => {
               className="usa-button card_banner-apply-button"
               href={`${college.id}/apply`}
               onClick={() => mixpanel.track("click_launch-application")}
+              aria-label={`Apply to ${college.name}`}
             >
               Apply
             </Link>
