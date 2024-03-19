@@ -92,7 +92,7 @@ export const mockCollege: College = {
 
 export const mockCollegeDbItemTwo = {
   institutionId: 122456,
-  institutionName: " A University of College",
+  institutionName: " Central College",
   city: "Beanington",
   state: "KY",
   zip: "00000",
@@ -178,7 +178,7 @@ export const mockCollegeDbItemTwo = {
 
 export const mockCollegeDbItem = {
   institutionId: 123456,
-  institutionName: "Test College",
+  institutionName: "CUNY Central",
   city: "Edtown",
   state: "AZ",
   zip: "00000",
