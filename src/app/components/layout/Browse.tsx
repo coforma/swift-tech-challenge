@@ -31,9 +31,10 @@ export const Browse = () => {
     setIsModalVisible(true);
   };
 
+  if (!filteredInstitutions || filteredInstitutions.length == 0)
+    return <Spinner />;
   return (
     <>
-      {!filteredInstitutions && <Spinner />}
       {filteredInstitutions && (
         <div className="browse_header">
           <h2 className="browse_header-title">Browse colleges</h2>
