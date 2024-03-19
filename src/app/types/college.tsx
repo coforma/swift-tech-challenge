@@ -159,3 +159,16 @@ export const stateOptions = Object.keys(States)
     label: States[value as keyof typeof States],
   }))
   .sort((a: any, b: any) => (a.label > b.label ? 1 : -1));
+
+export interface FilterShape {
+  "filter-state": string;
+  "filter-type": string[];
+  "filter-undergrad-pop": string[];
+  "filter-avg-cost-per-year": string[];
+  "filter-grad-rate": string[];
+}
+
+export interface FilterRangeShape {
+  lower: number;
+  upper: number;
+}

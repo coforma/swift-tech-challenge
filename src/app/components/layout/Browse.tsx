@@ -15,7 +15,7 @@ import { College } from "../../types";
 import arrow_upward from "../../assets/icons/arrow_upward.svg";
 
 export const Browse = () => {
-  const { institutionsArray } = useContext(InstitutionContext);
+  const { filteredInstitutions } = useContext(InstitutionContext);
   const [scrollPosition, setScrollPosition] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -33,8 +33,8 @@ export const Browse = () => {
 
   return (
     <>
-      {!institutionsArray && <Spinner />}
-      {institutionsArray && (
+      {!filteredInstitutions && <Spinner />}
+      {filteredInstitutions && (
         <div className="browse_header">
           <h2 className="browse_header-title">Browse colleges</h2>
           <p className="site_text-intro browse_header-subtitle">
@@ -49,11 +49,11 @@ export const Browse = () => {
         <FilterModal closeHandler={() => setIsModalVisible(false)} />
       )}
       <ul className="usa-card-group">
-        {institutionsArray?.map((school: College) => (
+        {filteredInstitutions?.map((school: College) => (
           <CollegeCard key={school.id} college={school} />
         ))}
       </ul>
-      {institutionsArray && scrollPosition && (
+      {filteredInstitutions && scrollPosition && (
         <Button
           type="button"
           className="browse_back-to-top-button"

@@ -1,5 +1,5 @@
 "use client";
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useContext } from "react";
 import {
   Button,
   ButtonGroup,
@@ -8,29 +8,34 @@ import {
 } from "@trussworks/react-uswds";
 import Image from "next/image";
 import close from "../../assets/icons/close.svg";
-import { stateOptions } from "../../types";
+import { CollegeType, stateOptions } from "../../types";
 
 import { CheckboxField } from "../form/CheckboxField";
 import { DropdownField } from "../form/DropdownField";
 import { useForm } from "react-hook-form";
+import { InstitutionContext } from "../institutions/InstitutionProvider";
+import { filterInstitutions } from "../../utils/filtering";
 
 export const FilterModal = ({ closeHandler }: Props) => {
   const form = useForm();
-  const [filterState, setFilterState] = useState<Object | undefined>(undefined);
+  const { institutionsArray, setFilteredInstitutions } =
+    useContext(InstitutionContext);
+  // const [filterState, setFilterState] = useState<Object | undefined>(undefined);
 
   const closeModal = () => {
     closeHandler();
     // TODO: Add tracking
   };
 
-  const applyFilters = async (data: any) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
-    setFilterState(data);
-
-    // TODO: handle data
+  // TODO: Add tracking
+  const applyFilters = async (filters: any) => {
+    // TODO: persist filters
+    const filteredInstitutions = filterInstitutions(
+      institutionsArray!,
+      filters,
+    );
+    setFilteredInstitutions(filteredInstitutions);
     closeHandler();
-    // TODO: Add tracking
   };
 
   return (
@@ -61,8 +66,9 @@ export const FilterModal = ({ closeHandler }: Props) => {
                 id="filter-type"
                 name="filter-type"
                 options={[
-                  { id: "public", label: "Public" },
-                  { id: "private", label: "Private" },
+                  { id: CollegeType.PUBLIC, label: CollegeType.PUBLIC },
+                  { id: CollegeType.PRIVATE_NP, label: CollegeType.PRIVATE_NP },
+                  { id: CollegeType.PRIVATE_FP, label: CollegeType.PRIVATE_FP },
                 ]}
                 registerField={form.register}
               />
@@ -73,8 +79,9 @@ export const FilterModal = ({ closeHandler }: Props) => {
                 id="filter-undergrad-pop"
                 name="filter-undergrad-pop"
                 options={[
-                  { id: "1-3", label: "1,000 - 3,000" },
-                  { id: "3-10", label: "3,000 - 10,000" },
+                  { id: "<2", label: "Less than 2,000" },
+                  { id: "2-5", label: "2,000 - 5,000" },
+                  { id: "5-10", label: "5,000 - 10,000" },
                   { id: "10-20", label: "10,000 - 20,000" },
                   { id: ">20", label: "20,000 +" },
                 ]}
@@ -88,9 +95,9 @@ export const FilterModal = ({ closeHandler }: Props) => {
                 name="filter-grad-rate"
                 options={[
                   { id: ">90", label: "More than 90%" },
-                  { id: "50-90", label: "50% - 90%" },
-                  { id: "25-50", label: "25% - 50%" },
-                  { id: "<25", label: "Less than 25%" },
+                  { id: "60-90", label: "60% - 90%" },
+                  { id: "30-60", label: "30% - 60%" },
+                  { id: "<30", label: "Less than 30%" },
                 ]}
                 registerField={form.register}
               />
@@ -102,8 +109,9 @@ export const FilterModal = ({ closeHandler }: Props) => {
                 name="filter-avg-cost-per-year"
                 options={[
                   { id: "<10", label: "Less than $10,000" },
-                  { id: "10-30", label: "$10,000 - $30,000" },
-                  { id: "30-60", label: "$30,000 - $60,000" },
+                  { id: "10-20", label: "$10,000 - $20,000" },
+                  { id: "20-40", label: "$20,000 - $40,000" },
+                  { id: "40-60", label: "$40,000 - $60,000" },
                   { id: ">60", label: "More than $60,000" },
                 ]}
                 registerField={form.register}
