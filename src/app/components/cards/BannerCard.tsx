@@ -2,7 +2,7 @@
 
 import mixpanel from "mixpanel-browser";
 // components
-import Image from "next/image";
+import { ImageWithFallback } from "../utilities/ImageWithFallback";
 import {
   Card,
   CardBody,
@@ -26,7 +26,7 @@ export const BannerCard = ({ college }: Props) => {
     <Card layout="flagDefault" headerFirst={true} className="card card_banner">
       <div className="card_banner-container">
         <CardMedia className="card_banner-image">
-          <Image
+          <ImageWithFallback
             src={`https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`}
             alt={`AI generated image of ${college.name}`}
             width={400}

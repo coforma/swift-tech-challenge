@@ -17,11 +17,11 @@ export const ImageWithFallback = ({
 
   return (
     <Image
-      alt={alt}
       height={height}
       width={width}
       onError={setError}
       src={error ? fallbackImage : src}
+      alt={error ? "Placeholder image" : alt}
       {...props}
     />
   );

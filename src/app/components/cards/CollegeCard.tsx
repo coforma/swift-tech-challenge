@@ -11,6 +11,7 @@ import {
 } from "@trussworks/react-uswds";
 import Link from "next/link";
 import { CardIcon } from "./CardIcon";
+import { ImageWithFallback } from "../utilities/ImageWithFallback";
 // utils
 import {
   maskCurrency,
@@ -19,20 +20,12 @@ import {
 } from "../../utils/masking";
 //types
 import { College } from "../../types";
-import { useState } from "react";
-import imagePlaceholder from "../../assets/default-institution-image.png";
 
 export const CollegeCard = ({ college }: Props) => {
-  const [imgSrc, setImgSrc] = useState<string>(
-    `https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`,
-  );
-  const handleError = () => {
-    setImgSrc(imagePlaceholder);
-  };
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
       <CardMedia className="card_media">
-        <Image
+        <ImageWithFallback
           src={`https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`}
           alt={`AI generated image of ${college.name}`}
           width={400}
