@@ -1,5 +1,6 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 // components
 import { Button } from "@trussworks/react-uswds";
 import Image from "next/image";
@@ -11,11 +12,15 @@ import {
 } from "../../components";
 // utils
 import { College } from "../../types";
+import { filterInstitutions } from "../../utils/filtering";
 // icons
 import arrow_upward from "../../assets/icons/arrow_upward.svg";
 
 export const Browse = () => {
-  const { filteredInstitutions } = useContext(InstitutionContext);
+  const form = useForm();
+
+  const { institutionsArray, filteredInstitutions, setFilteredInstitutions } =
+    useContext(InstitutionContext);
   const [scrollPosition, setScrollPosition] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -29,6 +34,19 @@ export const Browse = () => {
 
   const launchModal = () => {
     setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const applyFilters = async (filters: any) => {
+    const filteredInstitutions = filterInstitutions(
+      institutionsArray!,
+      filters,
+    );
+    setFilteredInstitutions(filteredInstitutions);
+    closeModal();
   };
 
   return (
@@ -46,7 +64,10 @@ export const Browse = () => {
         </div>
       )}
       {isModalVisible && (
-        <FilterModal closeHandler={() => setIsModalVisible(false)} />
+        <FilterModal
+          closeHandler={closeModal}
+          submitHandler={form.handleSubmit(applyFilters)}
+        />
       )}
       <ul className="usa-card-group">
         {filteredInstitutions?.map((school: College) => (

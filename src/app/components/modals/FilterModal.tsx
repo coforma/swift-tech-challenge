@@ -1,43 +1,20 @@
 "use client";
-import { MouseEventHandler, useContext } from "react";
+import { FormEventHandler, MouseEventHandler } from "react";
+import { useForm } from "react-hook-form";
 import {
   Button,
   ButtonGroup,
   ModalFooter,
   ModalHeading,
 } from "@trussworks/react-uswds";
+import { CheckboxField } from "../form/CheckboxField";
+import { DropdownField } from "../form/DropdownField";
 import Image from "next/image";
 import close from "../../assets/icons/close.svg";
 import { CollegeType, stateOptions } from "../../types";
 
-import { CheckboxField } from "../form/CheckboxField";
-import { DropdownField } from "../form/DropdownField";
-import { useForm } from "react-hook-form";
-import { InstitutionContext } from "../institutions/InstitutionProvider";
-import { filterInstitutions } from "../../utils/filtering";
-
-export const FilterModal = ({ closeHandler }: Props) => {
+export const FilterModal = ({ closeHandler, submitHandler }: Props) => {
   const form = useForm();
-  const { institutionsArray, setFilteredInstitutions } =
-    useContext(InstitutionContext);
-  // const [filterState, setFilterState] = useState<Object | undefined>(undefined);
-
-  const closeModal = () => {
-    closeHandler();
-    // TODO: Add tracking
-  };
-
-  // TODO: Add tracking
-  const applyFilters = async (filters: any) => {
-    // TODO: persist filters
-    const filteredInstitutions = filterInstitutions(
-      institutionsArray!,
-      filters,
-    );
-    setFilteredInstitutions(filteredInstitutions);
-    closeHandler();
-  };
-
   return (
     <div
       role="dialog"
@@ -46,7 +23,7 @@ export const FilterModal = ({ closeHandler }: Props) => {
       aria-describedby="modal-1-description"
     >
       <div data-testid="modalOverlay" className="usa-modal-overlay">
-        <form id="" onSubmit={form.handleSubmit(applyFilters)}>
+        <form onSubmit={submitHandler}>
           <div className="usa-modal usa-modal--lg" tabIndex={-1}>
             <ModalHeading>Filter schools</ModalHeading>
             <div className="filter_section">
@@ -122,7 +99,7 @@ export const FilterModal = ({ closeHandler }: Props) => {
                 <Button type="submit">Apply Filters</Button>
                 <Button
                   type="button"
-                  onClick={closeModal}
+                  onClick={closeHandler as MouseEventHandler}
                   unstyled
                   className="padding-105 text-center"
                 >
@@ -135,7 +112,7 @@ export const FilterModal = ({ closeHandler }: Props) => {
               className="usa-button usa-modal__close filter_close"
               aria-label="Close this window"
               data-close-modal
-              onClick={closeModal as MouseEventHandler}
+              onClick={closeHandler as MouseEventHandler}
             >
               <Image
                 src={close}
@@ -154,4 +131,5 @@ export const FilterModal = ({ closeHandler }: Props) => {
 
 interface Props {
   closeHandler: Function;
+  submitHandler: FormEventHandler;
 }
