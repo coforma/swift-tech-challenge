@@ -40,7 +40,7 @@ const requiredTextArea = (
   </USWDSForm>
 );
 
-describe.skip("Test TextArea", () => {
+describe("Test TextArea", () => {
   test("TextArea is visible", async () => {
     await act(async () => {
       await render(await notRequiredTextArea);
@@ -56,7 +56,7 @@ describe.skip("Test TextArea", () => {
   });
 });
 
-describe.skip("Test TextArea accessibility", () => {
+describe("Test TextArea accessibility", () => {
   it("Should not have basic accessibility issues", async () => {
     await act(async () => {
       const { container } = render(notRequiredTextArea);
