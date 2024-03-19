@@ -43,14 +43,22 @@ body > footer {
   @include u-margin-y(2)
 }
 
+.usa-banner__inner {
+  max-width: 75rem;
+}
+
 .grid-container {
-  max-width: 100rem;
+  max-width: 75rem;
+}
+
+.required {
+  @include u-color($theme-color-secondary);
 }
 
 h1 {
-  @include typeset("ui", "2xl", 1);
-  @include u-text("bold");
-  @include u-text('ls-1')
+  @include u-text("base-lightest", "normal");
+  @include u-margin-bottom(2);
+  @include typeset("heading", 12, 1);
 }
 
 .site_text-intro {

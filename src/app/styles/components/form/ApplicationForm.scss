@@ -1,0 +1,118 @@
+@use "uswds-core" as *;
+
+.application_card {
+  width: 100%;
+
+  &:first-child {
+    @include u-margin-top(3);
+  }
+  &>.usa-card__container {
+    border-radius: 1rem;
+    padding: 0 1.5rem 1.5rem 1.5rem;
+  }
+}
+
+.application_confirmation {
+  &-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+    text-align: center;
+    height: 100%;
+    position: relative;
+    padding: 6rem 2rem 8rem 2rem;
+
+
+    &>.usa-button-group {
+      justify-content: center;
+    }
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      background: #E0ECFF80;
+      z-index: -1;
+      border-radius: 50%;
+      top: 7%;
+      width: 300px; height: 300px;
+      @include at-media("mobile-lg") {
+        top: 7%;
+        width: 300px; height: 300px;
+      }
+      @include at-media("tablet-lg") {
+        top: 5%;
+        width: 375px; height: 375px;
+      }
+      @include at-media("desktop") {
+        top: 5%;
+        width: 375px; height: 375px;
+      }
+    }
+  }
+
+  &-subtitle {
+    @include u-padding-bottom(2);
+    @include typeset("ui", 5, 1);
+    @include at-media("mobile-lg") {
+      @include u-font-size("heading", 6);
+    }
+    @include at-media("tablet-lg") {
+      @include u-font-size("heading", 7);
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 8);
+    }
+    @include u-text("primary-vivid", "normal");
+  }
+
+  &-title {
+    @include typeset("ui", 13, 1);
+    @include at-media("mobile-lg") {
+      @include u-font-size("heading", 14);
+    }
+    @include at-media("tablet") {
+      @include u-font-size("heading", 15);
+    }
+    @include at-media("tablet-lg") {
+      @include u-font-size("heading", 17);
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 18);
+    }
+    @include u-text("primary-vivid", "bold");
+    margin: 0;
+  }
+
+  &-icon {
+    @include u-margin-y(8);
+    width: 240px;
+    height: 180px;
+  }
+
+  &-notice {
+    @include u-padding-bottom(4);
+    @include typeset("ui", 5, 1);
+    @include u-text("primary-darker", "bold");
+  }
+
+  &-finalmessage {
+    @include u-padding-bottom(4);
+    @include typeset("ui", 7, 1);
+    @include at-media("mobile-lg") {
+      @include u-font-size("heading", 8);
+    }
+    @include at-media("tablet-lg") {
+      @include u-font-size("heading", 9);
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 10);
+    }
+    @include u-text("primary-vivid", "normal");
+  }
+
+
+}

@@ -13,7 +13,8 @@ images_bucket = {
   arn  = "arn:aws:s3:::swift-institution-images-c20cd252"
   name = "swift-institution-images-c20cd252"
 }
-provisioned_concurrency     = 1
+applicants_dynamodb_table   = "applicants-test"
+provisioned_concurrency     = 0
 static_bucket               = "public-static-3a96b108"
 static_next_path            = ""
-institutions_dynamodb_table = "institutions-test"
+institutions_dynamodb_table = "institutions"

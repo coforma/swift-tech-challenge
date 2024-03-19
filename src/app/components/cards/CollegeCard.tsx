@@ -23,10 +23,6 @@ import { College } from "../../types";
 export const CollegeCard = ({ college }: Props) => {
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
-      <CardHeader className="card_header">
-        <h2 className="card_header-title">{college.name}</h2>
-        <p className="card_header-subtitle">{`${college.city}, ${college.state}`}</p>
-      </CardHeader>
       <CardMedia className="card_media">
         <Image
           src={`https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`}
@@ -35,7 +31,11 @@ export const CollegeCard = ({ college }: Props) => {
           height={400}
         />
       </CardMedia>
-      <CardBody>
+      <CardHeader className="card_header">
+        <h2 className="card_header-title">{college.name}</h2>
+        <p className="card_header-subtitle">{`${college.city}, ${college.state}`}</p>
+      </CardHeader>
+      <CardBody className="card_body">
         <p className="card_desc">{college.description}</p>
         <div className="card_grid">
           <CardIcon
