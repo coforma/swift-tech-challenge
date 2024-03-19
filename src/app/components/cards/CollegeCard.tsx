@@ -20,23 +20,23 @@ import {
 //types
 import { College } from "../../types";
 import { useState } from "react";
+import imagePlaceholder from "../../assets/default-institution-image.png";
 
 export const CollegeCard = ({ college }: Props) => {
   const [imgSrc, setImgSrc] = useState<string>(
     `https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`,
   );
   const handleError = () => {
-    setImgSrc("/src/app/assets/default-institution-image.png");
+    setImgSrc(imagePlaceholder);
   };
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
       <CardMedia className="card_media">
         <Image
-          src={imgSrc}
+          src={`https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`}
           alt={`AI generated image of ${college.name}`}
           width={400}
           height={400}
-          onError={handleError}
         />
       </CardMedia>
       <CardHeader className="card_header">
