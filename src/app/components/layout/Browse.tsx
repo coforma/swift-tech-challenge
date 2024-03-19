@@ -3,10 +3,14 @@ import { useContext, useEffect, useState } from "react";
 // components
 import { Button } from "@trussworks/react-uswds";
 import Image from "next/image";
-import { CollegeCard, FilterModal, InstitutionContext } from "../../components";
+import {
+  CollegeCard,
+  FilterModal,
+  InstitutionContext,
+  Spinner,
+} from "../../components";
 // utils
 import { College } from "../../types";
-import { Spinner } from "../utilities/Spinner";
 // icons
 import arrow_upward from "../../assets/icons/arrow_upward.svg";
 
