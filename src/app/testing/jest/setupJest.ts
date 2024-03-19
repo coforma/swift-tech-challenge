@@ -261,3 +261,5 @@ export const mockCollegeDbItem = {
     underFourYearInstitution: null,
   },
 };
+
+process.env.APPLICANTS_DYNAMODB_TABLE = "applicants";
