@@ -7,6 +7,7 @@ export const Spinner = () => {
         role="progressbar"
         aria-valuetext="loading"
       ></div>
+      <div className="spinner-text">Loading content</div>
     </div>
   );
 };

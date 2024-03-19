@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main>
+    <>
       <GridContainer>
         <h1>Page not found</h1>
         <p className="site_text-intro">
@@ -40,6 +40,6 @@ export default function NotFound() {
           Error Code: 404
         </p>
       </GridContainer>
-    </main>
+    </>
   );
 }
