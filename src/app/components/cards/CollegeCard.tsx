@@ -19,12 +19,10 @@ import {
 } from "../../utils/masking";
 //types
 import { College } from "../../types";
-
-const imageLoader = ({ src }: { src: string }) => {
-  return `https://${process.env.NEXT_PUBLIC_IMAGES_BUCKET}.s3.amazonaws.com/${src}`;
-};
+import { unstable_noStore as noStore } from "next/cache";
 
 export const CollegeCard = ({ college }: Props) => {
+  noStore();
   return (
     <Card layout="flagDefault" headerFirst={true} className="card">
       <CardHeader className="card_header">
@@ -33,8 +31,7 @@ export const CollegeCard = ({ college }: Props) => {
       </CardHeader>
       <CardMedia className="card_media">
         <Image
-          loader={imageLoader}
-          src={`${college.id}.png`}
+          src={`https://${process.env.NEXT_PUBLIC_IMAGES_BUCKET}.s3.amazonaws.com/${college.id}.png`}
           alt={`AI generated image of ${college.name}`}
           width={400}
           height={400}
