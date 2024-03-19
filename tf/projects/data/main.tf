@@ -178,8 +178,7 @@ data "aws_iam_policy_document" "dynamodb_access" {
       "dynamodb:ConditionCheckItem"
     ]
     resources = [
-      aws_dynamodb_table.institutions.arn,
-      aws_dynamodb_table.applicants.arn
+      "*"
     ]
   }
 }

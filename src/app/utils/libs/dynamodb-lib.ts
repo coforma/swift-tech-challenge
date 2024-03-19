@@ -23,6 +23,8 @@ if (process.env.DAX_ENDPOINT) {
     region: "us-east-1",
   });
   daxClient = DynamoDBDocumentClient.from(dax);
+  // eslint-disable-next-line no-console
+  console.log("using DAX!!");
 }
 
 var client = daxClient != null ? daxClient : ddbClient;
