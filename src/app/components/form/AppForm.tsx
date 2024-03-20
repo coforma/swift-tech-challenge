@@ -2,7 +2,6 @@
 
 import * as yup from "yup";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 // components
 import {
@@ -12,7 +11,13 @@ import {
   CardBody,
   GridContainer,
 } from "@trussworks/react-uswds";
-import { Spinner, TextArea, TextField, USWDSForm } from "../index";
+import {
+  CloseAppModal,
+  Spinner,
+  TextArea,
+  TextField,
+  USWDSForm,
+} from "@/src/app/components";
 // pages
 import NotFound from "../../not-found";
 // utils
@@ -27,6 +32,15 @@ export const AppForm = ({ institutionId }: Props) => {
     Record<string, any> | undefined
   >();
   const [loading, setLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const launchModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
 
   const appq = application?.questions;
 
@@ -232,13 +246,18 @@ export const AppForm = ({ institutionId }: Props) => {
         </GridContainer>
         <div className="application_footer">
           <ButtonGroup className="application_footer-buttons">
-            <Link href={"/"} className="usa-button usa-button--unstyled">
+            <Button
+              type="button"
+              onClick={launchModal}
+              className="usa-button usa-button--unstyled"
+            >
               Close application
-            </Link>
+            </Button>
             <Button type={"submit"}>Submit application</Button>
           </ButtonGroup>
         </div>
       </USWDSForm>
+      {isModalVisible && <CloseAppModal closeHandler={closeModal} />}
     </div>
   );
 

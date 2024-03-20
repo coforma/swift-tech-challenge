@@ -14,6 +14,7 @@ export { HeroImage } from "./layout/HeroImage";
 export { PageHeader } from "./layout/PageHeader";
 export { PageFooter } from "./layout/PageFooter";
 // modal elements
+export { CloseAppModal } from "./modals/CloseAppModal";
 export { FilterModal } from "./modals/FilterModal";
 // utilities
 export { Spinner } from "./utilities/Spinner";
