@@ -11,30 +11,26 @@ import NotFound from "@/src/app/not-found";
 // types
 import { College } from "../types";
 
-const filterCollege = (institutionsArray: College[], id: number) => {
-  return institutionsArray.filter((college) => college.id == id)[0];
-};
-
 export default function InstitutionDetails({
   params,
 }: {
   params: { id: number };
 }) {
-  const { institutionsArray } = useContext(InstitutionContext);
+  const { institutionsObject } = useContext(InstitutionContext);
   const [loading, setLoading] = useState(true);
   const [selectedCollege, setSelectedCollege] = useState<College>();
   useEffect(() => {
-    if (institutionsArray) {
-      setSelectedCollege(filterCollege(institutionsArray!, params.id));
+    if (institutionsObject) {
+      setSelectedCollege(institutionsObject[params.id]);
       setLoading(false);
     }
-  }, [institutionsArray, params.id]);
+  }, [institutionsObject, params.id]);
 
   const View = !selectedCollege ? (
     <NotFound />
   ) : (
     <ul className="usa-card-group details_page">
-      <BannerCard key={params.id} college={selectedCollege} />
+      <BannerCard key={params.id} college={selectedCollege} id={params.id} />
       <DetailsCards key={`${params.id}-dets`} college={selectedCollege} />
     </ul>
   );
