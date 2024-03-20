@@ -6,7 +6,7 @@ export const filterInstitutions = (
 ) => {
   let filteredArr = instArr;
   // filter by state
-  if (filters["filter-state"]) {
+  if (filters["filter-state"] !== "- Select -") {
     filteredArr = filteredArr.filter(
       (el: College) => el.state === filters["filter-state"],
     );

@@ -2,7 +2,6 @@
 import { useContext, useEffect, useState } from "react";
 // components
 import { Button } from "@trussworks/react-uswds";
-import Image from "next/image";
 import {
   CollegeCard,
   FilterModal,
@@ -10,17 +9,30 @@ import {
   Spinner,
   USWDSForm,
 } from "../../components";
+// types
+import { College } from "../../types";
 // utils
 import { filterInstitutions } from "../../utils/filtering";
-import { College } from "../../types";
-// icons
-import arrow_upward from "../../assets/icons/arrow_upward.svg";
+import { get20Institutions } from "../../utils/institutions";
+
+const defaultFilters = {
+  "filter-type": ["Public", "Private nonprofit", "Private for-profit"],
+  "filter-undergrad-pop": ["<2", "2-5", "5-10", "10-20", ">20"],
+  "filter-avg-cost-per-year": ["<10$", "10-20$", "20-40$", "40-60$", ">60$"],
+  "filter-state": "- Select -",
+  "filter-grad-rate": [">90", "60-90", "30-60", "<30"],
+};
 
 export const Browse = () => {
-  const { filteredInstitutions, institutionsArray, setFilteredInstitutions } =
+  const { institutionsArray, setFilteredInstitutions } =
     useContext(InstitutionContext);
+  const [instArray, setInstArray] = useState<College[]>([]);
+
+  const [loading, setLoading] = useState<boolean>(true);
+  const [lastScannedKey, setLastScannedKey] = useState<any | undefined>();
   const [scrollPosition, setScrollPosition] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [showPagination, setShowPagination] = useState<boolean>(true);
 
   useEffect(() => {
     const onScroll = (e: any) => {
@@ -39,56 +51,89 @@ export const Browse = () => {
   };
 
   const applyFilters = async (filters: any) => {
-    const filteredInstitutions = filterInstitutions(
-      institutionsArray!,
-      filters,
-    );
-    setFilteredInstitutions(filteredInstitutions);
+    if (JSON.stringify(filters) === JSON.stringify(defaultFilters)) {
+      await load20Institutions(true);
+    } else {
+      const filteredColleges = filterInstitutions(institutionsArray!, filters);
+      setFilteredInstitutions(filteredColleges);
+      setInstArray(filteredColleges);
+      setLastScannedKey(undefined);
+      setShowPagination(false);
+    }
     closeModal();
   };
 
-  if (!filteredInstitutions) return <Spinner />;
+  const load20Institutions = async (shouldReset?: boolean) => {
+    try {
+      let newArray;
+      const { colleges: result, lastKey } =
+        await get20Institutions(lastScannedKey);
+      if (shouldReset) {
+        newArray = Array(...result);
+      } else {
+        newArray = Array(...instArray, ...result);
+      }
+      setInstArray(newArray);
+      setLastScannedKey(lastKey);
+      setShowPagination(true);
+      setLoading(false);
+    } catch (e: any) {
+      throw new Error("Institution data could not be loaded.");
+    }
+  };
+
+  useEffect(() => {
+    // loads initial 20 institutions to display
+    load20Institutions();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const InstList = () => {
+    return (
+      <ul className="usa-card-group">
+        {instArray!.map((school: College) => (
+          <CollegeCard key={school.id} college={school} />
+        ))}
+      </ul>
+    );
+  };
+
+  if (loading) return <Spinner />;
   return (
     <>
-      {filteredInstitutions && (
-        <div className="browse_header">
-          <h2 className="browse_header-title">Browse colleges</h2>
-          <p className="site_text-intro browse_header-subtitle">
-            Find the college that’s right for you
-          </p>
-          <Button type="button" outline={true} onClick={launchModal}>
-            Add filters
-          </Button>
-        </div>
-      )}
-      <USWDSForm initialValues={{}} submit={applyFilters}>
+      <div className="browse_header">
+        <h2 className="browse_header-title">Browse colleges</h2>
+        <p className="site_text-intro browse_header-subtitle">
+          Find the college that’s right for you
+        </p>
+        <Button type="button" outline={true} onClick={launchModal}>
+          Add filters
+        </Button>
+      </div>
+      <USWDSForm initialValues={defaultFilters} submit={applyFilters}>
         {isModalVisible && <FilterModal closeHandler={closeModal} />}
       </USWDSForm>
-      {filteredInstitutions?.length > 0 ? (
-        <ul className="usa-card-group">
-          {filteredInstitutions.map((school: College) => (
-            <CollegeCard key={school.id} college={school} />
-          ))}
-        </ul>
+      {instArray.length > 0 ? (
+        InstList()
       ) : (
         <p className="site_text-intro browse_header-subtitle">
           No matches found for filters.
         </p>
       )}
-      {filteredInstitutions.length > 0 && scrollPosition && (
+      {showPagination && (
         <Button
           type="button"
-          className="browse_back-to-top-button"
+          className="browse_load-more-button"
+          onClick={() => load20Institutions()}
+        >
+          Load more
+        </Button>
+      )}
+      {scrollPosition && (
+        <Button
+          type="button"
+          className="usa-button usa-button--outline usa-button--unstyled browse_back-to-top-button"
           onClick={() => window.scrollTo(0, 0)}
         >
-          <Image
-            src={arrow_upward}
-            className="browse_back-to-top-button-icon"
-            height="16"
-            width="16"
-            alt="arrow_upward icon"
-            loading="eager"
-          />
           Back to Top
         </Button>
       )}

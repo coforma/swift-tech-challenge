@@ -21,6 +21,9 @@ const dynamoClient = {
   },
   put: async (params: PutCommandInput) =>
     await client.send(new PutCommand(params)),
+  singleScan: async function (params: ScanCommandInput) {
+    return await client.send(new ScanCommand(params));
+  },
   scanAll: async function (params: ScanCommandInput) {
     let items: any[] = [];
     let ExclusiveStartKey: any;
