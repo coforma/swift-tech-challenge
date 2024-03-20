@@ -41,7 +41,7 @@ describe("Test Application Page", () => {
     expect(screen.getByText("Phone number (required)")).toBeVisible();
     expect(screen.getByText("Email (required)")).toBeVisible();
     expect(screen.getByText("Writing")).toBeVisible();
-    expect(screen.getByText("Essay Question 1 (required)")).toBeVisible();
+    expect(screen.getByText("Essay question 1 (required)")).toBeVisible();
   });
 });
 
