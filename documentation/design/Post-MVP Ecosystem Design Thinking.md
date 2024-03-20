@@ -16,8 +16,7 @@ To iterate on our MVP goals and designs, we focused on items in our [**prioritiz
 
 3. **Tracking applications**: Students who have submitted applications to different colleges may benefit from application status tracking, which would allow students to view which applications are in-progress, submitted, and unfinished. 
 
-<img width="1728" alt="Applications page hifi" src="https://github.com/coforma/swift-tech-challenge/assets/122126772/ce4ef199-d438-41e6-9e05-31101173a250">
-
+![Screenshots of prototype of in progress application page](https://github.com/coforma/swift-tech-challenge/assets/122126772/ce4ef199-d438-41e6-9e05-31101173a250)
 
 ## Support for first-generation college students
 
