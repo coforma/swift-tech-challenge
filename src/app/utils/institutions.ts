@@ -13,7 +13,7 @@ export async function getInstitutions() {
     FilterExpression: "recordType = :recordType",
     ExpressionAttributeValues: { ":recordType": "data" },
   };
-  const items = await await parallelScan(params, { concurrency: 5 });
+  const items = await parallelScan(params, { concurrency: 5 });
 
   if (Array.isArray(items)) {
     for (const item of items) {
