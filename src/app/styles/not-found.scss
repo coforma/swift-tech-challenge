@@ -1,11 +1,11 @@
 @use "uswds-core" as *;
-
-.notfound_button-group {
-  @include u-padding-bottom(2);
+.notfound_container {
+  text-align: center;
+}
+.notfound_h1 {
+  color: black
 }
 
-.notfound_errorcode {
-  @include typeset("ui", "md", 1);
-  @include u-text("base", "normal");
-  @include u-line-height('body', 3);
+.notfound_link {
+  margin: 2em auto;
 }
