@@ -1,5 +1,8 @@
 import { CollegeType } from "@/src/app/types";
-import { getInstitutions } from "@/src/app/utils/institutions";
+import {
+  get20Institutions,
+  getInstitutions,
+} from "@/src/app/utils/institutions";
 import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { mockClient } from "aws-sdk-client-mock";
 import { mockCollegeDbItem, mockCollegeDbItemTwo } from "../../setupJest";
@@ -31,6 +34,15 @@ describe("test institutions utils", () => {
       .on(ScanCommand)
       .resolves({ Items: [mockCollegeDbItem, mockCollegeDbItemTwo] });
     const result = await getInstitutions();
+    expect(result.length).toBe(2);
+    expect(result[0].id).toBe(122456);
+  });
+
+  test("test get20Institutions", async () => {
+    dynamoClientMock
+      .on(ScanCommand)
+      .resolves({ Items: [mockCollegeDbItem, mockCollegeDbItemTwo] });
+    const { colleges: result } = await get20Institutions();
     expect(result.length).toBe(2);
     expect(result[0].id).toBe(122456);
   });
