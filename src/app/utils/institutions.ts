@@ -1,5 +1,6 @@
 "use server";
 import dynamoClient from "./libs/dynamodb-lib";
+import { parallelScan } from "@shelf/dynamodb-parallel-scan";
 // types
 import { College, degreeMap } from "../types";
 
@@ -12,7 +13,7 @@ export async function getInstitutions() {
     FilterExpression: "recordType = :recordType",
     ExpressionAttributeValues: { ":recordType": "data" },
   };
-  const items = await dynamoClient.scanAll(params);
+  const items = await await parallelScan(params, { concurrency: 5 });
 
   if (Array.isArray(items)) {
     for (const item of items) {
