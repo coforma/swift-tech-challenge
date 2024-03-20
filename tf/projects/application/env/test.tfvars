@@ -17,4 +17,4 @@ applicants_dynamodb_table   = "applicants-test"
 provisioned_concurrency     = 0
 static_bucket               = "public-static-3a96b108"
 static_next_path            = ""
-institutions_dynamodb_table = "institutions"
+institutions_dynamodb_table = "institutions-test"
