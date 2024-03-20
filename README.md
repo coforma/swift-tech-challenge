@@ -1,18 +1,34 @@
 # U.S. College Finder
 
+> Coforma's response to the HHS Swift
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/74f953d2eba0abd1f240/maintainability)](https://codeclimate.com/github/coforma/swift-tech-challenge/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/74f953d2eba0abd1f240/test_coverage)](https://codeclimate.com/github/coforma/swift-tech-challenge/test_coverage)
-
-Coforma's response to the SWIFT technical challenge
-
+[![MIT License](https://img.shields.io/github/license/10up/.github.svg)]('./LICENSE)
 ## Table of Contents
 
+- [Overview](#overview)
 - [Getting Started](#getting-started)
 - [Testing](#testing)
 - [Analytics](#analytics)
 - [Decision Documentation](#decision-documentation)
 
+## Overview
+User needs and business goals are the central focus of every solution Coforma builds. This tool will empower prospective students, assisting them in achieving their goal of going to college. You can check out the tool in two places.
+- Test Environment [link](https://d1b4twxh1cihpk.cloudfront.net)
+- Production Environment [link](https://d19jzmn7wae8g9.cloudfront.net/)
+
+If you'd like to work on this with us please check out our [approach to contributing](./CONTRIBUTING.md)
 ## Getting Started
+
+### Architecture
+This prototype uses a serverless approach deploying on AWS. For more information on decisions made please see this [folder](./documentation/engineering/adr/). There are two main parts two the architecture.
+
+1. A data ingestion piece that uses api access to large language models to complete the data set
+2. An application set
+
+Here is a link to the current architecture of the application
+![Architecture diagram](./documentation/engineering/diagrams/architecture.png)
 
 ### One time only
 
