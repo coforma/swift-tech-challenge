@@ -5,7 +5,10 @@ import {
 } from "@/src/app/utils/institutions";
 import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { mockClient } from "aws-sdk-client-mock";
-import { mockCollegeDbItem, mockCollegeDbItemTwo } from "../../setupJest";
+import {
+  mockCollegeDbItem,
+  mockCollegeDbItemTwo,
+} from "@/src/app/testing/jest/setupJest";
 
 const dynamoClientMock = mockClient(DynamoDBDocumentClient);
 

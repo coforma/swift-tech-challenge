@@ -1,5 +1,5 @@
 import { filterInstitutions } from "@/src/app/utils/filtering";
-import { mockCollege } from "../../../setupJest";
+import { mockCollege } from "@/src/app/testing/jest/setupJest";
 // types
 import { CollegeType, FilterShape } from "@/src/app/types";
 
