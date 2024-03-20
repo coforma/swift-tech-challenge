@@ -19,7 +19,17 @@ The ```main```branch is the development branch, meaning it contains the next ver
 - Example bug branch is ```bug/confirmation-workflow-not-routing-properly```
 
 ### Project board
-TODO: Writeup workflow and put in image of the board. Make the board public
+Our project board follows a kanban approach with all disciplines woking from the same source. This allows handoffs across the team ensuring that work flows left to right and steps are not missed.
+
+The basic flow is as follows.
+1. Backlog -- Work in the ideation state, not sure if it will get picked up
+2. ToDo -- Work that has been selected for research and design.
+3. Design in Progress -- Work that is being iterated on by design and research teams, heave collaboration with engineering
+4. Ready for development -- Issues to be worked by engineering
+5. Dev In Progress -- Issues actively being worked by engineering
+6. Quality Review -- Items being reviewed
+7. Done -- Items that are done. See [Definition of Done](./documentation/product/definition_of_done.md)
+
 
 ### Working instructions
 For items being developed
@@ -32,7 +42,10 @@ For items being developed
 7. Push the code from your local environment to the the repository.
 8. Open a pull request, fill out the pull request template.
 9. The pull request will be reviewed, and then merged or have changes requested. In some cases pull requests will be dismissed
-10. Once merged the code will be scrutinized by automated actions including, linting, security, build, code quality, test coverage, and test success. From there the code will auto deploy to the staging environment should all checks pass.
+10. Once merged the code will be scrutinized by automated actions including, linting, security, build, code quality, test coverage, and test success. From there the code will auto deploy to the test environment should all checks pass.
+
+#### Production Release
+A production release is currently a controlled action that requires the manual running of a Github action. This is reviewed by product and then triggered by engineering. Future iterations involve incorporation of feature flags and the removal of the manual release process.
 
 ### Reverting a deployment
 Sometimes we have to revert changes. The best way to do that is to revert the PR on Github, rerun the actions, and then let the site redeploy.
