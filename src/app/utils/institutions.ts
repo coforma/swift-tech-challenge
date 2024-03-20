@@ -5,6 +5,7 @@ import { parallelScan } from "@shelf/dynamodb-parallel-scan";
 import { College, degreeMap } from "../types";
 
 const INSTITUTIONS_TABLE_NAME = "institutions";
+const scanConcurrency = 12;
 
 export async function getInstitutions() {
   let colleges: College[] = [];
@@ -13,8 +14,7 @@ export async function getInstitutions() {
     FilterExpression: "recordType = :recordType",
     ExpressionAttributeValues: { ":recordType": "data" },
   };
-  const items = await parallelScan(params, { concurrency: 50 });
-
+  const items = await parallelScan(params, { concurrency: scanConcurrency });
   if (Array.isArray(items)) {
     for (const item of items) {
       const college: College = {
