@@ -31,3 +31,13 @@ For items being developed
 6. If there are any documentation changes please make those as well. Documentation lives in [./documentation](./documentation/) from the root of the repository.
 7. Push the code from your local environment to the the repository.
 8. Open a pull request, fill out the pull request template.
+9. The pull request will be reviewed, and then merged or have changes requested. In some cases pull requests will be dismissed
+10. Once merged the code will be scrutinized by automated actions including, linting, security, build, code quality, test coverage, and test success. From there the code will auto deploy to the staging environment should all checks pass.
+
+### Reverting a deployment
+Sometimes we have to revert changes. The best way to do that is to revert the PR on Github, rerun the actions, and then let the site redeploy.
+1. Find the pull request that merged the code into the ```main``` branch
+2. Scroll and find where the merge happens
+3. Click the revert button
+![Image showing where revert button is](./documentation/engineering/assets/revert-pr.png)
+4. This will open a PR that can be merged, reverting the deployment
