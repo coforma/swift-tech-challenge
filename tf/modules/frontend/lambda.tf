@@ -80,7 +80,7 @@ resource "aws_lambda_function" "frontend" {
 
   runtime     = "nodejs20.x"
   timeout     = 30
-  memory_size = 512
+  memory_size = 2048
 
   environment {
     variables = {

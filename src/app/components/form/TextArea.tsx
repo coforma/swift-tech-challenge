@@ -3,11 +3,16 @@
 import { ErrorMessage, Field } from "formik";
 
 export const TextArea = ({ id, label, name, required }: Props) => {
-  const fieldLabel = required ? `${label} *` : `${label}`;
   return (
     <div>
-      <label className="usa-labe input_textarea-label" htmlFor={id}>
-        {fieldLabel}
+      <label className="usa-label input_textarea-label" htmlFor={id}>
+        {required ? (
+          <>
+            {label} <span className="required">*</span>
+          </>
+        ) : (
+          label
+        )}
       </label>
       <Field
         id={name}

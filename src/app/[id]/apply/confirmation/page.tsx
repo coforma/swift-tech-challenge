@@ -11,20 +11,17 @@ import ErrorPage from "@/src/app/error/page";
 // types
 import { College } from "@/src/app/types";
 
-const filterCollege = (institutionsArray: College[], id: number) => {
-  return institutionsArray.filter((college) => college.id == id)[0];
-};
-
 export default function ConfirmationPage({ params }: Props) {
-  const { institutionsArray } = useContext(InstitutionContext);
+  const { institutionsObject } = useContext(InstitutionContext);
   const [loading, setLoading] = useState(true);
   const [selectedCollege, setSelectedCollege] = useState<College>();
+
   useEffect(() => {
-    if (institutionsArray) {
-      setSelectedCollege(filterCollege(institutionsArray!, params.id));
+    if (institutionsObject) {
+      setSelectedCollege(institutionsObject[params.id]);
       setLoading(false);
     }
-  }, [institutionsArray, params.id]);
+  }, [institutionsObject, params.id]);
 
   const View = !selectedCollege ? (
     <ErrorPage />
@@ -33,7 +30,7 @@ export default function ConfirmationPage({ params }: Props) {
       <div className="application_header">
         <h1 className="application_header-title">{selectedCollege.name}</h1>
         <p className="application_header-subtitle">
-          NEW APPLICATION (2024-2025)
+          NEW APPLICATION (2025-2026)
         </p>
       </div>
       <div className="application_confirmation">

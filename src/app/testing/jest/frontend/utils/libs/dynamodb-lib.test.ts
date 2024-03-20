@@ -32,6 +32,13 @@ describe("Test DynamoDB lib", () => {
     expect(mockPut).toHaveBeenCalled();
   });
 
+  test("Can perform a single scan", async () => {
+    const mockItem = { foo: "bar" };
+    dynamoClientMock.on(ScanCommand).resolves({ Items: [mockItem] });
+    const result = await dynamoLib.singleScan({ TableName: "foos" });
+    expect(result.Items?.[0]).toBe(mockItem);
+  });
+
   test("Can scan all", async () => {
     const mockKey = {};
     const mockItem1 = { foo: "bar" };
