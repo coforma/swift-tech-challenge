@@ -32,7 +32,7 @@ on:
 
 jobs:
   terraform:
-    name: "Validate Terraform (${{ inputs.target }}, ${{ inputs.project }})"
+    name: "Deploy Terraform (${{ inputs.target }}, ${{ inputs.project }})"
     permissions:
       id-token: write
       contents: read
