@@ -13,7 +13,7 @@
     @include at-media("desktop") {
       @include u-font-size("ui", 9)
     }
-    @include u-text("base-darkest", "normal");
+    @include u-text("base-darker", "normal");
     @include u-line-height('body', 3);
     @include u-margin-y(3);
 
