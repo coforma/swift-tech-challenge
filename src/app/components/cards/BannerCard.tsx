@@ -35,7 +35,7 @@ export const BannerCard = ({ college, id }: Props) => {
         </CardMedia>
         <CardBody>
           <CardHeader className="card_header">
-            <h2 className="card_header-title">{college.name}</h2>
+            <h1 className="card_header-title">{college.name}</h1>
             <p className="card_header-subtitle">{`${college.city}, ${college.state}`}</p>
           </CardHeader>
           <p className="card_desc">{college.description}</p>

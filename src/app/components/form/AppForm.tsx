@@ -98,7 +98,7 @@ export const AppForm = ({ institutionId }: Props) => {
             {application?.institutionName}
           </h1>
           <p className="application_header-subtitle">
-            NEW APPLICATION (2024-2025)
+            NEW APPLICATION (2025-2026)
           </p>
         </div>
         <GridContainer className="application_questions">
