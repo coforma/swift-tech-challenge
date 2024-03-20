@@ -25,6 +25,7 @@ jobs:
     name: "Calling Terraform Deploy (${{ inputs.target }})"
     uses: ./.github/workflows/terraform-deploy.yml
     strategy:
+      max-parallel: 1
       matrix:
         project: [data,application,monitoring]
     with:
