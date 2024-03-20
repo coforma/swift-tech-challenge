@@ -30,8 +30,8 @@ const OutcomesCard = ({ college }: Props) => {
           <h3 className="card_details_section-header">Graduation rate</h3>
           <p className="card_details_section-text">
             The percent of students who finished their degree at this school
-            within [4 or 8, conditionally] years. This is calculated for full
-            and part time students.
+            within 4 years (for 2 year schools) or 8 years (for 4 year schools).
+            This is calculated for full and part time students.
           </p>
           <p className="card_details_section-data-title">Graduation rate</p>
           <p className="card_details_section-data-highlight">
@@ -375,13 +375,13 @@ const CostsCard = ({ college }: Props) => {
             <div>
               <p className="card_details_section-data-title">In-state</p>
               <p className="card_details_section-data-highlight">
-                {maskThousands(college.tuitionInState)}
+                {maskCurrency(college.tuitionInState)}
               </p>
             </div>
             <div>
               <p className="card_details_section-data-title">Out-of-state</p>
               <p className="card_details_section-data-highlight">
-                {maskThousands(college.tuitionOutOfState)}
+                {maskCurrency(college.tuitionOutOfState)}
               </p>
             </div>
           </div>
@@ -410,7 +410,7 @@ const CostsCard = ({ college }: Props) => {
             this college might cost for your specific circumstances.
           </p>
           <Link href={college.npcUrl || "https://usa.gov"}>
-            Calculate a customized price for you with the financial aid applied
+            Calculate a customized price for you with financial aid applied
           </Link>
         </div>
       </CardBody>
