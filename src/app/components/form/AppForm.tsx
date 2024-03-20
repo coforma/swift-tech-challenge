@@ -2,7 +2,6 @@
 
 import * as yup from "yup";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 // components
 import {
@@ -12,7 +11,13 @@ import {
   CardBody,
   GridContainer,
 } from "@trussworks/react-uswds";
-import { Spinner, TextArea, TextField, USWDSForm } from "../index";
+import {
+  CloseAppModal,
+  Spinner,
+  TextArea,
+  TextField,
+  USWDSForm,
+} from "../index";
 // pages
 import NotFound from "../../not-found";
 // utils
@@ -27,6 +32,15 @@ export const AppForm = ({ institutionId }: Props) => {
     Record<string, any> | undefined
   >();
   const [loading, setLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const launchModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
 
   const appq = application?.questions;
 
@@ -99,7 +113,7 @@ export const AppForm = ({ institutionId }: Props) => {
             {application?.institutionName}
           </h1>
           <p className="application_header-subtitle">
-            NEW APPLICATION (2024-2025)
+            NEW APPLICATION (2025-2026)
           </p>
         </div>
         <GridContainer className="application_questions">
@@ -168,6 +182,9 @@ export const AppForm = ({ institutionId }: Props) => {
             <Card className="application_card">
               <CardBody className="application_card">
                 <fieldset className="usa-fieldset">
+                  <legend className="usa-legend usa-legend--large">
+                    Essay guidance
+                  </legend>
                   <p className="application_questions-essay-guidance">
                     Answer the following essay questions. We encourage you to
                     write the essays in a separate word processing program,
@@ -181,10 +198,9 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody className="application_card">
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay Question 1 (required){" "}
+                    Essay question 1 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <p className="application_questions-essay-q">Question</p>
                   <TextArea label={essayQ1} name={"essayOne"} />
                 </fieldset>
               </CardBody>
@@ -193,10 +209,9 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody>
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay Question 2 (required){" "}
+                    Essay question 2 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <p className="application_questions-essay-q">Question</p>
                   <TextArea label={essayQ2} name={"essayTwo"} />
                 </fieldset>
               </CardBody>
@@ -206,10 +221,9 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody>
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay Question 3 (required){" "}
+                    Essay question 3 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <p className="application_questions-essay-q">Question</p>
                   <TextArea label={essayQ3} name={"essayThree"} />
                 </fieldset>
               </CardBody>
@@ -218,13 +232,18 @@ export const AppForm = ({ institutionId }: Props) => {
         </GridContainer>
         <div className="application_footer">
           <ButtonGroup className="application_footer-buttons">
-            <Link href={"/"} className="usa-button usa-button--unstyled">
+            <Button
+              type="button"
+              onClick={launchModal}
+              className="usa-button usa-button--unstyled"
+            >
               Close application
-            </Link>
+            </Button>
             <Button type={"submit"}>Submit application</Button>
           </ButtonGroup>
         </div>
       </USWDSForm>
+      {isModalVisible && <CloseAppModal closeHandler={closeModal} />}
     </div>
   );
 
