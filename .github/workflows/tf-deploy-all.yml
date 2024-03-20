@@ -1,4 +1,4 @@
-name: "Deploy All Terraform Projects"
+name: "Deploy All"
 on:
   workflow_call:
     inputs:
@@ -8,6 +8,8 @@ on:
     secrets:
       TERRAFORM_ROLE:
         required: true
+      DEPLOY_ROLE:
+        required: true
   workflow_dispatch:
     inputs:
       target:
@@ -16,19 +18,35 @@ on:
         options:
           - stage
           - prod
+          - test
 
 jobs:
   call-tf-deploy:
-    if: github.ref == 'refs/heads/main'
+    name: "Calling Terraform Deploy (${{ inputs.target }})"
     uses: ./.github/workflows/terraform-deploy.yml
     strategy:
       matrix:
-        project: [test]
+        project: [data,application,monitoring]
     with:
       target: ${{ inputs.target }}
       project: ${{ matrix.project }}
     secrets:
       TERRAFORM_ROLE: ${{ secrets.TERRAFORM_ROLE }}
+    permissions:
+      id-token: write
+      contents: read
+  call-app-deploy:
+    name: "Calling App Deploy (${{ inputs.target }})"
+    uses: ./.github/workflows/app-deploy.yml
+    ## Run after terraform deploy and app build
+    needs:
+      - call-tf-deploy
+    concurrency:
+      group: ${{ inputs.target }}-deployment
+    with:
+      target: ${{ inputs.target }}
+    secrets:
+      DEPLOY_ROLE: ${{ secrets.DEPLOY_ROLE }}
     permissions:
       id-token: write
       contents: read
