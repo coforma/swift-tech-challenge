@@ -58,6 +58,14 @@ For items being developed
 
 A production release is currently a controlled action that requires the manual running of a GitHub action. This is reviewed by product and then triggered by engineering. Future iterations involve incorporation of feature flags and the removal of the manual release process.
 
+Manual Release Process:
+1. Navigate to github actions and select "Deploy All" from the available Workflow list
+2. Under "Run Workflow" and select the correct branch and environments (stage and production can only be deployed from a protected branch) and click "Run Workflow"
+      ![Image showing the release process](./documentation/engineering/assets/prod-release.png)
+3. Notify an administrator of a pending release and have them approve the change.
+    ![Image showing the approval process](./documentation/engineering/assets/release-approval.png)
+
+
 ### Reverting a deployment
 
 Sometimes we have to revert changes. The best way to do that is to revert the PR on GitHub, rerun the actions, and then let the site redeploy.
