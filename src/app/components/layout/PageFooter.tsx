@@ -1,6 +1,9 @@
 // components
 import { Footer, GridContainer, NavList } from "@trussworks/react-uswds";
+import Image from "next/image";
 import Link from "next/link";
+// assets
+import footerlogo from "@/src/app/assets/logo.svg";
 
 export const PageFooter = () => {
   return (
@@ -11,7 +14,7 @@ export const PageFooter = () => {
         <GridContainer>
           <div className="footer_primary-section">
             <div className="footer_logo">
-              <div className="footer_logo-img">Logo</div>
+              <Image className="footer_logo-img" src={footerlogo} alt={""} />
             </div>
             <div className="footer_logo">
               <Link className="footer_logo-title" href="https://highered.gov">
