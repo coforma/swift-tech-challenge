@@ -97,7 +97,7 @@ const AdmissionsCard = ({ college }: Props) => {
             Average combined score
           </p>
           <p className="card_details_section-data-highlight">
-            {maskThousands(college?.satScores?.satAverageScore)}
+            {college?.satScores?.satAverageScore}
           </p>
         </div>
       </CardBody>
