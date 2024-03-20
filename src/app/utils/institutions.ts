@@ -3,7 +3,9 @@ import dynamoClient from "./libs/dynamodb-lib";
 // types
 import { College, degreeMap } from "../types";
 
-const INSTITUTIONS_TABLE_NAME = "institutions";
+const INSTITUTIONS_TABLE_NAME = process.env.INSTITUTIONS_DYNAMODB_TABLE
+  ? process.env.INSTITUTIONS_DYNAMODB_TABLE
+  : "institutions";
 
 function mapDbDataRecordToCollege(item: any) {
   return {
