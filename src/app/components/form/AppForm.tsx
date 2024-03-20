@@ -155,7 +155,7 @@ export const AppForm = ({ institutionId }: Props) => {
                     />
 
                     <TextField
-                      label={`Critical reading${hasSATQ ? " (required)" : ""}`}
+                      label={`Writing${hasSATQ ? " (required)" : ""}`}
                       name={"writing-score"}
                       required={hasSATQ}
                     />

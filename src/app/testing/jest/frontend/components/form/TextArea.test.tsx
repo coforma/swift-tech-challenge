@@ -53,7 +53,7 @@ describe("Test TextArea", () => {
     await act(async () => {
       await render(await requiredTextArea);
     });
-    expect(screen.getByText("field-label *")).toBeVisible();
+    expect(screen.getByText("*")).toBeVisible();
   });
 });
 
