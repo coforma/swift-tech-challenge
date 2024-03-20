@@ -112,7 +112,7 @@ export const AppForm = ({ institutionId }: Props) => {
             {application?.institutionName}
           </h1>
           <p className="application_header-subtitle">
-            NEW APPLICATION (2024-2025)
+            NEW APPLICATION (2025-2026)
           </p>
         </div>
         <GridContainer className="application_questions">
@@ -181,6 +181,9 @@ export const AppForm = ({ institutionId }: Props) => {
             <Card className="application_card">
               <CardBody className="application_card">
                 <fieldset className="usa-fieldset">
+                  <legend className="usa-legend usa-legend--large">
+                    Essay guidance
+                  </legend>
                   <p className="application_questions-essay-guidance">
                     Answer the following essay questions. We encourage you to
                     write the essays in a separate word processing program,
@@ -194,10 +197,9 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody className="application_card">
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay Question 1 (required){" "}
+                    Essay question 1 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <p className="application_questions-essay-q">Question</p>
                   <TextArea
                     id={"essay-question-1"}
                     label={essayQ1}
@@ -211,10 +213,9 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody>
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay Question 2 (required){" "}
+                    Essay question 2 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <p className="application_questions-essay-q">Question</p>
                   <TextArea
                     id={"essay-question-2"}
                     label={essayQ2}
@@ -229,10 +230,9 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody>
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay Question 3 (required){" "}
+                    Essay question 3 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <p className="application_questions-essay-q">Question</p>
                   <TextArea
                     id={"essay-question-3"}
                     label={essayQ3}

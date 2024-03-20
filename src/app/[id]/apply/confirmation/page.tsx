@@ -30,7 +30,7 @@ export default function ConfirmationPage({ params }: Props) {
       <div className="application_header">
         <h1 className="application_header-title">{selectedCollege.name}</h1>
         <p className="application_header-subtitle">
-          NEW APPLICATION (2024-2025)
+          NEW APPLICATION (2025-2026)
         </p>
       </div>
       <div className="application_confirmation">

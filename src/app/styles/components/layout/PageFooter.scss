@@ -8,6 +8,7 @@
   @include u-display("flex");
   @include u-flex("align-center");
   gap: 20px;
+  padding-top: 1.25rem;
 }
 .usa-footer__primary-section>.grid-container {
   max-width: 100rem;
@@ -18,17 +19,13 @@
 }
 
 .footer_logo {
-  @include u-margin-y(3);
+  @include u-margin-bottom(1);
 
-  // Temp code in place of a real logo
   &-img {
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     line-height: 5rem;
     display: inline-block;
-    background: #fff;
-    border-radius: 100%;
-    text-align: center;
   }
 
   &-title {
