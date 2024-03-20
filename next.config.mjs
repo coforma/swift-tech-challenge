@@ -43,7 +43,7 @@ const nextConfig = {
       allowedOrigins: [
         "d1b4twxh1cihpk.cloudfront.net",
         "d2z6xcoh14f3wb.cloudfront.net",
-        "https://d19jzmn7wae8g9.cloudfront.net",
+        "d19jzmn7wae8g9.cloudfront.net",
       ],
     },
   },
