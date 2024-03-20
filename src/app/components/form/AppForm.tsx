@@ -76,7 +76,7 @@ export const AppForm = ({ institutionId }: Props) => {
   const ApplicationView = !application ? (
     <NotFound />
   ) : (
-    <main className="application">
+    <div className="application">
       <USWDSForm
         initialValues={{
           "first-name": "",
@@ -187,7 +187,7 @@ export const AppForm = ({ institutionId }: Props) => {
                   <TextArea
                     id={"essay-question-1"}
                     label={essayQ1}
-                    name={"question-1"}
+                    name={"essay-question-1"}
                     required={false}
                   />
                 </fieldset>
@@ -204,7 +204,7 @@ export const AppForm = ({ institutionId }: Props) => {
                   <TextArea
                     id={"essay-question-2"}
                     label={essayQ2}
-                    name={"question-2"}
+                    name={"essay-question-2"}
                     required={false}
                   />
                 </fieldset>
@@ -222,7 +222,7 @@ export const AppForm = ({ institutionId }: Props) => {
                   <TextArea
                     id={"essay-question-3"}
                     label={essayQ3}
-                    name={"question-3"}
+                    name={"essay-question-3"}
                     required={false}
                   />
                 </fieldset>
@@ -239,7 +239,7 @@ export const AppForm = ({ institutionId }: Props) => {
           </ButtonGroup>
         </div>
       </USWDSForm>
-    </main>
+    </div>
   );
 
   return <main>{loading ? <Spinner /> : ApplicationView}</main>;

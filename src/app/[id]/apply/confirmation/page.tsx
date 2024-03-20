@@ -1,27 +1,27 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // assets
 import mail from "@/src/app/assets/mail.svg";
 // components
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonGroup } from "@trussworks/react-uswds";
-import { Spinner } from "@/src/app/components";
+import { InstitutionContext, Spinner } from "@/src/app/components";
 import ErrorPage from "@/src/app/error/page";
 // types
 import { College } from "@/src/app/types";
-import { getInstitutionData } from "@/src/app/utils/institutions";
 
 export default function ConfirmationPage({ params }: Props) {
+  const { institutionsObject } = useContext(InstitutionContext);
   const [loading, setLoading] = useState(true);
   const [selectedCollege, setSelectedCollege] = useState<College>();
 
   useEffect(() => {
-    getInstitutionData(Number(params.id)).then((institution) => {
-      setSelectedCollege(institution);
+    if (institutionsObject) {
+      setSelectedCollege(institutionsObject[params.id]);
       setLoading(false);
-    });
-  }, [params.id]);
+    }
+  }, [institutionsObject, params.id]);
 
   const View = !selectedCollege ? (
     <ErrorPage />

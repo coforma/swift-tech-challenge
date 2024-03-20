@@ -147,12 +147,3 @@ export async function getInstitutionApplication(institutionId: Number) {
   const result = await dynamoClient.get(params);
   return result?.Item;
 }
-
-export async function getInstitutionData(institutionId: Number) {
-  const params = {
-    TableName: INSTITUTIONS_TABLE_NAME,
-    Key: { institutionId: institutionId, recordType: "data" },
-  };
-  const result = await dynamoClient.get(params);
-  return mapDbDataRecordToCollege(result?.Item);
-}

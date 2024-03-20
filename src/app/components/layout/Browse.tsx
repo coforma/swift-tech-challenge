@@ -15,6 +15,14 @@ import { College } from "../../types";
 import { filterInstitutions } from "../../utils/filtering";
 import { get20Institutions } from "../../utils/institutions";
 
+const defaultFilters = {
+  "filter-type": ["Public", "Private nonprofit", "Private for-profit"],
+  "filter-undergrad-pop": ["<2", "2-5", "5-10", "10-20", ">20"],
+  "filter-avg-cost-per-year": ["<10$", "10-20$", "20-40$", "40-60$", ">60$"],
+  "filter-state": "- Select -",
+  "filter-grad-rate": [">90", "60-90", "30-60", "<30"],
+};
+
 export const Browse = () => {
   const { institutionsArray, setFilteredInstitutions } =
     useContext(InstitutionContext);
@@ -43,19 +51,28 @@ export const Browse = () => {
   };
 
   const applyFilters = async (filters: any) => {
-    const filteredColleges = filterInstitutions(institutionsArray!, filters);
-    setFilteredInstitutions(filteredColleges);
-    setInstArray(filteredColleges);
-    setLastScannedKey(undefined);
-    setShowPagination(false);
+    if (JSON.stringify(filters) === JSON.stringify(defaultFilters)) {
+      await load20Institutions(true);
+    } else {
+      const filteredColleges = filterInstitutions(institutionsArray!, filters);
+      setFilteredInstitutions(filteredColleges);
+      setInstArray(filteredColleges);
+      setLastScannedKey(undefined);
+      setShowPagination(false);
+    }
     closeModal();
   };
 
-  const load20Institutions = async () => {
+  const load20Institutions = async (shouldReset?: boolean) => {
     try {
+      let newArray;
       const { colleges: result, lastKey } =
         await get20Institutions(lastScannedKey);
-      const newArray = Array(...instArray, ...result);
+      if (shouldReset) {
+        newArray = Array(...result);
+      } else {
+        newArray = Array(...instArray, ...result);
+      }
       setInstArray(newArray);
       setLastScannedKey(lastKey);
       setShowPagination(true);
@@ -68,7 +85,7 @@ export const Browse = () => {
   useEffect(() => {
     // loads initial 20 institutions to display
     load20Institutions();
-  }, []); // ← runs once on app load
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const InstList = () => {
     return (
@@ -92,7 +109,7 @@ export const Browse = () => {
           Add filters
         </Button>
       </div>
-      <USWDSForm initialValues={{}} submit={applyFilters}>
+      <USWDSForm initialValues={defaultFilters} submit={applyFilters}>
         {isModalVisible && <FilterModal closeHandler={closeModal} />}
       </USWDSForm>
       {instArray.length > 0 ? (
@@ -106,7 +123,7 @@ export const Browse = () => {
         <Button
           type="button"
           className="browse_load-more-button"
-          onClick={load20Institutions}
+          onClick={() => load20Institutions()}
         >
           Load more
         </Button>
