@@ -5,7 +5,7 @@ The following is a set of guidelines for contributors as well as information and
 Contributing is more than just writing code -- its anything that improves the project. All contributions are managed right here in Github. Here are some ways that anyone can help:
 
 ### Report a bug
-If you are running into an issue, please take a look through [existing issues](https://github.com/coforma/swift-tech-challenge/issues). If your issue is not listed feel empowered to open a [new issue](https://github.com/coforma/swift-tech-challenge/issues/new/choose). If possible include steps to reproduce, environment information, and screenshots/videos as relevant. Please add the label ```bug``` to the item when creating the the issue.
+If you are running into an issue, please take a look through [existing issues](https://github.com/coforma/swift-tech-challenge/issues). If your issue is not listed, feel empowered to open a [new issue](https://github.com/coforma/swift-tech-challenge/issues/new/choose). If possible, include steps to reproduce, environment information, and screenshots/videos as relevant. Please add the label ```bug``` to the item when creating the the issue.
 
 ### Suggesting enhancements
 New features and enhancements are also managed via [issues](https://github.com/coforma/swift-tech-challenge/issues/new/choose). Please add the label ```enhancement``` to the item when creating the issue.
