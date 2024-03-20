@@ -251,7 +251,7 @@ const AcademicsCard = ({ college }: Props) => {
           <h3 className="card_details_section-header">Student/Faculty ratio</h3>
           <p className="card_details_section-data-title">Ratio</p>
           <p className="card_details_section-data-highlight">
-            {college?.studentFacultyRatio}
+            {college?.studentFacultyRatio}:1
           </p>
         </div>
         {college?.specialties && (
