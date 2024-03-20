@@ -17,7 +17,7 @@ import {
   TextArea,
   TextField,
   USWDSForm,
-} from "@/src/app/components";
+} from "../index";
 // pages
 import NotFound from "../../not-found";
 // utils
@@ -58,6 +58,7 @@ export const AppForm = ({ institutionId }: Props) => {
       email: data.email,
       institutionId: institutionId,
     };
+
     try {
       await saveApplication(submission);
       router.push(`/${institutionId}/apply/confirmation`);
@@ -78,9 +79,9 @@ export const AppForm = ({ institutionId }: Props) => {
     "math-score": satSchema,
     "reading-score": satSchema,
     "writing-score": satSchema,
-    "question-1": text(),
-    "question-2": text(),
-    "question-3": text(),
+    essayOne: text(),
+    essayTwo: text(),
+    essayThree: text(),
   });
   // Handle EssayQuestions
   const essayQ1: string | undefined = appq?.[4];
@@ -100,9 +101,9 @@ export const AppForm = ({ institutionId }: Props) => {
           "math-score": "",
           "reading-score": "",
           "writing-score": "",
-          "question-1": "",
-          "question-2": "",
-          "question-3": "",
+          essayOne: "",
+          essayTwo: "",
+          essayThree: "",
         }}
         validationSchema={validationSchema}
         submit={onSubmit}
@@ -200,12 +201,7 @@ export const AppForm = ({ institutionId }: Props) => {
                     Essay question 1 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <TextArea
-                    id={"essay-question-1"}
-                    label={essayQ1}
-                    name={"essay-question-1"}
-                    required={false}
-                  />
+                  <TextArea label={essayQ1} name={"essayOne"} />
                 </fieldset>
               </CardBody>
             </Card>
@@ -216,12 +212,7 @@ export const AppForm = ({ institutionId }: Props) => {
                     Essay question 2 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <TextArea
-                    id={"essay-question-2"}
-                    label={essayQ2}
-                    name={"essay-question-2"}
-                    required={false}
-                  />
+                  <TextArea label={essayQ2} name={"essayTwo"} />
                 </fieldset>
               </CardBody>
             </Card>
@@ -233,12 +224,7 @@ export const AppForm = ({ institutionId }: Props) => {
                     Essay question 3 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <TextArea
-                    id={"essay-question-3"}
-                    label={essayQ3}
-                    name={"essay-question-3"}
-                    required={false}
-                  />
+                  <TextArea label={essayQ3} name={"essayThree"} />
                 </fieldset>
               </CardBody>
             </Card>

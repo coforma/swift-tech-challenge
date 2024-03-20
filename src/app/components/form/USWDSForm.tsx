@@ -19,7 +19,9 @@ export const USWDSForm = ({
         setSubmitting(false);
       }}
     >
-      {() => <Form>{children}</Form>}
+      {() => {
+        return <Form>{children}</Form>;
+      }}
     </Formik>
   );
 };
