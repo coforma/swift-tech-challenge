@@ -10,7 +10,12 @@ export const HeroImage = () => {
         <p className="hero_container-title">
           Find your dream <br /> school today
         </p>
-        <Image src={hero} alt={"Hero image"} className="hero_container-image" />
+        <Image
+          src={hero}
+          alt={"Hero image"}
+          className="hero_container-image"
+          priority
+        />
       </GridContainer>
     </div>
   );
