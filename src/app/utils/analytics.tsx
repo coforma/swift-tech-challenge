@@ -12,7 +12,7 @@ export const InitAnalytics = () => {
     // note: this variable is not a secret: https://developer.mixpanel.com/reference/project-token
     const mixpanelToken = isProd ? tokenMap.prod : tokenMap.lower;
     mixpanel.init(mixpanelToken, {
-      debug: true,
+      debug: !isProd,
       ignore_dnt: !isProd,
       track_pageview: "full-url",
       persistence: "localStorage",
