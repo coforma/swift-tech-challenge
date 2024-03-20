@@ -141,22 +141,45 @@ export const Browse = () => {
               )}
               {filterChips["filter-undergrad-pop"] && (
                 <p
-                  className={`browse_chip ${filterChips["filter-type"].length === 0 ? "browse_chip-error" : ""}`}
+                  className={`browse_chip ${filterChips["filter-undergrad-pop"].length === 0 ? "browse_chip-error" : ""}`}
                 >{`Population Ranges (${filterChips["filter-undergrad-pop"].length === 5 ? "All" : filterChips["filter-undergrad-pop"].length})`}</p>
               )}
               {filterChips["filter-avg-cost-per-year"] && (
                 <p
-                  className={`browse_chip ${filterChips["filter-type"].length === 0 ? "browse_chip-error" : ""}`}
+                  className={`browse_chip ${filterChips["filter-avg-cost-per-year"].length === 0 ? "browse_chip-error" : ""}`}
                 >{`Cost Ranges (${filterChips["filter-avg-cost-per-year"].length === 5 ? "All" : filterChips["filter-avg-cost-per-year"].length})`}</p>
               )}
               {filterChips["filter-grad-rate"] && (
                 <p
-                  className={`browse_chip ${filterChips["filter-type"].length === 0 ? "browse_chip-error" : ""}`}
+                  className={`browse_chip ${filterChips["filter-grad-rate"].length === 0 ? "browse_chip-error" : ""}`}
                 >{`Graduation Rate Ranges (${filterChips["filter-grad-rate"].length === 4 ? "All" : filterChips["filter-grad-rate"].length})`}</p>
               )}
             </>
           )}
         </div>
+        <div className="browse_filter-warning-container">
+          {filterChips["filter-type"].length === 0 && (
+            <p className="browse-filter-warning">
+              Please select at least one institution type.
+            </p>
+          )}
+          {filterChips["filter-undergrad-pop"].length === 0 && (
+            <p className="browse-filter-warning">
+              Please select at least one population range.
+            </p>
+          )}
+          {filterChips["filter-avg-cost-per-year"].length === 0 && (
+            <p className="browse-filter-warning">
+              Please select at least one cost range.
+            </p>
+          )}
+          {filterChips["filter-grad-rate"].length === 0 && (
+            <p className="browse-filter-warning">
+              Please select at least one graduation rate range.
+            </p>
+          )}
+        </div>
+
         <Button type="button" outline={true} onClick={launchModal}>
           {hasFiltered ? "Edit filters" : "Add filters"}
         </Button>

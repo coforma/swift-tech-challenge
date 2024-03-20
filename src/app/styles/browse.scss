@@ -90,3 +90,12 @@
     @include u-text("warning-darker");
   }
 }
+
+.browse_filter-warning-container {
+  margin-bottom: 16px;
+}
+
+.browse-filter-warning {
+  margin-bottom: 8px;
+  @include u-text("warning-darker");
+}
