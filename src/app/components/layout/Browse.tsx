@@ -10,7 +10,7 @@ import {
   USWDSForm,
 } from "../../components";
 // types
-import { College } from "../../types";
+import { College, FilterShape } from "../../types";
 // utils
 import { filterInstitutions } from "../../utils/filtering";
 import { get20Institutions } from "../../utils/institutions";
@@ -27,7 +27,8 @@ export const Browse = () => {
   const { institutionsArray, setFilteredInstitutions } =
     useContext(InstitutionContext);
   const [instArray, setInstArray] = useState<College[]>([]);
-
+  const [filterChips, setFilterChips] = useState<FilterShape>(defaultFilters);
+  const [hasFiltered, setHasFiltered] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [lastScannedKey, setLastScannedKey] = useState<any | undefined>();
   const [scrollPosition, setScrollPosition] = useState<boolean>(false);
@@ -57,6 +58,8 @@ export const Browse = () => {
       const filteredColleges = filterInstitutions(institutionsArray!, filters);
       setFilteredInstitutions(filteredColleges);
       setInstArray(filteredColleges);
+      setFilterChips(filters);
+      setHasFiltered(true);
       setLastScannedKey(undefined);
       setShowPagination(false);
     }
@@ -74,9 +77,11 @@ export const Browse = () => {
         newArray = Array(...instArray, ...result);
       }
       setInstArray(newArray);
+      setFilterChips(defaultFilters);
       setLastScannedKey(lastKey);
       setShowPagination(true);
       setLoading(false);
+      setHasFiltered(false);
     } catch (e: any) {
       throw new Error("Institution data could not be loaded.");
     }
@@ -105,6 +110,31 @@ export const Browse = () => {
         <p className="site_text-intro browse_header-subtitle">
           Find the college that’s right for you
         </p>
+
+        <div className="browse_filter-chips">
+          {JSON.stringify(filterChips) === JSON.stringify(defaultFilters) &&
+          !hasFiltered ? (
+            <p className="browse_chip">No filters applied</p>
+          ) : (
+            <>
+              {filterChips["filter-state"] && (
+                <p className="browse_chip">{`State (${filterChips["filter-state"] === "- Select -" ? "All" : filterChips["filter-state"]})`}</p>
+              )}
+              {filterChips["filter-type"] && (
+                <p className="browse_chip">{`Types (${filterChips["filter-type"].length === 3 ? "All" : filterChips["filter-type"].length})`}</p>
+              )}
+              {filterChips["filter-undergrad-pop"] && (
+                <p className="browse_chip">{`Population Ranges (${filterChips["filter-undergrad-pop"].length === 5 ? "All" : filterChips["filter-undergrad-pop"].length})`}</p>
+              )}
+              {filterChips["filter-avg-cost-per-year"] && (
+                <p className="browse_chip">{`Cost Ranges (${filterChips["filter-avg-cost-per-year"].length === 5 ? "All" : filterChips["filter-avg-cost-per-year"].length})`}</p>
+              )}
+              {filterChips["filter-grad-rate"] && (
+                <p className="browse_chip">{`Graduation Rate Ranges (${filterChips["filter-grad-rate"].length === 4 ? "All" : filterChips["filter-grad-rate"].length})`}</p>
+              )}
+            </>
+          )}
+        </div>
         <Button type="button" outline={true} onClick={launchModal}>
           Add filters
         </Button>

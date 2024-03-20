@@ -66,3 +66,22 @@
   align-items: center;
   transition: all 0.3s ease;
 }
+
+.browse_filter-chips {
+  margin-bottom: 16px;
+  margin-left: -4px;
+}
+
+.browse_chip {
+  @include typeset("ui", 5, 1);
+  display: inline-block;
+  padding: 8px;
+  align-items: center;
+  width: auto;
+  margin: 4px;
+  border-radius: 4px;
+  background: var(--primary-bg-primary-lighter, #d9e8f6);
+  @include u-text("primary");
+  font-size: 16px;
+  font-weight: 500;
+}
