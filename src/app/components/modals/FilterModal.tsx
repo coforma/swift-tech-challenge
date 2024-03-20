@@ -40,6 +40,12 @@ export const FilterModal = ({ closeHandler }: Props) => {
               options={stateOptions}
             />
           </div>
+          <p>
+            <i>
+              For the multi-select checkboxes below, you must select at least
+              one checkbox in each category.
+            </i>
+          </p>
           <div className="filter_section">
             <p className="filter_section-heading">Type</p>
             <CheckboxField
