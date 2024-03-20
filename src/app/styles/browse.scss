@@ -44,8 +44,7 @@
   }
 }
 
-.browse_back-to-top-button {
-  position: sticky;
+.browse_load-more-button {
   bottom: 24px;
   margin: auto;
   display: flex;
@@ -62,4 +61,13 @@
     @include u-margin(0.5);
     @include u-margin-right(1);
   }
+}
+
+.browse_back-to-top-button {
+  margin: auto;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
 }

@@ -18,7 +18,7 @@ jest.mock("mixpanel-browser", () => ({
 
 const component = (
   <ul>
-    <BannerCard college={mockCollege} />
+    <BannerCard college={mockCollege} id={0} />
   </ul>
 );
 

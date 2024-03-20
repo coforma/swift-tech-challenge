@@ -1,30 +1,27 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // assets
 import mail from "@/src/app/assets/mail.svg";
 // components
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonGroup } from "@trussworks/react-uswds";
-import { InstitutionContext, Spinner } from "@/src/app/components";
+import { Spinner } from "@/src/app/components";
 import ErrorPage from "@/src/app/error/page";
 // types
 import { College } from "@/src/app/types";
-
-const filterCollege = (institutionsArray: College[], id: number) => {
-  return institutionsArray.filter((college) => college.id == id)[0];
-};
+import { getInstitutionData } from "@/src/app/utils/institutions";
 
 export default function ConfirmationPage({ params }: Props) {
-  const { institutionsArray } = useContext(InstitutionContext);
   const [loading, setLoading] = useState(true);
   const [selectedCollege, setSelectedCollege] = useState<College>();
+
   useEffect(() => {
-    if (institutionsArray) {
-      setSelectedCollege(filterCollege(institutionsArray!, params.id));
+    getInstitutionData(Number(params.id)).then((institution) => {
+      setSelectedCollege(institution);
       setLoading(false);
-    }
-  }, [institutionsArray, params.id]);
+    });
+  }, [params.id]);
 
   const View = !selectedCollege ? (
     <ErrorPage />

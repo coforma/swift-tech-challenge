@@ -21,13 +21,13 @@ import {
 //types
 import { College } from "../../types";
 
-export const BannerCard = ({ college }: Props) => {
+export const BannerCard = ({ college, id }: Props) => {
   return (
     <Card layout="flagDefault" headerFirst={true} className="card card_banner">
       <div className="card_banner-container">
         <CardMedia className="card_banner-image">
           <ImageWithFallback
-            src={`https://swift-institution-images-public.s3.amazonaws.com/${college.id}.png`}
+            src={`https://swift-institution-images-public.s3.amazonaws.com/${id}.png`}
             alt={`AI generated image of ${college.name}`}
             width={400}
             height={400}
@@ -64,7 +64,7 @@ export const BannerCard = ({ college }: Props) => {
           <CardFooter>
             <Link
               className="usa-button card_banner-apply-button"
-              href={`${college.id}/apply`}
+              href={`${id}/apply`}
               onClick={() => mixpanel.track("click_launch-application")}
               aria-label={`Apply to ${college.name}`}
             >
@@ -79,4 +79,5 @@ export const BannerCard = ({ college }: Props) => {
 
 type Props = {
   college: College;
+  id: number;
 };

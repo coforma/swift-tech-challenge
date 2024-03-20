@@ -1,40 +1,31 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // components
-import {
-  BannerCard,
-  DetailsCards,
-  InstitutionContext,
-  Spinner,
-} from "@/src/app/components";
+import { BannerCard, DetailsCards, Spinner } from "@/src/app/components";
 import NotFound from "@/src/app/not-found";
 // types
 import { College } from "../types";
-
-const filterCollege = (institutionsArray: College[], id: number) => {
-  return institutionsArray.filter((college) => college.id == id)[0];
-};
+import { getInstitutionData } from "../utils/institutions";
 
 export default function InstitutionDetails({
   params,
 }: {
   params: { id: number };
 }) {
-  const { institutionsArray } = useContext(InstitutionContext);
   const [loading, setLoading] = useState(true);
   const [selectedCollege, setSelectedCollege] = useState<College>();
   useEffect(() => {
-    if (institutionsArray) {
-      setSelectedCollege(filterCollege(institutionsArray!, params.id));
+    getInstitutionData(Number(params.id)).then((institution) => {
+      setSelectedCollege(institution);
       setLoading(false);
-    }
-  }, [institutionsArray, params.id]);
+    });
+  }, [params.id]);
 
   const View = !selectedCollege ? (
     <NotFound />
   ) : (
     <ul className="usa-card-group details_page">
-      <BannerCard key={params.id} college={selectedCollege} />
+      <BannerCard key={params.id} college={selectedCollege} id={params.id} />
       <DetailsCards key={`${params.id}-dets`} college={selectedCollege} />
     </ul>
   );
