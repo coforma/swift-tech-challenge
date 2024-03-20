@@ -1,5 +1,5 @@
 # Contributing and Maintaining
-The following is a set of guidelines for contributors as well as information and instructions around our development process. The two are closely tied together and its important to understand how the work flows and not just how todo the work.
+The following is a set of guidelines for contributors as well as information and instructions around our development process. The two are closely tied together and its important to understand how the work flows and not just how to do the work.
 
 ## Ways to contribute
 Contributing is more than just writing code -- its anything that improves the project. All contributions are managed right here in Github. Here are some ways that anyone can help:
