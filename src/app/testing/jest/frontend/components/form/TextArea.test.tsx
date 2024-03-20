@@ -17,27 +17,7 @@ const notRequiredTextArea = (
     validationSchema={fieldSchema}
     submit={mockOnSubmit}
   >
-    <TextArea
-      id={"field-id"}
-      label={"field-label"}
-      required={false}
-      name={"field-name"}
-    />
-  </USWDSForm>
-);
-
-const requiredTextArea = (
-  <USWDSForm
-    initialValues={{ "field-name": "" }}
-    validationSchema={fieldSchema}
-    submit={mockOnSubmit}
-  >
-    <TextArea
-      id={"field-id"}
-      label={"field-label"}
-      required={true}
-      name={"field-name"}
-    />
+    <TextArea label={"field-label"} name={"field-name"} />
   </USWDSForm>
 );
 
@@ -47,13 +27,6 @@ describe("Test TextArea", () => {
       await render(await notRequiredTextArea);
     });
     expect(screen.getByText("field-label")).toBeVisible();
-  });
-
-  test("TextArea required star is visible", async () => {
-    await act(async () => {
-      await render(await requiredTextArea);
-    });
-    expect(screen.getByText("*")).toBeVisible();
   });
 });
 
