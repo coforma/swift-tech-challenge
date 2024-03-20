@@ -2,7 +2,6 @@
 import { useContext, useEffect, useState } from "react";
 // components
 import { Button } from "@trussworks/react-uswds";
-import Image from "next/image";
 import {
   CollegeCard,
   FilterModal,
@@ -10,11 +9,10 @@ import {
   Spinner,
   USWDSForm,
 } from "../../components";
+// types
+import { College } from "../../types";
 // utils
 import { filterInstitutions } from "../../utils/filtering";
-import { College } from "../../types";
-// icons
-import arrow_upward from "../../assets/icons/arrow_upward.svg";
 import { get20Institutions } from "../../utils/institutions";
 
 export const Browse = () => {
@@ -110,14 +108,6 @@ export const Browse = () => {
           className="browse_load-more-button"
           onClick={load20Institutions}
         >
-          <Image
-            src={arrow_upward}
-            className="browse_load-more-button-icon"
-            height="16"
-            width="16"
-            alt="arrow_upward icon"
-            loading="eager"
-          />
           Load more
         </Button>
       )}
