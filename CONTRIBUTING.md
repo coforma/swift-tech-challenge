@@ -24,7 +24,7 @@ Our project board follows a kanban approach with all disciplines working from th
 The basic flow is as follows.
 1. Backlog -- Work in the ideation state, not sure if it will get picked up
 2. ToDo -- Work that has been selected for research and design.
-3. Design in Progress -- Work that is being iterated on by design and research teams, heave collaboration with engineering
+3. Design in Progress -- Work that is being iterated on by design and research teams, achieve collaboration with engineering
 4. Ready for development -- Issues to be worked by engineering
 5. Dev In Progress -- Issues actively being worked by engineering
 6. Quality Review -- Items being reviewed
