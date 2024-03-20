@@ -200,7 +200,7 @@ export const Browse = () => {
           className="browse_load-more-button"
           onClick={() => load20Institutions()}
         >
-          Load more
+          Load 20 more
         </Button>
       )}
       {scrollPosition && (

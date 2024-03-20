@@ -12,6 +12,7 @@
   text-align: center;
 
   &-title {
+    margin-top: 0;
     @include typeset("heading", 9, 1);
     @include at-media("mobile-lg") {
       @include u-font-size("heading", 10)

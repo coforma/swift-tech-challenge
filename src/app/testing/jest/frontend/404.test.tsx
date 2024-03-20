@@ -8,20 +8,10 @@ const notFound = <NotFound />;
 describe("Test NotFound Page", () => {
   test("Check that page renders", () => {
     render(notFound);
-    expect(screen.getByText("Page not found")).toBeVisible();
+    expect(screen.getByText("404")).toBeVisible();
     expect(
-      screen.getByRole("link", { name: "Visit homepage" }),
+      screen.getByRole("link", { name: "Browse Colleges" }),
     ).toHaveAttribute("href", "/");
-    expect(screen.getByRole("link", { name: "Contact us" })).toHaveAttribute(
-      "href",
-      "#",
-    );
-    expect(
-      screen.getByRole("link", { name: "Start a live chat with us" }),
-    ).toHaveAttribute("href", "#");
-    expect(
-      screen.getByRole("link", { name: "(555) 555-GOVT" }),
-    ).toHaveAttribute("href", "tel:555-555-GOVT");
   });
 });
 

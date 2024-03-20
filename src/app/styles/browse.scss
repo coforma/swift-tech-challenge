@@ -11,18 +11,18 @@
 
   &-title {
     text-align: left;
-    @include typeset("ui", 10, 1);
+    @include typeset("ui", 9, 1);
     @include at-media("mobile-lg") {
-      @include u-font-size("heading", 11);
+      @include u-font-size("heading", 10);
     }
     @include at-media("tablet") {
-      @include u-font-size("heading", 12);
+      @include u-font-size("heading", 11);
     }
     @include at-media("tablet-lg") {
-      @include u-font-size("heading", 14);
+      @include u-font-size("heading", 11);
     }
     @include at-media("desktop") {
-      @include u-font-size("heading", 15);
+      @include u-font-size("heading", 12);
     }
     @include u-text("primary-darker", "bold");
     @include u-margin-y(2);
@@ -30,16 +30,18 @@
 
   &-subtitle {
     text-align: left;
-    @include u-padding-bottom(2);
-    @include typeset("ui", 5, 1);
+    font-weight: 100;
+
+    @include u-padding-bottom(4);
+    @include typeset("ui", 6, 1);
     @include at-media("mobile-lg") {
-      @include u-font-size("heading", 6);
-    }
-    @include at-media("tablet-lg") {
       @include u-font-size("heading", 7);
     }
-    @include at-media("desktop") {
+    @include at-media("tablet-lg") {
       @include u-font-size("heading", 8);
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", 9);
     }
   }
 }

@@ -8,40 +8,52 @@
 .hero_container {
   position: relative;
 
-  &-title {
+  &-text-container {
     position: absolute;
     z-index:1;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
-
-    @include u-text("primary-darker", "bold");
-    @include typeset("heading", "lg", 4);
-    @include at-media("mobile-lg") {
-      @include typeset("heading", "xl", 4);
-    }
-    @include at-media("tablet") {
-      @include typeset("heading", "2xl", 4);
-    }
-    @include at-media("tablet-lg") {
-      @include typeset("heading", "3xl", 4);
-    }
-    @include at-media("desktop") {
-      @include u-font-size("heading", 17)
-    }
-    text-align: center;
+    justify-content: center;
+    gap: 24px;
 
     top: 0;
     bottom: 0;
     margin: 20px 0;
     width: 60%;
+  }
+
+  &-title {
+    @include u-text("primary-darker", "bold");
+    @include typeset("heading", "lg", 4);
     @include at-media("tablet") {
-      width: 55%;
-      left:5%;
+      @include typeset("heading", "xl", 4);
     }
     @include at-media("tablet-lg") {
-      left:10%;
+      @include typeset("heading", "2xl", 4);
     }
+    @include at-media("desktop") {
+      @include u-font-size("heading", "3xl")
+    }
+    text-align: center;
+  }
+
+  &-subtitle {
+    @include u-text("primary-darker", "light");
+    display: none;
+    @include at-media("tablet") {
+      display: block;
+      @include typeset("heading", "sm", 4);
+    }
+    @include at-media("tablet-lg") {
+      @include typeset("heading", "md", 4);
+    }
+    @include at-media("desktop") {
+      @include u-font-size("heading", "lg");
+      @include u-padding-bottom(6);
+    }
+    text-align: center;
   }
 
 
@@ -52,6 +64,6 @@
     aspect-ratio: 2 / 1;
     object-fit: contain;
     left: 29%;
-    max-height: 34.375rem;
+    max-height: 26.25rem;
   }
 }

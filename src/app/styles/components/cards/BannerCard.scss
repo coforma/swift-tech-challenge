@@ -11,7 +11,7 @@
   &-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 0 0 0;
+    padding: 0 0 0 0;
     @include at-media("tablet") {
       padding: 0 1rem;
     }
@@ -29,6 +29,10 @@
     justify-content: center;
 
     &>.card_banner-image {
+      display: none;
+      @include at-media("tablet-lg") {
+        display: block;
+      }
       position: relative;
       width: 100%;
       max-width: 27.5rem;
@@ -52,7 +56,15 @@
         @include u-padding-top(2);
         @include u-padding-x(2);
         @include at-media("tablet-lg") {
-          @include u-padding-x(4);
+          @include u-padding-x(3);
+        }
+
+        &>.card_header-title {
+          @include u-margin-bottom(0);
+          @include u-font-size("heading", 12);
+          @include at-media("desktop") {
+            @include u-font-size("heading", 14);
+          }
         }
       }
       &>.card_desc {
