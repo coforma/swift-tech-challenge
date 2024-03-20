@@ -13,6 +13,9 @@ const testParams = {
 
 const testContext: InstitutionContextShape = {
   institutionsArray: [mockCollege],
+  institutionsObject: { 0: mockCollege },
+  filteredInstitutions: [mockCollege],
+  setFilteredInstitutions: () => {},
 };
 
 const testConfirmationPageComponent = () => (

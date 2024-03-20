@@ -13,7 +13,7 @@ const testParams = {
 const testContext: InstitutionContextShape = {
   institutionsArray: [mockCollege],
   filteredInstitutions: [mockCollege],
-  institutionsObject: {},
+  institutionsObject: { 0: mockCollege },
   setFilteredInstitutions: () => {},
 };
 

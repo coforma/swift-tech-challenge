@@ -1,6 +1,6 @@
 "use client";
 
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useContext } from "react";
 //components
 import Image from "next/image";
 import {
@@ -9,13 +9,18 @@ import {
   ModalFooter,
   ModalHeading,
 } from "@trussworks/react-uswds";
-import { CheckboxField, DropdownField } from "../../components";
+import {
+  CheckboxField,
+  DropdownField,
+  InstitutionContext,
+} from "../../components";
 //assets
 import close from "../../assets/icons/close.svg";
 //types
 import { CollegeType, stateOptions } from "../../types";
 
 export const FilterModal = ({ closeHandler }: Props) => {
+  const { institutionsArray } = useContext(InstitutionContext);
   return (
     <div
       role="dialog"
@@ -90,7 +95,9 @@ export const FilterModal = ({ closeHandler }: Props) => {
           </div>
           <ModalFooter>
             <ButtonGroup>
-              <Button type="submit">Apply Filters</Button>
+              <Button type="submit" disabled={!institutionsArray}>
+                {!institutionsArray ? "Loading data" : "Apply Filters"}
+              </Button>
               <Button
                 type="button"
                 onClick={closeHandler as MouseEventHandler}
