@@ -375,13 +375,13 @@ const CostsCard = ({ college }: Props) => {
             <div>
               <p className="card_details_section-data-title">In-state</p>
               <p className="card_details_section-data-highlight">
-                {maskThousands(college.tuitionInState)}
+                {maskCurrency(college.tuitionInState)}
               </p>
             </div>
             <div>
               <p className="card_details_section-data-title">Out-of-state</p>
               <p className="card_details_section-data-highlight">
-                {maskThousands(college.tuitionOutOfState)}
+                {maskCurrency(college.tuitionOutOfState)}
               </p>
             </div>
           </div>

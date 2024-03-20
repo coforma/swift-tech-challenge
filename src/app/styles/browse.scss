@@ -84,4 +84,9 @@
   @include u-text("primary");
   font-size: 16px;
   font-weight: 500;
+
+  &-error {
+    @include u-bg("warning-lighter");
+    @include u-text("warning-darker");
+  }
 }

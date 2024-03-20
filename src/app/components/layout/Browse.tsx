@@ -51,8 +51,24 @@ export const Browse = () => {
     setIsModalVisible(false);
   };
 
+  const checkFilterEquality = (selectedFilters: any, defaultFilters: any) => {
+    const sortObject = (obj: any) =>
+      Object.entries(obj)
+        .sort((a, b) => (a > b ? 1 : -1))
+        .map((el: any[]) =>
+          typeof el[1] === "string"
+            ? el[1]
+            : el[1].sort((a: any, b: any) => (a > b ? 1 : -1)),
+        );
+    return (
+      JSON.stringify(sortObject(selectedFilters)) ===
+      JSON.stringify(sortObject(defaultFilters))
+    );
+  };
+
   const applyFilters = async (filters: any) => {
-    if (JSON.stringify(filters) === JSON.stringify(defaultFilters)) {
+    const filtersAreEqual = checkFilterEquality(filters, defaultFilters);
+    if (filtersAreEqual) {
       await load20Institutions(true);
     } else {
       const filteredColleges = filterInstitutions(institutionsArray!, filters);
@@ -110,10 +126,8 @@ export const Browse = () => {
         <p className="site_text-intro browse_header-subtitle">
           Find the college that’s right for you
         </p>
-
         <div className="browse_filter-chips">
-          {JSON.stringify(filterChips) === JSON.stringify(defaultFilters) &&
-          !hasFiltered ? (
+          {checkFilterEquality(filterChips, defaultFilters) || !hasFiltered ? (
             <p className="browse_chip">No filters applied</p>
           ) : (
             <>
@@ -121,22 +135,30 @@ export const Browse = () => {
                 <p className="browse_chip">{`State (${filterChips["filter-state"] === "- Select -" ? "All" : filterChips["filter-state"]})`}</p>
               )}
               {filterChips["filter-type"] && (
-                <p className="browse_chip">{`Types (${filterChips["filter-type"].length === 3 ? "All" : filterChips["filter-type"].length})`}</p>
+                <p
+                  className={`browse_chip ${filterChips["filter-type"].length === 0 ? "browse_chip-error" : ""}`}
+                >{`Types (${filterChips["filter-type"].length === 3 ? "All" : filterChips["filter-type"].length})`}</p>
               )}
               {filterChips["filter-undergrad-pop"] && (
-                <p className="browse_chip">{`Population Ranges (${filterChips["filter-undergrad-pop"].length === 5 ? "All" : filterChips["filter-undergrad-pop"].length})`}</p>
+                <p
+                  className={`browse_chip ${filterChips["filter-type"].length === 0 ? "browse_chip-error" : ""}`}
+                >{`Population Ranges (${filterChips["filter-undergrad-pop"].length === 5 ? "All" : filterChips["filter-undergrad-pop"].length})`}</p>
               )}
               {filterChips["filter-avg-cost-per-year"] && (
-                <p className="browse_chip">{`Cost Ranges (${filterChips["filter-avg-cost-per-year"].length === 5 ? "All" : filterChips["filter-avg-cost-per-year"].length})`}</p>
+                <p
+                  className={`browse_chip ${filterChips["filter-type"].length === 0 ? "browse_chip-error" : ""}`}
+                >{`Cost Ranges (${filterChips["filter-avg-cost-per-year"].length === 5 ? "All" : filterChips["filter-avg-cost-per-year"].length})`}</p>
               )}
               {filterChips["filter-grad-rate"] && (
-                <p className="browse_chip">{`Graduation Rate Ranges (${filterChips["filter-grad-rate"].length === 4 ? "All" : filterChips["filter-grad-rate"].length})`}</p>
+                <p
+                  className={`browse_chip ${filterChips["filter-type"].length === 0 ? "browse_chip-error" : ""}`}
+                >{`Graduation Rate Ranges (${filterChips["filter-grad-rate"].length === 4 ? "All" : filterChips["filter-grad-rate"].length})`}</p>
               )}
             </>
           )}
         </div>
         <Button type="button" outline={true} onClick={launchModal}>
-          Add filters
+          {hasFiltered ? "Edit filters" : "Add filters"}
         </Button>
       </div>
       <USWDSForm initialValues={defaultFilters} submit={applyFilters}>
@@ -146,7 +168,7 @@ export const Browse = () => {
         InstList()
       ) : (
         <p className="site_text-intro browse_header-subtitle">
-          No matches found for filters.
+          No matches found. Please update your filters.
         </p>
       )}
       {showPagination && (
