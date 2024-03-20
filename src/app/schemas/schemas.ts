@@ -19,7 +19,7 @@ export const number = () =>
     .typeError(error.INVALID_NUMBER)
     .required(error.REQUIRED_GENERIC);
 
-export const numberOptional = () => numberSchema().notRequired().nullable();
+export const numberOptional = () => number().notRequired().nullable();
 
 export const email = () => text().email(error.INVALID_EMAIL);
 export const emailOptional = () => email().notRequired();

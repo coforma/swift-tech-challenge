@@ -2,6 +2,7 @@
 
 import * as yup from "yup";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 // components
 import {
@@ -11,13 +12,7 @@ import {
   CardBody,
   GridContainer,
 } from "@trussworks/react-uswds";
-import {
-  CloseAppModal,
-  Spinner,
-  TextArea,
-  TextField,
-  USWDSForm,
-} from "@/src/app/components";
+import { Spinner, TextArea, TextField, USWDSForm } from "../index";
 // pages
 import NotFound from "../../not-found";
 // utils
@@ -32,15 +27,6 @@ export const AppForm = ({ institutionId }: Props) => {
     Record<string, any> | undefined
   >();
   const [loading, setLoading] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
-  const launchModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setIsModalVisible(false);
-  };
 
   const appq = application?.questions;
 
@@ -58,6 +44,7 @@ export const AppForm = ({ institutionId }: Props) => {
       email: data.email,
       institutionId: institutionId,
     };
+
     try {
       await saveApplication(submission);
       router.push(`/${institutionId}/apply/confirmation`);
@@ -78,9 +65,9 @@ export const AppForm = ({ institutionId }: Props) => {
     "math-score": satSchema,
     "reading-score": satSchema,
     "writing-score": satSchema,
-    "question-1": text(),
-    "question-2": text(),
-    "question-3": text(),
+    essayOne: text(),
+    essayTwo: text(),
+    essayThree: text(),
   });
   // Handle EssayQuestions
   const essayQ1: string | undefined = appq?.[4];
@@ -100,9 +87,9 @@ export const AppForm = ({ institutionId }: Props) => {
           "math-score": "",
           "reading-score": "",
           "writing-score": "",
-          "question-1": "",
-          "question-2": "",
-          "question-3": "",
+          essayOne: "",
+          essayTwo: "",
+          essayThree: "",
         }}
         validationSchema={validationSchema}
         submit={onSubmit}
@@ -112,7 +99,7 @@ export const AppForm = ({ institutionId }: Props) => {
             {application?.institutionName}
           </h1>
           <p className="application_header-subtitle">
-            NEW APPLICATION (2025-2026)
+            NEW APPLICATION (2024-2025)
           </p>
         </div>
         <GridContainer className="application_questions">
@@ -181,9 +168,6 @@ export const AppForm = ({ institutionId }: Props) => {
             <Card className="application_card">
               <CardBody className="application_card">
                 <fieldset className="usa-fieldset">
-                  <legend className="usa-legend usa-legend--large">
-                    Essay guidance
-                  </legend>
                   <p className="application_questions-essay-guidance">
                     Answer the following essay questions. We encourage you to
                     write the essays in a separate word processing program,
@@ -197,15 +181,11 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody className="application_card">
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay question 1 (required){" "}
+                    Essay Question 1 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <TextArea
-                    id={"essay-question-1"}
-                    label={essayQ1}
-                    name={"essay-question-1"}
-                    required={false}
-                  />
+                  <p className="application_questions-essay-q">Question</p>
+                  <TextArea label={essayQ1} name={"essayOne"} />
                 </fieldset>
               </CardBody>
             </Card>
@@ -213,15 +193,11 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody>
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay question 2 (required){" "}
+                    Essay Question 2 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <TextArea
-                    id={"essay-question-2"}
-                    label={essayQ2}
-                    name={"essay-question-2"}
-                    required={false}
-                  />
+                  <p className="application_questions-essay-q">Question</p>
+                  <TextArea label={essayQ2} name={"essayTwo"} />
                 </fieldset>
               </CardBody>
             </Card>
@@ -230,15 +206,11 @@ export const AppForm = ({ institutionId }: Props) => {
               <CardBody>
                 <fieldset className="usa-fieldset">
                   <legend className="usa-legend usa-legend--large">
-                    Essay question 3 (required){" "}
+                    Essay Question 3 (required){" "}
                     <span className="required">*</span>
                   </legend>
-                  <TextArea
-                    id={"essay-question-3"}
-                    label={essayQ3}
-                    name={"essay-question-3"}
-                    required={false}
-                  />
+                  <p className="application_questions-essay-q">Question</p>
+                  <TextArea label={essayQ3} name={"essayThree"} />
                 </fieldset>
               </CardBody>
             </Card>
@@ -246,18 +218,13 @@ export const AppForm = ({ institutionId }: Props) => {
         </GridContainer>
         <div className="application_footer">
           <ButtonGroup className="application_footer-buttons">
-            <Button
-              type="button"
-              onClick={launchModal}
-              className="usa-button usa-button--unstyled"
-            >
+            <Link href={"/"} className="usa-button usa-button--unstyled">
               Close application
-            </Button>
+            </Link>
             <Button type={"submit"}>Submit application</Button>
           </ButtonGroup>
         </div>
       </USWDSForm>
-      {isModalVisible && <CloseAppModal closeHandler={closeModal} />}
     </div>
   );
 
